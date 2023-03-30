@@ -9,11 +9,15 @@ Make sure you create a System Restore Point before running any scripts.
 
 ## How to
 
+> If you need to download a fresh OS ISO directly from Microsoft, follow the guide at [WINDOWS_DOWNLOAD_GUIDE](/docs/WINDOWS_DOWNLOAD_GUIDE.md)
+
 - Create a system restore point
 - If you want apps instalation to be automated, install winget manually <https://github.com/microsoft/winget-cli/releases/> In Assets, Download `.msixbundle` and install it. You can improve the `apps/install.cmd` for yourself.
 - In some scripts from `scripts/tweaks` folder, you might need to fill it up manually. All should be on top of each script. It should be `gpu.cmd`, `network.cmd` and `power.cmd`
 - Run scripts from `scripts/debloat` folder first
 - Run every script as administrator
+
+> After running the scripts, follow some guides in `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
 
 ### Notes
 
