@@ -17,7 +17,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 - Create a system restore point
 - If you want apps instalation to be automated, install winget manually <https://github.com/microsoft/winget-cli/releases/> In Assets, Download `.msixbundle` and install it. You can improve the `apps/install.cmd` for yourself.
-- In some scripts from `scripts/tweaks` folder, you might need to fill it up manually. All should be on top of each script. It should be `gpu.cmd`, `network.cmd` and `power.cmd`
+- In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually. It's on top of each script. It should be `gpu.cmd`, `network.cmd` and `power.cmd`. Instructions are in each file.
 - Run scripts from `scripts/debloat` folder first
 - Run every script as administrator
 
