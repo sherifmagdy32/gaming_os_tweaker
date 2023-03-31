@@ -73,4 +73,4 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 - An option, would be to remove services <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
 - Could be useful <https://github.com/riverar/mach2>
-- RAM usage could be reduced if service drivers were looked into more completely. <https://processhacker.sourceforge.io/>
+- RAM usage could be reduced if service drivers were looked into more completely. <https://processhacker.sourceforge.io/> and also doing more tweaks to kernel and memory management. <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
