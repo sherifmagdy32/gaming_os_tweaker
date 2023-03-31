@@ -1,4 +1,5 @@
 :: Disable unnecessary devices
+cd "%~dp0"
 DevManView.exe /disable "AMD PSP"
 DevManView.exe /disable "AMD SMBus"
 DevManView.exe /disable "Base System Device"
