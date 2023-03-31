@@ -1,6 +1,6 @@
 # Gaming OS Tweaker
 
-> Attempts to keep low input lag, low latency and improved performance.
+> Attempts to debloat, keep low input lag, low latency and have improved performance.
 
 ```txt
 I dont take responsability for any damage the scripts could cause.
@@ -8,6 +8,8 @@ Make sure you create a System Restore Point before running any scripts.
 ```
 
 > Know that if you execute all the scripts, it will make your OS for games only, that is the focus. Dont expect to be usable for your everyday everything.
+
+---
 
 ### How to
 
