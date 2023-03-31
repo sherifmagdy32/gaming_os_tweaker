@@ -28,9 +28,11 @@ Make sure you create a System Restore Point before running any scripts.
 
 ---
 
-From a fresh Windows 10 22H2 install and completely updated, and applying all debloat and tweaks scripts, it was able to keep `41` processes, with Process Lasso and Nvidia Driver in the background, so it would be less than `40` if it were bare. No additional tools were used.
+From a fresh Windows 10 22H2 install and completely updated, and applying all debloat and tweaks scripts, it was able to keep `41` processes, with Process Lasso and Nvidia Driver in the background, so it would be less than `40` if it were bare.
 
-It's a very clean OS, while being functional and being able to make windows update. You can reapply the scripts after a windows update.
+No additional tools were used.
+
+It's a very clean OS, while being decently functional and being able to make Windows Update. You can reapply the scripts after an update. Task scheduler is also enabled.
 
 ---
 
@@ -63,3 +65,4 @@ Other:
 
 - An option, would be to remove services <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
 - Could be useful <https://github.com/riverar/mach2>
+- RAM usage could be reduced if service drivers were looked into more completely.
