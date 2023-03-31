@@ -64,7 +64,6 @@ for %%a in (
     "DefenderApiLogger"
     "DefenderAuditLogger"
     "Diagtrack-Listener"
-    "Diaglog"
     "LwtNetLog"
     "Microsoft-Windows-Rdp-Graphics-RdpIdd-Trace"
     "NetCore"
@@ -74,8 +73,11 @@ for %%a in (
     "ReadyBoot"
     "SpoolerLogger"
     "UBPM"
-    "WdiContextLog"
     "WiFiSession"
 ) do (
     REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\%%~a" /v Start /t REG_DWORD /d 0 /f
 )
+
+:: Fix Task Manager not responding when exit
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\DiagLog" /v Start /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\WdiContextLog" /v Start /t REG_DWORD /d 1 /f
