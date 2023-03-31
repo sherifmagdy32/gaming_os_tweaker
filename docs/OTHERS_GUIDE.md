@@ -28,6 +28,7 @@ heavy CPU processes like games.
 
 ### Guidelines
 
+```txt
 4 Cores 4 Processors: Set Mask for GPU and its PCI Bridge to CPU 2. Set Mask for USB to
 CPU 3.
 4 Cores 8 Processors: Set Mask for GPU and its PCI Bridge to CPU 4. Set Mask for USB to
@@ -40,13 +41,12 @@ CPU 8.
 CPU 4.
 8 Cores 16 Processors: Set Mask for GPU and its PCI Bridge to CPU 4. Set Mask for USB to
 CPU 8.
+```
 
-Run `intPolicy_x64.exe` and use Device Manager, set View > Devices by Connection, Find the GPU and PCI-to-PCI Bridge and set to the same CPU, you can find which if you go to Properties and Location in the General tab.
+Run `intPolicy_x64.exe` and use Device Manager, set View > Devices by Connection, Find the GPU and PCI-to-PCI Bridge and set to the same CPU, you can find the one if you go to Properties and Location in the General tab.
 
 For USB, if you do not know, go to Properties in the parent device, Details > Device description, that is the name, use the same Location. And follow the instructions.
 
-For USB Mouse, it has been HID-compliant mouse. Add all if more than one.
-
-You don't want to set the generic set that holds many values.
+For USB Mouse, it has been HID-compliant mouse. Add all if more than one. You don't want to set the generic set that holds many values.
 
 ---
