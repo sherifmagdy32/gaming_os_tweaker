@@ -129,7 +129,13 @@ powershell "Get-AppxPackage -Allusers *SAMSUNGELECTRONICSCO* | Remove-AppxPackag
 powershell "Get-AppxPackage -Allusers *Microsoft.Advertising.Xaml* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.PrintDialog* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.WindowsCalculator* | Remove-AppxPackage"
-:: Dont remove this, to install packages outside MS Store
+powershell "Get-AppxPackage -Allusers *Microsoft.WebpImageExtension* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.WebMediaExtensions* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.VP9VideoExtensions* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.HEIFImageExtension* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Windows.CBSPreview* | Remove-AppxPackage"
+
+:: Do not remove this, to install packages outside MS Store
 :: powershell "Get-AppxPackage "Microsoft.DesktopAppInstaller" | Remove-AppxPackage -ErrorAction SilentlyContinue"
 
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.ScreenSketch* | Remove-AppxProvisionedPackage -online"
@@ -171,6 +177,40 @@ powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Micros
 
 powershell "Get-WindowsPackage -Online | Where PackageName -like *QuickAssist* | Remove-WindowsPackage -Online -NoRestart"
 powershell "Get-WindowsPackage -Online | Where PackageName -like *Hello-Face* | Remove-WindowsPackage -Online -NoRestart"
+
+powershell "Get-WindowsOptionalFeature -Online | Where FeatureName -eq *WindowsMediaPlayer* | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null"
+powershell "Get-WindowsOptionalFeature -Online | Where FeatureName -eq *WorkFolders-Client* | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null"
+powershell "Get-WindowsOptionalFeature -Online | Where FeatureName -eq *Printing-XPSServices-Features* | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null"
+powershell "Get-WindowsOptionalFeature -Online | Where FeatureName -eq *FaxServicesClientPackage* | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null"
+
+powershell "Remove-Printer -Name "Fax" -ErrorAction SilentlyContinue"
+
+powershell "Get-WindowsCapability -Online | Where Name -like *Media.WindowsMediaPlayer* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *MathRecognizer* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Hello.Face* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *OpenSSH.Client* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *OpenSSH.Server* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Print.Fax.Scan* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Print.Management.Console* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.WordPad* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *App.StepsRecorder* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *OneCoreUAP.OneSync* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.PowerShell.ISE* | Remove-WindowsCapability -Online | Out-Null"
+:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.MSPaint* | Remove-WindowsCapability -Online | Out-Null"
+:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.Notepad* | Remove-WindowsCapability -Online | Out-Null"
+
+powershell "Get-AppPackage -Allusers *MicrosoftWindows.Client.CBS* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Windows.SecureAssessmentBrowser* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.CredDialogHost* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Windows.ParentalControls* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.XboxGameCallableUI* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.MicrosoftEdgeDevToolsClient* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Windows.PeopleExperienceHost* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Windows.NarratorQuickStart* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Win32WebViewHost* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.Windows.XGpuEjectDialog* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Windows.PrintDialog* | Remove-AppPackage"
+powershell "Get-AppPackage -Allusers *Microsoft.MicrosoftEdge* | Remove-AppPackage"
 
 :: ==============================================================================================================
 
@@ -449,6 +489,29 @@ schtasks /delete /tn "Microsoft\Windows\USB\Usb-Notifications" /f
 schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\IntegrityCheck" /f
 schtasks /delete /tn "Microsoft\Windows\ExploitGuard\ExploitGuard MDM policy Refresh" /f
 schtasks /delete /tn "Microsoft\Windows\Chkdsk\SyspartRepair" /f
+schtasks /delete /tn "Microsoft\Windows\AppID\EDPPolicyManager" /f
+schtasks /delete /tn "Microsoft\Windows\AppListBackup\Backup" /f
+schtasks /delete /tn "Microsoft\Windows\Bluetooth\UninstallDeviceTask" /f
+schtasks /delete /tn "Microsoft\Windows\Chkdsk\ProactiveScan" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\HandleCommand" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\HandleWnsCommand" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\LocateCommandUserSession" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceAccountChange" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\RegisterDevicePolicyChange" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceProtectionStateChanged" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\RegisterDeviceSettingChange" /f
+schtasks /delete /tn "Microsoft\Windows\DeviceDirectoryClient\RegisterUserDevice" /f
+schtasks /delete /tn "Microsoft\Windows\CertificateServicesClient\SystemTask" /f
+schtasks /delete /tn "Microsoft\Windows\CertificateServicesClient\UserTask" /f
+schtasks /delete /tn "Microsoft\Windows\CertificateServicesClient\UserTask-Roam" /f
+schtasks /delete /tn "Microsoft\Windows\EDP\EDPAppLaunchTask" /f
+schtasks /delete /tn "Microsoft\Windows\EDP\EDPAuthTask" /f
+schtasks /delete /tn "Microsoft\Windows\EDP\EDPInaccessibleCredentialsTask" /f
+schtasks /delete /tn "Microsoft\Windows\EDP\StorageCardEncryptionTask" /f
+schtasks /delete /tn "Microsoft\Windows\Shell\CreateObjectTask" /f
+schtasks /delete /tn "Microsoft\Windows\Shell\ThemesSyncedImageDownload" /f
+schtasks /delete /tn "Microsoft\Windows\Shell\UpdateUserPictureTask" /f
+
 
 schtasks /change /tn "CreateExplorerShellUnelevatedTask" /enable
 :: schtasks /change /tn "Microsoft\Windows\TextServicsFramework\MsCtfMonitor" /enable :: (keylogger) is required to be able to type within Settings and etc
@@ -466,3 +529,7 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AppHost" /v
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PushToInstall" /v DisablePushToInstall /t REG_DWORD /d 1 /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
 sc delete PushToInstall
+
+:: Disable Text Input
+taskkill /im "TextInputHost.exe" /t /f
+RENAME "C:\Windows\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy" "MicrosoftWindows.Client.CBS_cw5n1h2txyewy.bak" 
