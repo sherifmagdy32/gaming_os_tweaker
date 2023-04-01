@@ -134,7 +134,7 @@ powershell "Get-AppxPackage -Allusers *Microsoft.WebMediaExtensions* | Remove-Ap
 powershell "Get-AppxPackage -Allusers *Microsoft.VP9VideoExtensions* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.HEIFImageExtension* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Windows.CBSPreview* | Remove-AppxPackage"
-powershell "Get-AppxPackage -Allusers *Microsoft-Windows-ContentDeliveryManager* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.Windows.ContentDeliveryManager* | Remove-AppxPackage"
 
 :: Do not remove this, to install packages outside MS Store
 :: powershell "Get-AppxPackage "Microsoft.DesktopAppInstaller" | Remove-AppxPackage -ErrorAction SilentlyContinue"

@@ -69,7 +69,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Easy Anti-Cheat (Fortnite, Apex Legends) - Working
 - Ricochet (Call of Duty) - Working
 - Vanguard (Valorant) - Not Working - Game does open, but it requires Exploit Protections and most were disabled, but they can be enabled again, not sure how it would go with no Windows Defender though. <https://support-valorant.riotgames.com/hc/en-us/articles/4406555340179-How-to-Enable-Exploit-Protection-and-Prevent-Error-Code-VAN9002>
-- FaceIT (CSGO) - Not Tested
+- FaceIT (CSGO) - Not Tested - But, it seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.
 
 > I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
@@ -80,7 +80,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 ### Other
 
 - An option, would be to remove services <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
-- RAM usage could be reduced if service drivers were looked into more completely. <https://processhacker.sourceforge.io/> and also doing more tweaks to kernel and memory management. <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
+- RAM usage could be reduced if service drivers were looked into more completely. <https://processhacker.sourceforge.io/> <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell
   - <https://github.com/riverar/mach2>

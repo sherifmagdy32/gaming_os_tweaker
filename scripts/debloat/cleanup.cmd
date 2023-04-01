@@ -2,7 +2,7 @@ echo "Started debloat cleanup"
 
 :: ====================================================================================================================================
 
-DISM.exe /Online /Cleanup-Image /StartComponentCleanup
+DISM.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase /SPSuperseded
 
 :: Nvidia cache cleanup
 del /q "%temp%\NVIDIA Corporation\NV_Cache\*"
