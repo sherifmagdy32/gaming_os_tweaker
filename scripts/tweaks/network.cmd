@@ -43,6 +43,7 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *JumboPacke
 powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 2
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 2
 powershell Get-NetAdapterAdvancedProperty -Name "*"
+powershell Set-NetIPv4Protocol -MulticastForwarding Enabled
 
 powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterLso -Name "*" -ErrorAction SilentlyContinue
