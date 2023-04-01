@@ -63,7 +63,15 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 ---
 
-> I didnt have the opportunity to test every game. But if anyone find any issue, feel free to create an issue and/or PR.
+### Anti-Cheats
+
+- Defense Matrix (Overwatch 2) - Working
+- Easy Anti-Cheat (Fortnite, Apex Legends) - Working
+- Ricochet (Call of Duty) - Working
+- Vanguard (Valorant) - Not Working - Game does open, but it requires Exploit Protections and most were disabled, but they can be enabled again, not sure how it would go with no Windows Defender though. <https://support-valorant.riotgames.com/hc/en-us/articles/4406555340179-How-to-Enable-Exploit-Protection-and-Prevent-Error-Code-VAN9002>
+- FaceIT (CSGO) - Not Tested
+
+> I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
 > If you have any suggestions, additions or correction, feel free to create an issue and/or PR.
 
