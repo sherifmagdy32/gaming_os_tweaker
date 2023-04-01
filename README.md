@@ -41,7 +41,8 @@ No additional tools were used.
 It's a very clean OS, while being decently functional and being able to make Windows Update. You can reapply the scripts after an update. Task scheduler is also enabled.
 
 In my 5800X3D, the average DPC Latency are at `0.7/0.8`. Maybe with a high-end Intel that would be even less. Though latest nvidia drivers are having high dpc issues, and they have recognized and are working on it, when they fix, maybe even with Ryzen will be less in the average.
-Good reference: <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPuLJPi5D7xYJgQ4sxDM/edit#heading=h.mjyvqzxoctd0>
+
+Good reference:  <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPuLJPi5D7xYJgQ4sxDM/edit#heading=h.mjyvqzxoctd0>
 
 ---
 
