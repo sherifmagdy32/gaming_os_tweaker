@@ -3,7 +3,8 @@
 > Attempts to debloat, keep low input lag, low latency and have improved performance.
 
 ```txt
-I dont take responsability for any damage the scripts could cause.
+I am not responsible for any damage the scripts could cause.
+
 Make sure you create a System Restore Point before running any scripts.
 ```
 
