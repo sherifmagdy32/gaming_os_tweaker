@@ -81,7 +81,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 > I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
-> If you have any suggestions, additions or correction, feel free to create an issue and/or PR.
+> If you have any suggestions, additions or corrections, feel free to create an issue and/or PR.
 
 ---
 

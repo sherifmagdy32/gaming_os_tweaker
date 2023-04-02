@@ -81,8 +81,10 @@ netsh int ip set global neighborcachelimit=4096
 netsh int tcp set global timestamps=disabled
 netsh int tcp set heuristics disabled
 netsh int tcp set global autotuninglevel=experimental
-netsh int tcp set global congestionprovider=newreno
 netsh int tcp set supplemental Internet congestionprovider=newreno
+netsh int tcp set supplemental Internet congestionprovider=bbr2
+netsh int tcp set supplemental InternetCustom congestionprovider=newreno
+netsh int tcp set supplemental InternetCustom congestionprovider=bbr2
 netsh int tcp set global chimney=disabled
 netsh int tcp set global ecncapability=disabled
 netsh int tcp set global rss=enabled
