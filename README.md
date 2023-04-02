@@ -52,9 +52,10 @@ To give some perspective on the FPS, before I was on Win11 only with some tweaks
 ### Why did I built this compilation of scripts?
 
 Mostly, because I wanted a clean OS, with all the optimizations and I didnt trust the modified gaming OS out there. And It didnt feel that the other scripts out there were complete or clean enough.
-People keep making big youtube videos or useless articles for very small chunks of tweaks, here you may get every part of what is possible. It doesnt mean it has everything and done, but it should be very close. People even charge you for this kind of tweaking.
 
 I dont take credit for the scripts, since I got parts of it from many different places. I didnt kept all the urls and I didnt wanted to give credit to some only, so end up not giving to anyone.
+
+People keep making big youtube videos or useless articles for very small chunks of tweaks, here you may get every part of what is possible. It doesnt mean it has everything and done, but it should be very close. People even charge for this kind of tweaking.
 
 ---
 
