@@ -78,6 +78,9 @@ REG DELETE "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\PanelSound\.Current
 :: Disable auto-reboot after windows update are done
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\AU" /v NoAutorebootWithLoggedOnUser /t REG_DWORD /d 1 /f
 
+:: Disable Receive Updates for Other Microsoft Products
+powershell '(New-Object -com "Microsoft.Update.ServiceManager").RemoveService("7971f918-a847-4430-9279-4a52d1efe18d")'
+
 :: Disable Ink Workspace
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsInkWorkspace" /v AllowWindowsInkWorkspace /t REG_DWORD /d 0 /f
 
