@@ -22,7 +22,7 @@ Make sure you create a System Restore Point before running any scripts.
 - Run scripts from `scripts/debloat` folder first
 - Run every script as administrator
 
-> After running the scripts, follow some guides in `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
+> After running the scripts, follow some guides from the `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
 
 ---
 
