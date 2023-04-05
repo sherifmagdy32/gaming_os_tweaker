@@ -1,3 +1,5 @@
+# Put this in rawaccel folder along side all the profile .json you have created. Run with Powershell and select the one you want to activate.
+
 Push-Location $PSScriptRoot
 
 $title = "RawAccel Profiles"
