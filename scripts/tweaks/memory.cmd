@@ -6,6 +6,11 @@ echo "Started tweaks memory"
 wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=32768,MaximumSize=32768
 
+:: (Alternative) Set to zero page file
+::wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
+::wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
+::wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
+
 :: Disable RAM compression.
 powershell Disable-MMAgent -MemoryCompression -PageCombining
 powershell Enable-MMAgent -ApplicationPreLaunch
