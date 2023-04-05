@@ -4,10 +4,10 @@ echo "Started tweaks boot"
 
 :: Constantly pool interrupts, dynamic tick was implemented as a power saving feature
 bcdedit /set disabledynamictick yes
-bcdedit /set useplatformclock no
 
-:: Try this if your timer resolution is not 0.5ms
-:: bcdedit /set useplatformtick yes
+bcdedit /deletevalue useplatformclock
+bcdedit /set tscsyncpolicy Enhanced
+bcdedit /set useplatformtick yes
 
 :: Apply MSI to devices by default
 bcdedit /set MSI Default
