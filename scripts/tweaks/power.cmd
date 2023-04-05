@@ -6,10 +6,10 @@ SET "USB_IRQ=4294967241"
 
 :: ====================================================================================================================================
 
-:: Enable Ultimate Performance power scheme and set as active
+:: Unlock Ultimate Performance power scheme and set as active
 :: Beware if you re-run the script more than once, it will duplicate the scheme again
-powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-powercfg /setactive e9a42b02-d5df-448d-aa00-03f14749eb61
+for /f "tokens=4" %%I in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set ultscheme=%%I
+powercfg -setactive %ultscheme%
 
 :: Remove Power Save scheme
 powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
