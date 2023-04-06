@@ -100,3 +100,4 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://github.com/M2Team/NanaRun>
   - <https://www.zeus-software.com/downloads/ntfsaccess>
   - <https://github.com/Chuyu-Team/Dism-Multi-language>
+  - <https://github.com/he3als/setSvc>

@@ -3,11 +3,12 @@
 powershell "Install-Module WingetTools"
 
 winget install -e --id Brave.Brave --accept-package-agreements
-winget install -e --id Microsoft.PowerShell
 winget install -e --id Notepad++.Notepad++
+winget install -e --id Microsoft.DirectX
 :: 7-Zip
 winget install -e --id M2Team.NanaZip
 
+:: winget install -e --id Microsoft.PowerShell
 :: winget install -e --id Guru3D.Afterburner
 :: winget install -e --id Discord.Discord
 :: winget install -e --id Valve.Steam

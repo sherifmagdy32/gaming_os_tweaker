@@ -25,7 +25,7 @@ $devices = @(
 'System Speaker',
 'System Timer',
 'UMBus Root Bus Enumerator',
-'*WAN Miniport*',
+'*WAN Miniport*', # some related to VPN
 )
 
 Get-PnpDevice -FriendlyName $devices -ErrorAction Ignore | Disable-PnpDevice -Confirm:$false -ErrorAction Ignore
