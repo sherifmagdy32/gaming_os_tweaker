@@ -1,5 +1,7 @@
 :: https://winget.run/
 
+powershell "Install-Module WingetTools"
+
 winget install -e --id Brave.Brave --accept-package-agreements
 winget install -e --id Microsoft.PowerShell
 winget install -e --id Notepad++.Notepad++

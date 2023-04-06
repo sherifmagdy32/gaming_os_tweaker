@@ -17,9 +17,6 @@ Make sure you create a System Restore Point before running any scripts.
 > If you need to download a fresh OS ISO directly from Microsoft, follow the guide at [WINDOWS_DOWNLOAD_GUIDE](/docs/WINDOWS_DOWNLOAD_GUIDE.md)
 
 - Create a system restore point
-- If you want apps instalation to be automated, install winget manually <https://github.com/microsoft/winget-cli/releases/>
-  - In Assets, Download `.msixbundle` and install it.
-  - You can improve the `apps/install.cmd` for yourself.
 - In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually.
   - It's on top of each script.
   - It should be `gpu.cmd`, `network.cmd` and `power.cmd`.
