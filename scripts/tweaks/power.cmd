@@ -202,15 +202,17 @@ powercfg /setacvalueindex SCHEME_CURRENT 8619b916-e004-4dd8-9b66-dae86f806698 10
 powercfg /setacvalueindex SCHEME_CURRENT de830923-a562-41af-a086-e3a2c6bad2da 5c5bb349-ad29-4ee2-9d0b-2b25270f7a81 0
 :: Processor performance core parking overutilization threshold
 powercfg /setacvalueindex SCHEME_CURRENT 54533251-82be-4824-96c1-47b60b740d00 943c8cb6-6f93-4227-ad87-e9a3feec08d1 60
+:: Interrupt Steering Mode
+powercfg /setacvalueindex SCHEME_CURRENT 48672f38-7a9a-4bb2-8bf8-3d85be19de4e 2bfc24f9-5ea2-4801-8213-3dbae01aa39d 0
 
 :: Disable processor idle. Only uncomment if on desktop with good CPU refrigeration and low temps, because it reduces input lag but raises temp even on idle. It keeps running the CPU at 100% all the time.
-::powercfg /setacvalueindex SCHEME_CURRENT 54533251-82BE-4824-96C1-47B60B740D00 5D76A2CA-E8C0-402F-A133-2158492D58AD 0
+:: powercfg /setacvalueindex SCHEME_CURRENT 54533251-82BE-4824-96C1-47B60B740D00 5D76A2CA-E8C0-402F-A133-2158492D58AD 1
 
 :: Disable Hibernation
 powercfg -h off
 powercfg /setactive SCHEME_CURRENT
 
-:: Note: if you want to test, just use "powercfg -setactive scheme_current" No need to reboot the system.
+:: Note: if you want to test, just use "powercfg /setactive SCHEME_CURRENT" No need to reboot the system.
 
 :: ===============================================================================================================================================================================================
 
