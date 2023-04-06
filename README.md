@@ -17,8 +17,13 @@ Make sure you create a System Restore Point before running any scripts.
 > If you need to download a fresh OS ISO directly from Microsoft, follow the guide at [WINDOWS_DOWNLOAD_GUIDE](/docs/WINDOWS_DOWNLOAD_GUIDE.md)
 
 - Create a system restore point
-- If you want apps instalation to be automated, install winget manually <https://github.com/microsoft/winget-cli/releases/> In Assets, Download `.msixbundle` and install it. You can improve the `apps/install.cmd` for yourself.
-- In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually. It's on top of each script. It should be `gpu.cmd`, `network.cmd` and `power.cmd`. Instructions are in each file.
+- If you want apps instalation to be automated, install winget manually <https://github.com/microsoft/winget-cli/releases/>
+  - In Assets, Download `.msixbundle` and install it.
+  - You can improve the `apps/install.cmd` for yourself.
+- In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually.
+  - It's on top of each script.
+  - It should be `gpu.cmd`, `network.cmd` and `power.cmd`.
+  - Instructions are in each file.
 - Run scripts from `scripts/debloat` folder first
 - Run every script as administrator
 
@@ -30,6 +35,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 - `scripts/apps` are optional helpers
 - `scripts/additional_files` contain files like configurations
+- `scripts/configs` may contain apps and games configurations
 
 ---
 
@@ -94,3 +100,6 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell
   - <https://github.com/riverar/mach2>
+  - <https://github.com/M2Team/NanaRun>
+  - <https://www.zeus-software.com/downloads/ntfsaccess>
+  - <https://github.com/Chuyu-Team/Dism-Multi-language>

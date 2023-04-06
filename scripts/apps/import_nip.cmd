@@ -1,4 +1,6 @@
 :: Import Nvidia Profile Inspector config
 taskkill /f /im "nvcplui.exe" >nul 2>&1
-cd "%~dp0"
-start "" "nvidiaProfileInspector.exe" "low_latency.nip" -silentImport
+
+pushd "%~dp0"
+pushd ..\additional_files
+"nvidiaProfileInspector\nvidiaProfileInspector.exe" "low_latency.nip" -silentImport

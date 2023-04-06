@@ -14,3 +14,4 @@ winget install -e --id M2Team.NanaZip
 :: winget install -e --id VideoLAN.VLC
 :: winget install -e --id qBittorrent.qBittorrent
 :: winget install -e --id VSCodium.VSCodium
+:: winget install -e --id Open-Shell.Open-Shell-Menu

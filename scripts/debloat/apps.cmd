@@ -319,6 +319,55 @@ DISM /Online /Disable-Feature /featurename:SmbDirect /Remove /NoRestart
 
 :: ==============================================================================================================
 
+:: It seems that even unrelated packages removal can cause other important softwares to stop working.
+:: Disregard the list below
+:: Ref1: https://forums.mydigitallife.net/threads/completely-eradicate-telemetry-defender-one-drive-cortana-and-other-things.63734/page-14#post-1304549
+
+:: List all packages
+:: install_wim_tweak.exe /o /l
+
+:: Remove packages
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Internet-Browser-Package /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-ContactSupport /r
+:: install_wim_tweak.exe /o /c Microsoft-PPIProjection-Package /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-ContentDeliveryManager /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Store /r
+:: install_wim_tweak.exe /o /c Windows-Defender /r
+
+:: One said that removing Cortana through here will break Windows Search and may need to reinstall Windows, I havent tested, but maybe an optional package like Open-Shell will be enough to work.
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Cortana /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Search2 /r
+
+:: install_wim_tweak.exe /o /c Microsoft-Windows-SearchEngine /r
+:: install_wim_tweak.exe /o /c Adobe-Flash /r
+:: install_wim_tweak.exe /o /c Microsoft-Xbox /r
+:: install_wim_tweak.exe /o /c Microsoft-Xbox-GameCallableUI /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Backup /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-RetailDemo /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-InsiderHub /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-TroubleShooting /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-TroubleShooting /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-LanguageFeatures /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Legacy /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-SpeechComponents /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-Gaming /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-Indexer /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-BioEnrollment /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-Biometrics /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Printing-XPSServices /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Xps /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Geolocation /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-Compression /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-BusinessScanning /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-MediaPlayer /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-WindowsMediaPlayer /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-VirtualPC /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-VirtualXP /r
+:: install_wim_tweak.exe /o /c Microsoft-Windows-OneDrive /r
+:: install_wim_tweak.exe /o /c Microsoft-OneCore-AllowTelemetry /r
+
+:: ==============================================================================================================
+
 :: Disabled scheduled apps tasks
 schtasks /delete /tn "Microsoft\Windows\Customer Experience Improvement Program\BthSQM" /f
 schtasks /delete /tn "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /f
