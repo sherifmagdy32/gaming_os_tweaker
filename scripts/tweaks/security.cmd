@@ -62,7 +62,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Mem
 
 :: Disable DMA remapping
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\DmaGuard\DeviceEnumerationPolicy" /v value /t REG_DWORD /d 2 /f
-for /f "tokens=1" %%i in ('driverquery') do reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\%%i\Parameters" /v DmaRemappingCompatible /t REG_DWORD /d 0 /f
+for /f "tokens=1" %%i in ('driverquery') do REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\%%i\Parameters" /v DmaRemappingCompatible /t REG_DWORD /d 0 /f
 
 :: Disable WDigest. Dont store pw on memory
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Wdigest" /v UseLogonCredential /t REG_DWORD /d 0 /f
@@ -86,9 +86,10 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa" /v RestrictAno
 :: Disable allow PC to be discoverable on this network
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff" /f
 
-:: Keep DEP enabled
-REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoDataExecutionPrevention /t REG_DWORD /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableHHDEP /t REG_DWORD /d 0 /f
+:: Disable DEP
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoDataExecutionPrevention /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableHHDEP /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" /v DEPOff /t REG_DWORD /d 1 /f
 
 :: Disable the Windows Connect Now wizard
 REG ADD "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WCN\UI" /v DisableWcnUi /t REG_DWORD /d 1 /f
@@ -122,9 +123,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows\DeviceGu
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v RequireMicrosoftSignedBootChain /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v WasEnabledBy /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v Enabled /t REG_DWORD /d 0 /f
-
-:: Disable DEP
-:: REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" /v DEPOff /t REG_DWORD /d 1 /f
 
 :: Disable Mitigations on csrss, known to improve io latency
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe" /v MitigationAuditOptions /t REG_BINARY /d 222222222222222222222222222222222222222222222222 /f

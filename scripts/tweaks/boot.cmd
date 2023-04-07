@@ -41,8 +41,8 @@ bcdedit /set isolatedcontext No
 bcdedit /set linearaddress57 OptOut
 bcdedit /set increaseuserva 268435328
 
-:: Disable DEP. But dont, because of Anticheats
-:: bcdedit /set nx AlwaysOff
+:: Disable DEP
+bcdedit /set nx AlwaysOff
 
 :: ======================================================================================================================================================================================
 

@@ -340,7 +340,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AFD\Parameters" /v
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AFD\Parameters" /v DoNotHoldNicBuffers /t REG_DWORD /d 1 /f
 
 :: Disable NetBIOS (partial with services)
-for /f %%i in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces" /s /f "NetbiosOptions"^| findstr "HKEY"') do reg add "%%i" /v NetbiosOptions /t REG_DWORD /d 2 /f >nul 2>&1
+for /f %%i in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces" /s /f "NetbiosOptions"^| findstr "HKEY"') do REG ADD "%%i" /v NetbiosOptions /t REG_DWORD /d 2 /f >nul 2>&1
 
 :: Disable WPAD
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Wpad" /v WpadOverride /t REG_DWORD /d 1 /f
@@ -358,7 +358,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\wcmsvc\wifinetworkmanager" /v Wif
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WlanSvc\AnqpCache" /v OsuRegistrationStatus /t REG_DWORD /d 0 /f
 
 :: Disable more power saving features
-for /f %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*WakeOnMagicPacket" /s ^| findstr "HKEY"') do (
+for /f %%a in ('REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*WakeOnMagicPacket" /s ^| findstr "HKEY"') do (
     for %%i in (
         "*EEE"
         "*FlowControl"
@@ -385,8 +385,8 @@ for /f %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*Wak
         "WakeOnSlot"
         "WakeUpModeCap"
     ) do (
-        for /f %%j in ('reg query "%%a" /v "%%~i" ^| findstr "HKEY"') do (
-            reg add "%%j" /v "%%~i" /t REG_SZ /d "0" /f
+        for /f %%j in ('REG QUERY "%%a" /v "%%~i" ^| findstr "HKEY"') do (
+            REG ADD "%%j" /v "%%~i" /t REG_SZ /d 0 /f
         )
     )
 )
