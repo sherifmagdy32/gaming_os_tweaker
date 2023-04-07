@@ -218,8 +218,8 @@ powercfg /setactive SCHEME_CURRENT
 
 :: Disable HIPM and DIPM
 FOR /F "eol=E" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services" /S /F "EnableHIPM"^| FINDSTR /V "EnableHIPM"') DO (
-	REG ADD "%%a" /v "EnableHIPM" /t REG_DWORD /d 0 /f >NUL 2>&1
-	REG ADD "%%a" /v "EnableDIPM" /t REG_DWORD /d 0 /f >NUL 2>&1
+	REG ADD "%%a" /v EnableHIPM /t REG_DWORD /d 0 /f >NUL 2>&1
+	REG ADD "%%a" /v EnableDIPM /t REG_DWORD /d 0 /f >NUL 2>&1
 	FOR /F "tokens=*" %%z IN ("%%a") DO (
 		SET STR=%%z
 		SET STR=!STR:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\=!

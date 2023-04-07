@@ -43,8 +43,8 @@ del "%USERPROFILE%\Links\OneDrive.lnk" /s /f /q
 :: ----------------Disable usage of OneDrive-----------------
 :: ----------------------------------------------------------
 echo --- Disable usage of OneDrive
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /t REG_DWORD /v "DisableFileSyncNGSC" /d 1 /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /t REG_DWORD /v "DisableFileSync" /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /t REG_DWORD /v DisableFileSyncNGSC /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /t REG_DWORD /v DisableFileSync /d 1 /f
 :: ----------------------------------------------------------
 
 
@@ -52,7 +52,7 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /t REG_DWORD /v "Dis
 :: ---Prevent automatic OneDrive install for current user----
 :: ----------------------------------------------------------
 echo --- Prevent automatic OneDrive install for current user
-REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
+REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v OneDriveSetup /f
 :: ----------------------------------------------------------
 
 
@@ -61,7 +61,7 @@ REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetu
 :: ----------------------------------------------------------
 echo --- Prevent automatic OneDrive install for new users
 reg load "HKU\Default" "%SystemDrive%\Users\Default\NTUSER.DAT"
-REG DELETE "HKU\Default\software\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
+REG DELETE "HKU\Default\software\Microsoft\Windows\CurrentVersion\Run" /v OneDriveSetup /f
 reg unload "HKU\Default"
 :: ----------------------------------------------------------
 
@@ -72,8 +72,8 @@ reg unload "HKU\Default"
 echo --- Remove OneDrive from explorer menu
 REG DELETE "HKCR\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
 REG DELETE "HKCR\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
-REG ADD "HKCR\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v System.IsPinnedToNameSpaceTree /d "0" /t REG_DWORD /f
-REG ADD "HKCR\Wow6432Node\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v System.IsPinnedToNameSpaceTree /d "0" /t REG_DWORD /f
+REG ADD "HKCR\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v System.IsPinnedToNameSpaceTree /d 0 /t REG_DWORD /f
+REG ADD "HKCR\Wow6432Node\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v System.IsPinnedToNameSpaceTree /d 0 /t REG_DWORD /f
 :: ----------------------------------------------------------
 
 
@@ -89,5 +89,5 @@ for /f "tokens=1 delims=," %%x in ('schtasks /query /fo csv ^| find "OneDrive"')
 :: ------------Delete OneDrive path from registry------------
 :: ----------------------------------------------------------
 echo --- Delete OneDrive path from registry
-REG DELETE "HKCU\Environment" /v "OneDrive" /f
+REG DELETE "HKCU\Environment" /v OneDrive /f
 :: ----------------------------------------------------------

@@ -20,7 +20,7 @@ fsutil behavior set disableencryption 0
 
 :: Disable IoLatencyCap
 FOR /F "eol=E" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services" /S /F "IoLatencyCap"^| FINDSTR /V "IoLatencyCap"') DO (
-	REG ADD "%%a" /v "IoLatencyCap" /t REG_DWORD /d "0" /f >NUL 2>&1
+	REG ADD "%%a" /v IoLatencyCap /t REG_DWORD /d "0" /f >NUL 2>&1
 	FOR /F "tokens=*" %%z IN ("%%a") DO (
 		SET STR=%%z
 		SET STR=!STR:HKEY_LOCAL_MACHINE\System\CurrentControlSet\services\=!
@@ -30,14 +30,13 @@ FOR /F "eol=E" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\S
 
 :: Disable StorPort idle
 FOR /F "tokens=*" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Enum" /S /F "StorPort"^| FINDSTR /E "StorPort"') DO (
-	REG ADD "%%a" /v "EnableIdlePowerManagement" /t REG_DWORD /d "0" /f >NUL 2>&1
+	REG ADD "%%a" /v EnableIdlePowerManagement /t REG_DWORD /d "0" /f >NUL 2>&1
 	FOR /F "tokens=*" %%z IN ("%%a") DO (
 		SET STR=%%z
 		SET STR=!STR:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Enum\=!
 		SET STR=!STR:\Device Parameters\StorPort=!
 	)
 )
-
 
 :: =================================================================================================================================================================================================
 
