@@ -44,8 +44,7 @@ No additional tools were used.
 
 It's a very clean OS, while being decently functional and being able to make Windows Update. You can reapply the scripts after an update. Task scheduler is also enabled.
 
-In my 5800X3D, the average DPC Latency are at `0.7/0.8`. Maybe with a high-end Intel that would be even less. Though latest nvidia drivers are having high dpc issues, and they have recognized and are working on it, when they fix, maybe even with Ryzen will be less in the average.
-With the CPU idle state disabled, it was able to go to 0.5.
+In my 5800X3D, the average DPC Latency are at `0.7/0.8`. Maybe with a high-end Intel that would be even less. Though latest nvidia drivers are having high dpc issues, and they have recognized and are working on it, when they fix, maybe even with Ryzen will be less in the average. With the CPU idle state disabled, it was able to go to `0.5`, but the average fps in Overwatch 2 for example were less than when enabled.
 
 Good reference:  <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPuLJPi5D7xYJgQ4sxDM/edit#heading=h.mjyvqzxoctd0>
 
@@ -82,6 +81,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Ricochet (Call of Duty) - Working
 - Vanguard (Valorant) - Not Working - Game does open, but it requires Exploit Protections and most were disabled, but they can be enabled again, not sure how it would go with no Windows Defender though. <https://support-valorant.riotgames.com/hc/en-us/articles/4406555340179-How-to-Enable-Exploit-Protection-and-Prevent-Error-Code-VAN9002>
 - FaceIT (CSGO) - Not Tested - But, it seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.
+- Punkbuster (BF4) - Working
 
 > I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
