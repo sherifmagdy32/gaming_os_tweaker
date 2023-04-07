@@ -5,8 +5,8 @@ powershell "Install-Module WingetTools"
 winget install -e --id Brave.Brave --accept-package-agreements
 winget install -e --id Notepad++.Notepad++
 winget install -e --id Microsoft.DirectX
-:: 7-Zip
 winget install -e --id M2Team.NanaZip
+winget install -e --id Open-Shell.Open-Shell-Menu
 
 :: winget install -e --id Microsoft.PowerShell
 :: winget install -e --id Guru3D.Afterburner
@@ -17,4 +17,4 @@ winget install -e --id M2Team.NanaZip
 :: winget install -e --id VideoLAN.VLC
 :: winget install -e --id qBittorrent.qBittorrent
 :: winget install -e --id VSCodium.VSCodium
-:: winget install -e --id Open-Shell.Open-Shell-Menu
+:: winget install -e --id Microsoft.WindowsTerminal

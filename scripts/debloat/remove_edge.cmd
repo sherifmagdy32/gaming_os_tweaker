@@ -1,18 +1,7 @@
-@echo off
-
-:: Creator: Dave Kirkwood
-:: Created: 24/09/2020
-:: Updated: 21/09/2022
-
-:: First Stop Microsoft Edge Task
 taskkill /F /IM msedge.exe  >nul 2>&1
-
 
 CD %HOMEDRIVE%%HOMEPATH%\Desktop
 echo %CD%
-
-
-REM ************ Main process *****************
 
 echo *** Removing Microsoft Edge ***
 call :killdir C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe
@@ -30,8 +19,6 @@ echo Finished!
 pause
 exit
 
-REM ************ KillDir: Take ownership and remove a directory *****************
-
 :killdir
 echo|set /p=Removing dir %1
 if exist %1 (
@@ -48,8 +35,6 @@ if exist %1 (
 )
 exit /B 0
 
-REM ************ Edit registry to add do not update Edge key *****************
-
 :editreg
 echo|set /p=Editting registry
 echo Windows Registry Editor Version 5.00 > RemoveEdge.reg
@@ -64,17 +49,14 @@ del RemoveEdge.reg
 echo ...done.
 exit /B 0
 
-:: Delete Microsoft Edge Folders
 rmdir /s /q "C:\Program Files (x86)\Microsoft\Edge"
 rmdir /s /q "C:\Program Files (x86)\Microsoft\EdgeCore"
 rmdir /s /q "C:\Program Files (x86)\Microsoft\EdgeWebView"
 rmdir /s /q "C:\Program Files (x86)\Microsoft\Temp"
 
-:: Delete Edge Icons, from all users
 for /f "delims=" %%a in ('dir /b "C:\Users"') do (
 del /S /Q "C:\Users\%%a\Desktop\edge.lnk" >nul 2>&1
 del /S /Q "C:\Users\%%a\Desktop\Microsoft Edge.lnk" >nul 2>&1)
-
 
 
 :delshortcut

@@ -503,6 +503,12 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\CTF\LangBar" /v Label /t REG_DWORD
 :: Enable All Folders in Explorer Navigation Panel
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v NavPaneShowAllFolders /t REG_DWORD /d 1 /f
 
+:: Disable Libraries from Navigation Panel
+REG ADD "HKEY_CURRENT_USER\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}" /v System.IsPinnedToNameSpaceTree /t REG_DWORD /d 0 /f
+
+:: Disable Network from Navigation Panel
+REG ADD "HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" /v System.IsPinnedToNameSpaceTree /t REG_DWORD /d 0 /f
+
 :: Disable KB4524752 Support Notifications
 REG ADD "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Gwx" /v DisableGwx /t REG_DWORD /d 1 /f
 
