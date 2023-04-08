@@ -38,7 +38,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 ### Result
 
-From a fresh Windows 10 22H2 install and completely updated, and applying all debloat and tweaks scripts, it was able to keep `41` processes, with Process Lasso and Nvidia Driver in the background, so it would be less than `40` if it were bare.
+From a fresh Windows 10 22H2 install and completely updated, and applying all debloat and tweaks scripts, it was able to keep `35` processes, with Process Lasso and Nvidia Driver in the background. Had 1.5GB RAM usage.
 
 No additional tools were used.
 
@@ -49,6 +49,8 @@ In my 5800X3D, the average DPC Latency are at `0.7/0.8`. Maybe with a high-end I
 Good reference:  <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPuLJPi5D7xYJgQ4sxDM/edit#heading=h.mjyvqzxoctd0>
 
 To give some perspective on the FPS, before I was on Win11 only with some tweaks and debloat changes. I had to use the nvidia driver optimized for Overwatch 2 to be able to keep consistent 420fps at 1440p with pretty much no dips, but were not possible with other driver versions. Now in Win10 with the scripts from this repo, it never goes below 500fps, stays on 600fps when there is no fights and 540fps~ in mid fights most of the time, and I am using the latest driver from nvidia, not the optimized for Overwatch 2.
+
+![processes](./docs/processes.png)
 
 ---
 

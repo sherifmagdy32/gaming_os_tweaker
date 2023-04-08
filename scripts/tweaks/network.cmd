@@ -6,26 +6,20 @@ SET "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY={4d36e972-e325-11ce-bfc1-08002be10318}\
 :: ====================================================================================================================================
 
 :: Optmize network card settings
-powershell Get-NetOffloadGlobalSetting
-powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
-powershell Get-NetOffloadGlobalSetting
 
-powershell Set-NetTCPSetting -SettingName InternetCustom -InitialCongestionWindow 10 -MinRto 300
-
-powershell Get-NetAdapterAdvancedProperty -Name "*"
+:: Get-NetAdapterAdvancedProperty -Name "*" -AllProperties -IncludeHidden | SELECT * -ExpandProperty RegistryKeyword
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *FlowControl -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *InterruptModeration -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -DisplayName "Interrupt Moderation Rate" -DisplayValue "Off"
-powershell Set-NetAdapterAdvancedProperty -Name "*" -DisplayName "Ultra Low Power Mode" -DisplayValue "Disabled"
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword ULPMode -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword ITR -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *LsoV2IPv4 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *LsoV2IPv6 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PriorityVLANTag -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword AdaptiveIFS -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *IPChecksumOffloadIPv4 -RegistryValue 3
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv4 -RegistryValue 3
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *IPChecksumOffloadIPv4 -RegistryValue 0
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv4 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv6 -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv4 -RegistryValue 3
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv4 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv6 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMARPOffload -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMNSOffload -RegistryValue 0
@@ -37,21 +31,38 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *WakeOnPatt
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword EEELinkAdvertisement -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword EnablePME -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword ReduceSpeedOnPowerDown -RegistryValue 0
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword EnableWakeOnManagmentOnTCO -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword ULPMode -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword LogLinkStateEvent -RegistryValue 16
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *JumboPacket -RegistryValue 1514
+
+powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
+
+powershell Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 10 -MinRto 300
+
 powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 2
+powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 4
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 2
-powershell Get-NetAdapterAdvancedProperty -Name "*"
-powershell Set-NetIPv4Protocol -MulticastForwarding Enabled
+powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 4
+
+powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled 
 
 powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterLso -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterRsc -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterIPsecOffload -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterPowerManagement -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterQos -Name "*" -ErrorAction SilentlyContinue
-POWERSHELL Disable-NetAdapterEncapsulatedPacketTaskOffload -Name "*" -ErrorAction SilentlyContinue
+
+powershell Disable-NetAdapterEncapsulatedPacketTaskOffload -Name "*" -ErrorAction SilentlyContinue
+
+powershell Disable-NetAdapterUso -Name "*" -ErrorAction SilentlyContinue
+
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lldp -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lltdio -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_msclient -ErrorAction SilentlyContinue
@@ -75,12 +86,11 @@ netsh winsock set autotuning on
 netsh interface teredo set state disabled
 netsh interface 6to4 set state disabled
 netsh interface isatap set state disable
-netsh interface tcp set heuristics wsh=enabled
+netsh int tcp set heuristics wsh=disabled forcews=enabled
 netsh int ip set global taskoffload=disabled
 netsh int ip set global neighborcachelimit=4096
-netsh int tcp set global timestamps=disabled
 netsh int tcp set heuristics disabled
-netsh int tcp set global autotuninglevel=experimental
+netsh int tcp set global autotuninglevel=normal
 netsh int tcp set supplemental Internet congestionprovider=newreno
 netsh int tcp set supplemental Internet congestionprovider=bbr2
 netsh int tcp set supplemental InternetCustom congestionprovider=newreno
@@ -100,6 +110,7 @@ netsh int tcp set global maxsynretransmissions=2
 netsh int tcp set security profiles=disabled
 netsh int tcp set security mpp=disable
 netsh int udp set global uro=enabled
+netsh interface ip set interface ethernet currenthoplimit=64
 netsh interface ip set interface ethernet weakhostsend=enabled
 netsh interface ip set interface ethernet weakhostreceive=enabled
 netsh interface ipv4 set subinterface "Ethernet" mtu=1472 store=persistent
@@ -190,6 +201,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v FastCopyReceiveThreshold /t REG_DWORD /d 0x000005dc /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v DeadGWDetectDefault /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v GlobalMaxTcpWindowSize /t REG_DWORD /d 65535 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v TcpWindowSize /t REG_DWORD /d 65535 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v MaxUserPort /t REG_DWORD /d 65534 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v MaxFreeTcbs /t REG_DWORD /d 65536 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v Tcp1323Opts /t REG_DWORD /d 1 /f
@@ -197,6 +209,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" /v NameSrvQueryTimeout /t REG_DWORD /d 3000 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v EnableLMHOSTS /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v NodeType /t REG_DWORD /d 2 /f
+REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v EnablePMTUDiscovery /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v SackOpts /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v UseDelayedAcceptance /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v MaxSockAddrLength /t REG_DWORD /d 16 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v MinSockAddrLength /t REG_DWORD /d 16 /f
@@ -239,8 +253,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 4 /t REG_SZ /d NUMAScalingStatic /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 5 /t REG_SZ /d ConservativeScaling /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*FlowControl" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TransmitBuffers" /t REG_SZ /d 2048 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*ReceiveBuffers" /t REG_SZ /d 2048 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TransmitBuffers" /t REG_SZ /d 1024 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*ReceiveBuffers" /t REG_SZ /d 1024 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv4" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv6" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*UDPChecksumOffloadIPv4" /t REG_SZ /d 0 /f
@@ -275,14 +289,14 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v ParamDesc /t REG_SZ /d "Receive Buffers" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v default /t REG_SZ /d 256 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v min /t REG_SZ /d 32 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v max /t REG_SZ /d 2048 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v max /t REG_SZ /d 1024 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v step /t REG_SZ /d 8 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v Base /t REG_SZ /d 10 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v type /t REG_SZ /d int /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v ParamDesc /t REG_SZ /d "Transmit Buffers" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v default /t REG_SZ /d 512 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v min /t REG_SZ /d 32 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v max /t REG_SZ /d 2048 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v max /t REG_SZ /d 1024 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v step /t REG_SZ /d 8 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v Base /t REG_SZ /d 10 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v type /t REG_SZ /d int /f
