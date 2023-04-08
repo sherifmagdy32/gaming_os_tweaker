@@ -63,6 +63,11 @@ function SetupExecuteOnStartup {
 function SetupApplyProfile {
 	Write-Host "RawAccel Profiles"
 	[Environment]::NewLine
+	
+	if ($profiles.Count -eq 0) {
+		Write-Host "You have no profiles in this folder."
+		return
+	}
 
 	For ($i=0; $i -lt $profiles.Length; $i++) {
 		$label = $profiles[$i]
@@ -74,8 +79,9 @@ function SetupApplyProfile {
 		[int]$result = Read-Host "Select a RAW Accel Profile"
 		Apply-Profile -profile_name $result
 	}
-	[Environment]::NewLine
-	cmd /c pause
 }
 
 SetupApplyProfile
+
+[Environment]::NewLine
+cmd /c pause

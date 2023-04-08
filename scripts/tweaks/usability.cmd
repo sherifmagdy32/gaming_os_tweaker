@@ -568,3 +568,6 @@ for %%a in (
 :: REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v BranchReadinessLevel /t REG_DWORD /d 2 /f
 :: REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v ManagePreviewBuilds /t REG_DWORD /d 1 /f
 :: REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v ManagePreviewBuildsPolicyValue /t REG_DWORD /d 2 /f
+
+:: Stop auto keyboard layout creation
+REG DELETE "HKEY_USERS\.DEFAULT\Keyboard Layout\Preload" /f
