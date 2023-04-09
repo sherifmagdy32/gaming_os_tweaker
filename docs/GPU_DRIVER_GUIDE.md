@@ -19,11 +19,6 @@ After Restart
 
 After
 
-- Get MSI Util v3 at <https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/>
-- Open and set the GPU as High and Apply
-
-After
-
 - Use nvidiaProfileInspector from `scripts/additional_files` or get at <https://github.com/Orbmu2k/nvidiaProfileInspector/releases>
 - Import the `scripts/additional_files/low_latency.nip` and apply
 
