@@ -42,13 +42,12 @@ function SetupExecuteOnStartup {
 	if ($startup -eq "Y") {
 		$taskName = "rawaccelProfileStartup"
 		$taskExists = Get-ScheduledTask | Where-Object {$_.TaskName -like $taskName }
+		$action = New-ScheduledTaskAction -Execute "$PSScriptRoot\writer.exe" -Argument "$PSScriptRoot\$profile_value"
 		if ($taskExists) {
 			Write-Host "Updating rawaccel profile startup to $profile_value"
-			$action = New-ScheduledTaskAction -Execute "$PSScriptRoot\writer.exe" -Argument "$PSScriptRoot\$profile_value"
 			Set-ScheduledTask -TaskName $taskName -Action $action
 		} else {
 			Write-Host "Registering rawaccel profile startup to $profile_value"
-			$action = New-ScheduledTaskAction -Execute "$PSScriptRoot\writer.exe" -Argument "$PSScriptRoot\$profile_value"
 			$trigger = New-ScheduledTaskTrigger -AtLogOn
 			Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger
 		}
