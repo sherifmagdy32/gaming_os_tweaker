@@ -38,7 +38,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 ### Result
 
-From a fresh Windows 10 22H2 install and completely updated, and applying all debloat and tweaks scripts, it was able to keep `35` processes, with Process Lasso and Nvidia Driver in the background. Had 1.5GB RAM usage.
+From a fresh Windows 10 22H2 install and completely updated, and applying the scripts from this repo, it was reduced to `35` processes, with Process Lasso and Nvidia Driver (debloated) in the background.
 
 No additional tools were used.
 
