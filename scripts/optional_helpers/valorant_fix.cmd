@@ -6,7 +6,8 @@ for %%a in (valorant valorant-win64-shipping vgtray vgc) do (
     powershell -NoP -C "Set-ProcessMitigation -Name %%a.exe -Enable EmulateAtlThunks"
 )
 
-:: Changes above might be enough
+:: Changes above might be enough. If not, try uncommenting the ones below and reexecuting the script, reboot after.
+
 :: bcdedit /set nx AlwaysOn
 :: REG DELETE "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverride /f
 :: REG DELETE "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverrideMask /f
