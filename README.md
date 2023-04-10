@@ -18,9 +18,8 @@ Make sure you create a System Restore Point before running any scripts.
 
 - Create a system restore point
 - In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually.
-  - It's on top of each script.
   - It should be `gpu.cmd`, `network.cmd` and `power.cmd`.
-  - Instructions are in each file.
+  - It's on top of each script.
 - Run scripts from `scripts/debloat` folder first
 - Run every script as administrator
 
@@ -31,7 +30,7 @@ Make sure you create a System Restore Point before running any scripts.
 ### Notes
 
 - `scripts/apps` are optional helpers
-- `scripts/additional_files` contain files like configurations
+- `scripts/additional_files` contain files like configurations or tooling
 - `scripts/configs` may contain apps and games configurations
 
 ---
@@ -93,9 +92,16 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 ### Other
 
-- An option, would be to remove services <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
-- RAM usage could be reduced if service drivers were looked into more completely. <https://systeminformer.sourceforge.io/> <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
-- Scheduling Priorities seem to have hard locks done by the OS, there is a way to undo those, but the tool recommended has a lot of red flags related to trojan. Maybe if built manually it would be worth using. <https://www.youtube.com/watch?v=-jYnDuK-vB0> <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities> <https://github.com/katlogic/WindowsD>
+- An option, would be to remove services 
+  - <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
+- RAM usage could be reduced if service drivers were looked into more completely. 
+  - <https://systeminformer.sourceforge.io/> 
+  - <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> 
+  - <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
+- Scheduling Priorities seem to have hard locks done by the OS, there is a way to undo those, but the tool recommended has a lot of red flags related to trojan. Maybe if built manually it would be worth using. 
+  - <https://www.youtube.com/watch?v=-jYnDuK-vB0> 
+  - <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities> 
+  - <https://github.com/katlogic/WindowsD>
 
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell
