@@ -1,4 +1,5 @@
 :: https://winget.run/
+:: https://winstall.app/
 
 powershell "Install-Module WingetTools"
 
