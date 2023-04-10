@@ -1,5 +1,5 @@
-:: Fix Valorant for previously disabled mitigations
-for %%a in (valorant valorant-win64-shipping vgtray vgc) do (
+:: Enable previously disabled mitigations
+for %%a in (valorant valorant-win64-shipping vgtray vgc faceit faceitclient) do (
     powershell -NoP -C "Set-ProcessMitigation -Name %%a.exe -Enable CFG"
     powershell -NoP -C "Set-ProcessMitigation -Name %%a.exe -Enable SEHOP"
     powershell -NoP -C "Set-ProcessMitigation -Name %%a.exe -Enable DEP"
