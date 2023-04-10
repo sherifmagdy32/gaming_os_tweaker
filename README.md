@@ -78,6 +78,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://support-valorant.riotgames.com/hc/en-us/articles/4406555340179-How-to-Enable-Exploit-Protection-and-Prevent-Error-Code-VAN9002>
 - FaceIT (CSGO) - Not Tested
   - But, it seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.
+- BattleEye (Escape from Tarkov) - Not Tested
 
 **You can try the `anticheat_fix.cmd` script inside `scripts/optional_helpers/` folder.**
 
