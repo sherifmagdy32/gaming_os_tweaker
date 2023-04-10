@@ -14,6 +14,7 @@ $devices = @(
 'Microsoft Kernel Debug Network Adapter',
 'Microsoft RRAS Root Enumerator', # related to VPN
 'NDIS Virtual Network Adapter Enumerator', # related to VPN
+'*WAN Miniport*', # some related to VPN
 'Motherboard resources',
 'Numeric Data Processor',
 'PCI Data Acquisition and Signal Processing Controller',
@@ -25,7 +26,8 @@ $devices = @(
 'System Speaker',
 'System Timer',
 'UMBus Root Bus Enumerator',
-'*WAN Miniport*', # some related to VPN
+'Remote Desktop Device Redirector Bus'
+'Microsoft GS Wavetables Synth'
 )
 
 Get-PnpDevice -FriendlyName $devices -ErrorAction Ignore | Disable-PnpDevice -Confirm:$false -ErrorAction Ignore
