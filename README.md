@@ -92,16 +92,17 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 ### Other
 
-- An option, would be to remove services 
+- An option, would be to remove services
   - <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
-- RAM usage could be reduced if service drivers were looked into more completely. 
-  - <https://systeminformer.sourceforge.io/> 
-  - <https://woshub.com/huge-memory-usage-non-paged-pool-windows/> 
+- RAM usage could be reduced if service drivers were looked into more completely.
+  - <https://systeminformer.sourceforge.io/>
+  - <https://woshub.com/huge-memory-usage-non-paged-pool-windows/>
   - <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
-- Scheduling Priorities seem to have hard locks done by the OS, there is a way to undo those, but the tool recommended has a lot of red flags related to trojan. Maybe if built manually it would be worth using. 
-  - <https://www.youtube.com/watch?v=-jYnDuK-vB0> 
-  - <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities> 
+- Scheduling Priorities seem to have hard locks done by the OS, there is a way to undo those, but the tool recommended has a lot of red flags related to trojan. Maybe if built manually it would be worth using.
+  - <https://www.youtube.com/watch?v=-jYnDuK-vB0>
+  - <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities>
   - <https://github.com/katlogic/WindowsD>
+  - <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setpriorityclass>
 
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell
