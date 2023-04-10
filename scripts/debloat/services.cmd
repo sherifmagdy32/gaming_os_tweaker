@@ -23,7 +23,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\amdlog" /v Start /
 :: ====================================================================================================================================
 
 pushd "%~dp0"
-pushd ..\additional_files
+pushd ..\tools
 
 :: Disable Services
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hwpolicy" /v Start /t REG_DWORD /d 4 /f :: Last time it caused problems with Valorant anti-cheat

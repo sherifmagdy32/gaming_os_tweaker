@@ -27,14 +27,6 @@ Make sure you create a System Restore Point before running any scripts.
 
 ---
 
-### Notes
-
-- `scripts/apps` are optional helpers
-- `scripts/additional_files` contain files like configurations or tooling
-- `scripts/configs` may contain apps and games configurations
-
----
-
 ### Result
 
 From a fresh Windows 10 22H2 install and completely updated, and applying the scripts from this repo, it was reduced to `33` processes, with Nvidia Driver (debloated) in the background.

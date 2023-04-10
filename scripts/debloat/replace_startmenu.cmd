@@ -1,4 +1,4 @@
-:: Make sure you have run apps/install.cmd to install Winget + OpenShell, before running this.
+:: Make sure you have run optional_helpers/install.cmd to install Winget + OpenShell, before running this.
 cd %windir%\SystemApps
 
 taskkill /f /im SearchApp.exe

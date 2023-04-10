@@ -19,8 +19,9 @@ After Restart
 
 After
 
-- Use nvidiaProfileInspector from `scripts/additional_files` or get at <https://github.com/Orbmu2k/nvidiaProfileInspector/releases>
-- Import the `scripts/additional_files/low_latency.nip` and apply
+- Use nvidiaProfileInspector from `scripts/tools` or get at <https://github.com/Orbmu2k/nvidiaProfileInspector/releases>
+- Import the `scripts/config/apps/low_latency.nip` and apply
+- (Optional) there is a script that can do this automatically, at `scripts/optional_helpers`
 
 **You are done!**
 
