@@ -52,25 +52,18 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\srvnet" /v Start /
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\rspndr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Psched" /v Start /t REG_DWORD /d 4 /f
 
-:: Windows Update Orchestrator
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\UsoSvc" /v Start /t REG_DWORD /d 3 /f
-
-:: Windows Update Medic Service
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 3 /f
-
- :: Windows Update
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv" /v Start /t REG_DWORD /d 3 /f
-
-:: Seems to affect Windows Update
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS" /v Start /t REG_DWORD /d 3 /f
-
-REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WerSvc" /v Start /t REG_DWORD /d 4 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f
+:: Windows Update related
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS" /v Start /t REG_DWORD /d 4 /f
 
 :: Seemed to cause problems in windows
 ::REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Power" /v Start /t REG_DWORD /d 4 /f
 ::REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\atapi" /v Start /t REG_DWORD /d 4 /f
 
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WerSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DEFRAGSVC" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\upnphost" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SSDPSRV" /v Start /t REG_DWORD /d 4 /f
