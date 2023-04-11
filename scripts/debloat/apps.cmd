@@ -459,6 +459,7 @@ schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\UpdateModelTask" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" /f
+powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\UpdateOrchestrator\*' | Unregister-ScheduledTask -Confirm:$false"
 schtasks /delete /tn "Microsoft\Windows\WindowsUpdate\Scheduled Start" /f
 schtasks /delete /tn "Microsoft\Windows\Device Information\Device" /f
 schtasks /delete /tn "Microsoft\Windows\Device Information\Device User" /f
@@ -561,7 +562,7 @@ schtasks /delete /tn "Microsoft\Windows\EDP\StorageCardEncryptionTask" /f
 schtasks /delete /tn "Microsoft\Windows\Shell\CreateObjectTask" /f
 schtasks /delete /tn "Microsoft\Windows\Shell\ThemesSyncedImageDownload" /f
 schtasks /delete /tn "Microsoft\Windows\Shell\UpdateUserPictureTask" /f
-
+schtasks /delete /tn "\Microsoft\Windows\TaskScheduler\Maintenance Configurator" /f
 
 schtasks /change /tn "CreateExplorerShellUnelevatedTask" /enable
 :: schtasks /change /tn "Microsoft\Windows\TextServicsFramework\MsCtfMonitor" /enable :: (keylogger) is required to be able to type within Settings and etc
