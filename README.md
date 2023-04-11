@@ -17,10 +17,7 @@ Make sure you create a System Restore Point before running any scripts.
 > If you need to download a fresh OS ISO directly from Microsoft, follow the guide at [WINDOWS_DOWNLOAD_GUIDE](/docs/WINDOWS_DOWNLOAD_GUIDE.md)
 
 - Create a system restore point
-- In some scripts from `scripts/tweaks` folder, you might need to fill it the values from your machine manually.
-  - It should be `gpu.cmd`, `network.cmd` and `power.cmd`.
-  - It's on top of each script.
-- Run scripts from `scripts/debloat` folder first
+- Run scripts from `scripts/debloat` folder first, and `scripts/tweaks` after.
 - Run every script as administrator
 
 > After running the scripts, follow some guides from the `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)

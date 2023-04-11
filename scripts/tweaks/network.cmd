@@ -1,7 +1,7 @@
 echo "Started tweaks network"
 
-:: Open Device Manager > your Ethernet > Properties > Details > Driver Key
-SET "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY={4d36e972-e325-11ce-bfc1-08002be10318}\0001"
+for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {($_.PNPClass -match 'Net') -and ($_.Status -match 'OK') -and ($_.Name -like '*Connection*')} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "ETHERNET_DRIVER_KEY=%%a"
+SET "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY=%ETHERNET_DRIVER_KEY%"
 
 :: ====================================================================================================================================
 

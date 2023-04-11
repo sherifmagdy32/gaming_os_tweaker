@@ -1,13 +1,14 @@
 echo "Started tweaks gpu"
 
-:: Open Device Manager > your GPU > Properties > Details > Driver Key
-SET "GPU_DEVICE_CLASS_GUID_WITH_KEY={4d36e968-e325-11ce-bfc1-08002be10318}\0000"
+for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {$_.PNPClass -match 'Display'} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "GPU_DRIVER_KEY=%%a"
+SET "GPU_DEVICE_CLASS_GUID_WITH_KEY=%GPU_DRIVER_KEY%"
 
-:: Open regedit > HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\State\DisplayDatabase and find your display name
-SET "YOUR_DISPLAY_NAME=SAM105CH4ZR100198_05_07E5_3D"
+:: Both below are optional related to Monitor bits and scaling setup. Both can be easily configured in Nvidia Control Panel.
+:: Open regedit > HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\State\DisplayDatabase > Find your display name
+:: SET "YOUR_DISPLAY_NAME=SAM105CH4ZR100198_05_07E5_3D"
 
-:: Open regedit > HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration and find your display setup name
-SET "YOUR_CURRENT_DISPLAY_SETUP=SAM105CH4ZR100198_05_07E5_3D+MSI3FA4102_02_07E2_85^B9F3AD2D02BBA69506A76D84134F5234"
+:: Open regedit > HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration > Find your display setup name
+:: SET "YOUR_CURRENT_DISPLAY_SETUP=SAM105CH4ZR100198_05_07E5_3D+MSI3FA4102_02_07E2_85^B9F3AD2D02BBA69506A76D84134F5234"
 
 :: ====================================================================================================================================
 
@@ -356,7 +357,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%GPU_DEVICE_C
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\State\DisplayDatabase\%YOUR_DISPLAY_NAME%" /v DitherRegistryKey /t REG_BINARY /d db010000101010104f3000000 /f
 
 :: Set scaling to No Scaling in Nvidia Control Panel
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration\%YOUR_CURRENT_DISPLAY_SETUP%\00\00" /v Scaling /t REG_DWORD /d 2 /f
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration\%YOUR_CURRENT_DISPLAY_SETUP%\00\00" /v Scaling /t REG_DWORD /d 2 /f
 
 :: Tweak nvidia service
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm" /v PerfAnalyzeMidBufferPreemption /t REG_DWORD /d 0 /f
