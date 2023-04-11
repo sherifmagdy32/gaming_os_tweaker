@@ -257,7 +257,6 @@ for %%a in (
     "EnableIdlePowerManagement"
     "IdleInWorkingState"
 ) do (
-    echo info: configuring %%~a
     for /f "delims=" %%b in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "%%~a" ^| findstr "HKEY"') do (
         REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f > nul 2>&1
     )
@@ -266,7 +265,6 @@ for %%a in (
     "WakeEnabled"
     "WdkSelectiveSuspendEnable"
 ) do (
-    echo info: configuring %%~a
     for /f "delims=" %%b in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class" /s /f "%%~a" ^| findstr "HKEY"') do (
         REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f > nul 2>&1
     )
@@ -278,6 +276,9 @@ for %%a in (
 		REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 1 /f > nul
 	)
 )
+
+:: Disable power saving pnp
+powershell -noprofile -executionpolicy bypass -c "$power_device_enable = Get-WmiObject MSPower_DeviceEnable -Namespace root\wmi; $usb_devices = @(\"Win32_USBController\", \"Win32_USBControllerDevice\", \"Win32_USBHub\"); foreach ($power_device in $power_device_enable) { $instance_name = $power_device.InstanceName.ToUpper(); foreach ($device in $usb_devices) { foreach ($hub in Get-WmiObject $device) { $pnp_id = $hub.PNPDeviceID; if ($instance_name -like \"*$pnp_id*\") { $power_device.enable = $False; $power_device.psbase.put(); }}}}"
 
 :: Disable disk power savings
 for /f "tokens=*" %%i in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "StorPort"^| findstr "StorPort"') do REG ADD "%%i" /v EnableIdlePowerManagement /t REG_DWORD /d 0 /f >nul 2>&1
@@ -340,3 +341,4 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Pow
 
 :: High Performance Burst, try 2,6,12. Someone said that if lower the value mouse smoother, if higher will gain a little bit acceleration
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\Profile\Events\{54533251-82be-4824-96c1-47b60b740d00}\{0DA965DC-8FCF-4c0b-8EFE-8DD5E7BC959A}\{7E01ADEF-81E6-4e1b-8075-56F373584694}" /v TimeLimitInSeconds /t REG_DWORD /d 12 /f
+
