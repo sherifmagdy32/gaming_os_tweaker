@@ -1,7 +1,6 @@
 echo "Started tweaks network"
 
-for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {($_.PNPClass -match 'Net') -and ($_.Status -match 'OK') -and ($_.Name -like '*Connection*')} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "ETHERNET_DRIVER_KEY=%%a"
-SET "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY=%ETHERNET_DRIVER_KEY%"
+for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {($_.PNPClass -match 'Net') -and ($_.Status -match 'OK') -and ($_.Name -like '*Connection*')} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY=%%a"
 
 :: ====================================================================================================================================
 
@@ -45,7 +44,7 @@ powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 4
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 2
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 4
 
-powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled 
+powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled
 
 powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
 

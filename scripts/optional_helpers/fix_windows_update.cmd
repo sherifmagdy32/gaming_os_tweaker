@@ -16,4 +16,3 @@ net start msiserver
 
 :: 0x80070643 - Error seems related to WSL
 :: https://github.com/microsoft/WSL/issues/7222#issuecomment-939469616
-:: 0x80248007
