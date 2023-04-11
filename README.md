@@ -26,7 +26,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 ### Result
 
-From a fresh Windows 10 22H2 install and completely updated, and applying the scripts from this repo, it was reduced to `33` processes, with Nvidia Driver (debloated) in the background.
+From a fresh Windows 10 22H2 install and completely updated, and applying the scripts from this repo, it was reduced to `32` processes, with Nvidia Driver (debloated) in the background and Task Manager.
 
 No additional tools were used.
 
