@@ -48,7 +48,7 @@ Mostly, because I wanted a clean OS, with all the optimizations and I didnt trus
 
 I dont take credit for the scripts, since I got parts of it from many different places. I didnt kept all the urls and I didnt wanted to give credit to some only, so end up not giving to anyone.
 
-People keep making big youtube videos or articles for very small chunks or single tweak(s), good ones are the minority. Some may even charge for this kind of tweaking.
+People keep making big youtube videos or articles for very small chunks or single tweak(s), repeating the same thing, good ones are the minority. Some may even charge for this kind of tweaking.
 
 ---
 
