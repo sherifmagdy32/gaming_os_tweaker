@@ -19,7 +19,7 @@ Make sure you create a System Restore Point before running any scripts.
 - Create a system restore point.
 - Run scripts from `scripts/debloat` folder first, and `scripts/tweaks` after.
 - I recommend at least to also run the `install_apps.cmd` from `scripts/optional_helpers/` folder.
-- **Run every `.cmd` script as administrator. From any folder.**
+- **For every `.cmd` script you run, run as administrator.**
 - Reboot and Done!
 
 > After running the scripts, follow some guides from the `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
