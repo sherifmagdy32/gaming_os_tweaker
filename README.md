@@ -71,13 +71,8 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Ricochet (Call of Duty) - Working
 - BattleEye (Escape from Tarkov, Destiny 2) - Working
 - Punkbuster (BF4) - Working
-- Vanguard (Valorant) - Not Working
-  - Game does open, but it requires Exploit Protections and most were disabled, but they can be enabled again, not sure how it would go with no Windows Defender though.
-  - <https://support-valorant.riotgames.com/hc/en-us/articles/4406555340179-How-to-Enable-Exploit-Protection-and-Prevent-Error-Code-VAN9002>
-- FaceIT (CSGO) - Not Tested
-  - But, it seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.
-
-**You can try the `anticheat_fix.cmd` script inside `scripts/optional_helpers/` folder.**
+- Vanguard (Valorant) - Working **(But, only if you apply the `anticheat_fix.cmd` from `scripts/optional_helpers/` folder, to enable the exploit mitigations again.)**
+- FaceIT (CSGO) - Not Tested **(It seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.)**
 
 > I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 

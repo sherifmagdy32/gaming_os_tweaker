@@ -40,9 +40,6 @@ FOR /F "tokens=*" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSe
 
 :: =================================================================================================================================================================================================
 
-:: Disable additional NTFS/ReFS mitigations.
-REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager" /v ProtectionMode /t REG_DWORD /d 0 /f
-
 :: Disable Disk defrag
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction" /v Enable /t REG_SZ /d N /f
 
