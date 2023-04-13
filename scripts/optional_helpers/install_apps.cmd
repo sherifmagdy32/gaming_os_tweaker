@@ -1,6 +1,7 @@
 :: https://winget.run/
 :: https://winstall.app/
 
+:: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
 powershell "Install-Module WingetTools"
 
 winget install -e --id Brave.Brave --accept-package-agreements
