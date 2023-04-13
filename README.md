@@ -16,9 +16,11 @@ Make sure you create a System Restore Point before running any scripts.
 
 > If you need to download a fresh OS ISO directly from Microsoft, follow the guide at [WINDOWS_DOWNLOAD_GUIDE](/docs/WINDOWS_DOWNLOAD_GUIDE.md)
 
-- Create a system restore point
+- Create a system restore point.
 - Run scripts from `scripts/debloat` folder first, and `scripts/tweaks` after.
-- Run every script as administrator
+- I recommend at least to also run the `install_apps.cmd` from `scripts/optional_helpers/` folder.
+- Run every script as administrator.
+- Reboot and Done!
 
 > After running the scripts, follow some guides from the `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
 
