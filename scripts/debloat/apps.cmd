@@ -197,8 +197,8 @@ powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.
 powershell "Get-WindowsCapability -Online | Where Name -like *App.StepsRecorder* | Remove-WindowsCapability -Online | Out-Null"
 powershell "Get-WindowsCapability -Online | Where Name -like *OneCoreUAP.OneSync* | Remove-WindowsCapability -Online | Out-Null"
 powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.PowerShell.ISE* | Remove-WindowsCapability -Online | Out-Null"
-:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.MSPaint* | Remove-WindowsCapability -Online | Out-Null"
-:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.Notepad* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.Notepad* | Remove-WindowsCapability -Online | Out-Null"
+powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.MSPaint* | Remove-WindowsCapability -Online | Out-Null"
 
 powershell "Get-AppPackage -Allusers *MicrosoftWindows.Client.CBS* | Remove-AppPackage"
 powershell "Get-AppPackage -Allusers *Microsoft.Windows.SecureAssessmentBrowser* | Remove-AppPackage"
