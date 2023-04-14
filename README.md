@@ -60,7 +60,7 @@ People keep making big youtube videos or articles for very small chunks or singl
 
 Simply because as much as people tried to make it transparent by even putting it on github, some don't even do it, they just create a repo saying it's open-source.
 
-Main point is, there is no way to know how the image (ISO) are being built, it's not transparent there, so whoever is responsible could use the opportunity to hide a rootkit in this part of the process, and no one would know, while keeping the argument that it was all open source. So, that's why.
+Main point is, there is no way to know how the image (ISO) are being built, it's not transparent there, whoever is responsible could use the opportunity to hide a rootkit in this part of the process, and no one would know, while keeping the argument that it was all open source. So, that's why.
 
 It doesnt mean they arent trustworthy, I don't know them, it just means it's not transparent enough as it is.
 
