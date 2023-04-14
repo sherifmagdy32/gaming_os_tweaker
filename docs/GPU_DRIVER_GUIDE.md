@@ -9,11 +9,13 @@
 
 After Restart
 
-- Get <https://www.techpowerup.com/download/techpowerup-nvcleanstall/>
+- Download at <https://www.techpowerup.com/download/techpowerup-nvcleanstall/>
 - Download the nvidia driver that you want
-- Open NVCleanstall and select Use driver files on Disk and select the driver
+- Open NVCleanstall and select Use driver files on Disk > Select the driver
 - Next, I recommend the bare minimum `Display Driver (required)` only
-- Next, Disable Installer Telemtry & Advertising + Show Expert Tweaks [Disable driver telemetry + Disable HDCP]
+- Next, 
+ - Disable Installer Telemetry & Advertising 
+ - Show Expert Tweaks [Disable driver telemetry + Disable HDCP]
 - Next, Install
 - Next every step, once you are finished with nividia installer, you can close the nvcleanstall
 

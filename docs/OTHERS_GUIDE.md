@@ -3,7 +3,7 @@
 ## Timer Resolution
 
 - Download at <https://www.wagnardsoft.com/forums/viewtopic.php?t=1256>
-- I recommend checking both options on the bottom left
+- I recommend checking BOTH options on the bottom left
 - Set `0.0` on Wanted timer resolution and Check `Enable custom timer resolution`
 - Press `Start` and you are done
 
@@ -16,8 +16,17 @@
 heavy CPU processes like games.
 - While installing, choose only Core Engine to start at logon. GUI is not necessary.
 - (Optional)
-  - After Installing, with Process Lasso GUI opened, open YOUR_GAME, in the GUI Right Click YOUR_GAME.exe and choose Set Priority Always to High, I/O Priority to Always to High and CPU Affinity Uncheck Core 0 in Always.
-  - Set Application Power Profile to Ultimate Performance scheme. Exclude from ProBalance. Induce Performance Mode. Go to More > Disable IdleSaver. CPU Limiter > When CPU is 98% > Reduce by this Many Cores 1 > For a period of 1 > Add Rule
+  - After Installing, with Process Lasso GUI opened, open YOUR_GAME, in the GUI Right Click YOUR_GAME.exe
+    - CPU Priority > Always to High 
+    - I/O Priority > Always to High 
+    - CPU Affinity > Uncheck Core 0 in Always 
+    - Disable Windows dynamic thread priority boosts
+  - Set Application Power Profile to Ultimate Performance scheme. 
+  - Main
+    - Disable ProBalance. 
+  - Induce Performance Mode. 
+  - Go to More > Disable IdleSaver. 
+  - CPU Limiter > When CPU is 98% > Reduce by this Many Cores 1 > For a period of 1 > Add Rule
 - Done
 
 ---
@@ -25,6 +34,7 @@ heavy CPU processes like games.
 ## Interrupt Affinity Policy
 
 - Download at <https://www.techpowerup.com/download/microsoft-interrupt-affinity-tool/>
+- Alternative <https://github.com/spddl/GoInterruptPolicy>
 
 ### Guidelines
 

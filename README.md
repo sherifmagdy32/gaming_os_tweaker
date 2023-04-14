@@ -50,7 +50,9 @@ Mostly, because I wanted a clean OS, with all the optimizations and I didnt trus
 
 I dont take credit for the scripts, since I got parts of it from many different places. I didnt kept all the urls and I didnt wanted to give credit to some only, so end up not giving to anyone.
 
-People keep making big youtube videos or articles for very small chunks or single tweak(s), repeating the same thing, good ones are the minority. Some may even charge for this kind of tweaking.
+People keep making big youtube videos or articles for very small chunks or single tweak(s), repeating the same thing, good ones are the minority. Some may even charge for this kind of tweaking. Here you may get all or almost all of it.
+
+> If you have any suggestions, additions or corrections, feel free to create an issue and/or PR.
 
 ---
 
@@ -76,9 +78,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Vanguard (Valorant) - Working **(But, only if you apply the `anticheat_fix.cmd` from `scripts/optional_helpers/` folder, to enable the exploit mitigations again.)**
 - FaceIT (CSGO) - Not Tested **(It seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.)**
 
-> I didnt have the opportunity to test every game, but most without Anti Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
-
-> If you have any suggestions, additions or corrections, feel free to create an issue and/or PR.
+> I didnt have the opportunity to test every game, but most without Anti-Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
 ---
 
