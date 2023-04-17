@@ -2,6 +2,10 @@
 # Run with Powershell, choose Yes to run as Administrator.
 # Select the profile you want to activate.
 
+# If you prefer to have a .exe, you can run powershell as administrator, go to where the script are, and run the following commands.
+# Install-Module ps2exe
+# Invoke-PS2EX .\rawaccel_profiles.ps1 .\rawaccel_profiles.exe
+
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { 
 	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit 
 }
