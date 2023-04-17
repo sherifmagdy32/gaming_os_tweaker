@@ -7,8 +7,6 @@ In that case, press F12 in the browser
 - Go to the 3 dots on top right > More Tools > Network Conditions > User Agent, uncheck Use browser default, choose a Custom that is not Windows
 - Refresh the page
 - Download the OS ISO
-
-After
-
 - Download Rufus at <https://rufus.akeo.ie/>
 - Create your bootable OS in your USB drive
+- Done!
