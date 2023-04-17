@@ -12,8 +12,8 @@
 ## Process Lasso
 
 - Download at <https://bitsum.com/>
-- Free version should be enough, It doesn't let or at least diminish a lot so the machine hangging on
-heavy CPU processes like games.
+- Free version should be enough, It doesn't let or at least diminish so the machine doesnt hang on
+heavy processes like games, it help to keep the OS more responsive, but more than that.
 - While installing, choose only Core Engine to start at logon. GUI is not necessary.
 - (Optional)
   - After Installing, with Process Lasso GUI opened, open YOUR_GAME, in the GUI Right Click YOUR_GAME.exe
@@ -57,6 +57,8 @@ Run `intPolicy_x64.exe` and use Device Manager, set View > Devices by Connection
 
 For USB, if you do not know, go to Properties in the parent device, Details > Device description, that is the name, use the same Location. And follow the instructions.
 
-For USB Mouse, it has been HID-compliant mouse. Add all if more than one. You don't want to set the generic set that holds many values.
+For USB Mouse, it has been HID-compliant mouse. Add all if more than one. 
+
+You don't want to set the generic set that holds many values.
 
 ---
