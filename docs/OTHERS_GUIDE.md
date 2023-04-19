@@ -27,6 +27,9 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
   - Induce Performance Mode. 
   - Go to More > Disable IdleSaver. 
   - CPU Limiter > When CPU is 98% > Reduce by this Many Cores 1 > For a period of 1 > Add Rule
+  - Options > Power > Performance Mode
+    - Uncheck change power plan when engaged
+    - Uninstall Bitsum power plan
 - Done
 
 ---

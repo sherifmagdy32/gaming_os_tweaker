@@ -213,6 +213,12 @@ powershell "Get-AppPackage -Allusers *Microsoft.Windows.XGpuEjectDialog* | Remov
 powershell "Get-AppPackage -Allusers *Windows.PrintDialog* | Remove-AppPackage"
 powershell "Get-AppPackage -Allusers *Microsoft.MicrosoftEdge* | Remove-AppPackage"
 
+:: Remove Provisioned packages through DISM
+:: DISM /Online /Get-ProvisionedAppxPackages | select-string Packagename
+DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.XboxGamingOverlay_2.34.28001.0_neutral_~_8wekyb3d8bbwe
+DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.WindowsMaps_2019.716.2316.0_neutral_~_8wekyb3d8bbwe
+DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.WindowsCalculator_2021.2210.0.0_neutral_~_8wekyb3d8bbwe
+
 :: ==============================================================================================================
 
 :: Disable features from windows
