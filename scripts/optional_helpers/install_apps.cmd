@@ -7,7 +7,7 @@ powershell "Install-Module WingetTools"
 :: You can update them all by running
 :: winget upgrade --all
 
-:: You can install Windows Store apps by using their ids
+:: You can install Windows Store apps by using their id
 :: https://apps.microsoft.com/store/detail/netflix/9WZDNCRFJ3TJ
 :: winget install -e --id 9WZDNCRFJ3TJ
 
