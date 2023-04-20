@@ -22,6 +22,10 @@ winget install -e --id Notepad++.Notepad++
 :: Replace Paint
 winget install -e --id dotPDNLLC.paintdotnet
 
+:: Replace calculator or if you want it back.
+:: winget install -e --id Qalculate.Qalculate
+:: winget install calculator
+
 :: Screenshot and more
 :: winget install -e --id ShareX.ShareX
 
@@ -41,6 +45,8 @@ winget install -e --id dotPDNLLC.paintdotnet
 
 :: Gaming
 :: winget install -e --id Valve.Steam
+:: winget install -e --id EpicGames.EpicGamesLauncher
+:: winget install -e --id OBSProject.OBSStudio
 
 :: winget install -e --id Microsoft.PowerShell
 :: winget install -e --id Microsoft.WindowsTerminal
