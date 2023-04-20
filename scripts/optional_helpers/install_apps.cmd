@@ -4,6 +4,13 @@
 :: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
 powershell "Install-Module WingetTools"
 
+:: You can update them all by running
+:: winget upgrade --all
+
+:: You can install Windows Store apps by using their ids
+:: https://apps.microsoft.com/store/detail/netflix/9WZDNCRFJ3TJ
+:: winget install -e --id 9WZDNCRFJ3TJ
+
 winget install -e --id Microsoft.DirectX
 
 :: Replace native Windows Menu
@@ -18,6 +25,7 @@ winget install -e --id M2Team.NanaZip
 :: Replace Notepad
 winget install -e --id Notepad++.Notepad++
 :: winget install -e --id VSCodium.VSCodium
+:: winget install -e --id Microsoft.VisualStudioCode
 
 :: Replace Paint
 winget install -e --id dotPDNLLC.paintdotnet
