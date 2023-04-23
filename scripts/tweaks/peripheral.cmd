@@ -49,9 +49,9 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t R
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast" /v Flags /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v Flags /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\TimeOut" /v Flags /t REG_SZ /d 0 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v Flags /t REG_SZ /d 122 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatDelay /t REG_SZ /d 200 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatRate /t REG_SZ /d 6 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v Flags /t REG_SZ /d 59 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatDelay /t REG_SZ /d 120 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatRate /t REG_SZ /d 1 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v DelayBeforeAcceptance /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v BounceTime /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v "Last BounceKey Setting" /t REG_SZ /d 0 /f
