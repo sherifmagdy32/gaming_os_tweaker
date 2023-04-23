@@ -49,7 +49,8 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t R
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast" /v Flags /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v Flags /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\TimeOut" /v Flags /t REG_SZ /d 0 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v Flags /t REG_SZ /d 122 /f
+:: Flags 122 disable filterkeys, but it's what is necessary to bypass certain limits from windows is 59.
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v Flags /t REG_SZ /d 59 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatDelay /t REG_SZ /d 120 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v AutoRepeatRate /t REG_SZ /d 1 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v DelayBeforeAcceptance /t REG_SZ /d 0 /f
