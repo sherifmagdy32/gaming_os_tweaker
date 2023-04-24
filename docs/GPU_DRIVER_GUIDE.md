@@ -13,9 +13,9 @@ After Restart
 - Download the nvidia driver that you want
 - Open NVCleanstall and select Use driver files on Disk > Select the driver
 - Next, I recommend the bare minimum `Display Driver (required)` only
-- Next, 
- - Disable Installer Telemetry & Advertising 
- - Show Expert Tweaks [Disable driver telemetry + Disable HDCP]
+- Next,
+  - Disable Installer Telemetry & Advertising
+  - Show Expert Tweaks [Disable HDCP]
 - Next, Install
 - Next every step, once you are finished with nividia installer, you can close the nvcleanstall
 

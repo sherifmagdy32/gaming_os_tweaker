@@ -1,12 +1,15 @@
-# Download the ISO through here <https://www.microsoft.com/software-download/windows10ISO>
+# Windows Download
 
-In case you are on windows, you might not enter the page that is for downloading the ISO image directly.
+Download the ISO through the official microsoft website <https://www.microsoft.com/software-download/windows10ISO>
 
-In that case, press F12 in the browser
+In case you ARE on windows, you might not enter the page that is for downloading the ISO image directly.
 
-- Go to the 3 dots on top right > More Tools > Network Conditions > User Agent, uncheck Use browser default, choose a Custom that is not Windows
+In that case:
+
+- Press F12 in the browser
+- Go to the 3 dots on top right > More Tools > Network Conditions > User Agent > Uncheck (Use browser default) > Choose a Custom that is not Windows
 - Refresh the page
-- Download the OS ISO
+- Download the ISO
 - Download Rufus at <https://rufus.akeo.ie/>
 - Create your bootable OS in your USB drive
 - Done!
