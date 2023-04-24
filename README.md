@@ -22,7 +22,13 @@ Make sure you create a System Restore Point before running any scripts.
 - **For every `.cmd` script you run, run as administrator.**
 - Reboot and Done!
 
-> After running the scripts, follow some guides from the `docs` folder. [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md) and [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
+> After running the scripts, follow some guides from the `docs` folder.
+
+- [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md)
+- [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
+- [AUDIO_GUIDE](/docs/AUDIO_GUIDE.md)
+- [CPU_GUIDE](/docs/CPU_GUIDE.md)
+- [PERIPHERALS_GUIDE](/docs/PERIPHERALS_GUIDE.md)
 
 ---
 
