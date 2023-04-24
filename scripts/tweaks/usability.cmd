@@ -113,7 +113,28 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop" /v DpiScalingVer /t REG_DWORD 
 REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d 00000096 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop" /v SmoothScroll /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop" /v JPEGImportQuality /t REG_DWORD /d 100 /f
+
+:: Disable accessibility features
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\On" /v On /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v DynamicScrollbars /t REG_DWORD /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Warning Sounds" /t REG_DWORD /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Sound on Activation" /t REG_DWORD /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v Flags /t REG_SZ /d 130 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v TimeToMaximumSpeed /t REG_SZ /d 1000 /f  
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t REG_SZ /d 506 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\ToggleKeys" /v Flags /t REG_SZ /d 58 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast" /v Flags /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v Flags /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\TimeOut" /v On /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\ShowSounds" /v Flags /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\ShowSounds" /v On /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v Flags /t REG_SZ /d 2 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v FSTextEffect /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v WindowsEffect /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v TextEffect /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Blind Access" /v On /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\SlateLaunch" /v LaunchAT /t REG_DWORD /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Preference" /v On /t REG_SZ /d 0 /f
 
 :: Disable Get More out of Windows
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement" /v ScoobeSystemSettingEnabled /t REG_DWORD /d 0 /f
@@ -531,11 +552,8 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /
 :: Turn off Microsoft Peer-to-Peer Networking Services
 REG ADD "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Peernet" /v Disabled /t REG_DWORD /d 1 /f
 
-:: Chnage NTP server and resync
+:: Change NTP server
 w32tm /config /syncfromflags:manual /manualpeerlist:"0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org"
-net start w32time
-w32tm /config /update
-w32tm /resync
 
 :: Disable windows insider and build previews
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" /v EnableConfigFlighting /t REG_DWORD /d 0 /f
@@ -585,7 +603,7 @@ for %%a in (
 :: Stop auto keyboard layout creation
 REG DELETE "HKEY_USERS\.DEFAULT\Keyboard Layout\Preload" /f
 
-:: Disable search permissions 
+:: Disable search permissions
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsMSACloudSearchEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsAADCloudSearchEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsDeviceSearchHistoryEnabled /t REG_DWORD /d 0 /f
