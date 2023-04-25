@@ -12,9 +12,11 @@ for /f "delims=" %%a in ('powershell -noprofile -c "$deviceId = '*' + (Get-PnpDe
 :: https://bitsum.com/known-windows-power-guids/
 
 :: Unlock Ultimate Performance power scheme and set as active
-:: Beware if you re-run the script more than once, it will duplicate the scheme again
-for /f "tokens=4" %%I in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set ultscheme=%%I
-powercfg -setactive %ultscheme%
+for /f "tokens=2 delims=()" %%i IN ('powercfg /getactivescheme') do set CURRENT_PLAN=%%i
+if NOT "%CURRENT_PLAN%"=="Ultimate Performance" (
+	for /f "tokens=4" %%I in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set ultscheme=%%I
+	powercfg -setactive %ultscheme%
+)
 
 :: Remove Power Save scheme
 powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
