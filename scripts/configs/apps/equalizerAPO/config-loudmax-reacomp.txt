@@ -1,2 +1,0 @@
-VSTPlugin: Library LoudMax64.dll Thresh 0.297727 Output 0.297727 "Fader Link" 1 "ISP Detection" 1 "Large GUI" 0
-VSTPlugin: Library reacomp-standalone.dll Hipass 0 Thresh 0.0350344 Ratio 0.010101 Attack 0 Release 0.005 Pre-comp 0 resvd 0 Lowpass 1 SignIn 0 AudIn 0 Dry 3.16228e-08 Wet 1 AutoMkUp 0 PreviewF 0 "RMS size" 0.005 Knee 0.104167 AutoRel 0 ClsAttk 1 AntiAls 0
