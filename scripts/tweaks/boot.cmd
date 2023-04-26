@@ -44,6 +44,12 @@ bcdedit /set increaseuserva 268435328
 :: Disable DEP
 bcdedit /set nx AlwaysOff
 
+:: Speed a bit the boot time
+bcdedit /set quietboot yes
+bcdedit /set bootux disabled
+bcdedit /timeout 0
+bcdedit /set {globalsettings} custom:16000067 true
+
 :: ======================================================================================================================================================================================
 
 :: Speed up startup
