@@ -24,7 +24,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 > After running the scripts, follow some guides from the `docs` folder.
 
-- [GPU_DRIVER_GUIDE](/docs/GPU_DRIVER_GUIDE.md)
+- [GPU_GUIDE](/docs/GPU_GUIDE.md)
 - [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
 - [AUDIO_GUIDE](/docs/AUDIO_GUIDE.md)
 - [CPU_GUIDE](/docs/CPU_GUIDE.md)
@@ -111,3 +111,4 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://www.snappy-driver-installer.org>
   - <https://github.com/dlwyatt/PolicyFileEditor>
   - <https://hexed.it/>
+  - <https://github.com/sandboxie-plus/Sandboxie/>
