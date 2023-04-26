@@ -120,7 +120,8 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v DynamicScrollbars /t 
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Warning Sounds" /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Sound on Activation" /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v Flags /t REG_SZ /d 130 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v TimeToMaximumSpeed /t REG_SZ /d 1000 /f  
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v MaximumSpeed /t REG_SZ /d 0 /f  
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v TimeToMaximumSpeed /t REG_SZ /d 0 /f  
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t REG_SZ /d 506 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\ToggleKeys" /v Flags /t REG_SZ /d 58 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast" /v Flags /t REG_SZ /d 0 /f
@@ -254,20 +255,32 @@ REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ad
 REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCortanaButton /t REG_DWORD /d 0 /f
 
 :: Disable DWM settings
-REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM" /v EnableAeroPeek /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM" /v Blur /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM" /v CompositionPolicy /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM" /v Composition /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM" /v AlwaysHibernateThumbnails /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM" /v EnableWindowColorization /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\DWM" /v EnableAeroPeek /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\DWM" /v Blur /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\DWM" /v CompositionPolicy /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v Composition /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v AlwaysHibernateThumbnails /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v EnableWindowColorization /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v AnimationAttributionEnabled /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v AnimationAttributionHashingEnabled /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v OneCoreNoBootDWM /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v ForceEffectMode /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v Compositor /t REG_SZ /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v enableColorSeparation /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v ExclusiveModeFramerateAveragingPeriodMs /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v ExclusiveModeFramerateThresholdPercent /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v ForwardOnlyOnly /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v RemoveSRMeshInShell /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v SydneyDownsampleFilterKernelSize /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DWMWA_TRANSITIONS_FORCEDISABLED /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowAnimations /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v AnimationAttributionEnabled /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v AnimationAttributionHashingEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisableAccentGradient /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowFlip3d /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v Composition /t REG_DWORD /d 0 /f
-REG ADD "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowAnimations /t REG_DWORD /d 1 /f
-REG ADD "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowFlip3d /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowAnimations /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DWM" /v DisallowFlip3d /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows" /v DwmInputUsesIoCompletionPort /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows" /v EnableDwmInputProcessing /t REG_DWORD /d 0 /f
 
