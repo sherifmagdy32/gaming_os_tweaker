@@ -24,7 +24,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multime
 
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v AllowHeadlessExecution /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v AllowMultipleBackgroundTasks /t REG_DWORD /d 1 /f
-REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v InactivityTimeoutMs /t REG_DWORD /d 0xffffffff /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v InactivityTimeoutMs /t REG_DWORD /d FFFFFFFF /f
 
 :: Change Sound Communication to Do Nothing
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Multimedia\Audio" /v UserDuckingPreference /t REG_DWORD /d 3 /f

@@ -89,12 +89,13 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedul
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\ScheduledDiagnostics" /v EnabledExecution /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\ScheduledDiagnostics" /v EnabledExecution /t REG_DWORD /d 0 /f
 
-:: Disable auto drivers download with windows update
+:: Disable Windows Update tweaks
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" /v SearchOrderConfig /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v ExcludeWUDriversInQualityUpdate /t REG_DWORD /d 1 /f
-
-:: Disable Windows Update access
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v DisableWindowsUpdateAccess /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v DisableDualScan /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v AUPowerManagement /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v SetAutoRestartNotificationDisable /t REG_DWORD /d 1 /f
 
 :: Improve crash experience
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v CrashDumpEnabled /t REG_DWORD /d 0 /f
@@ -120,8 +121,8 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v DynamicScrollbars /t 
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Warning Sounds" /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility" /v "Sound on Activation" /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v Flags /t REG_SZ /d 130 /f
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v MaximumSpeed /t REG_SZ /d 0 /f  
-REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v TimeToMaximumSpeed /t REG_SZ /d 0 /f  
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v MaximumSpeed /t REG_SZ /d 0 /f
+REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\MouseKeys" /v TimeToMaximumSpeed /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t REG_SZ /d 506 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\ToggleKeys" /v Flags /t REG_SZ /d 58 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast" /v Flags /t REG_SZ /d 0 /f
@@ -162,6 +163,13 @@ REG ADD "HKCR\WOW6432Node\CLSID\{679f85cb-0220-4080-b29b-5540cc05aab6}\ShellFold
 :: Windows Update related
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoWindowsUpdate /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate  /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v AUOptions  /t REG_DWORD /d 2 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v AutoInstallMinorUpdates  /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAUAsDefaultShutdownOption  /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAUShutdownOption  /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoRebootWithLoggedOnUsers  /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v IncludeRecommendedUpdates  /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v EnableFeaturedSoftware  /t REG_DWORD /d 0 /f
 
 :: Disable searches and warns
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoLowDiskSpaceChecks /t REG_DWORD /d 1 /f
@@ -265,6 +273,9 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v AnimationAttribut
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v AnimationAttributionHashingEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v OneCoreNoBootDWM /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v ForceEffectMode /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v DisallowComposition /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v EnableShadow /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM" /v DisableHologramCompositor /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v Compositor /t REG_SZ /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v enableColorSeparation /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM\ExtendedComposition" /v ExclusiveModeFramerateAveragingPeriodMs /t REG_DWORD /d 0 /f
@@ -546,6 +557,9 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\CTF\LangBar" /v Label /t REG_DWORD
 
 :: Enable All Folders in Explorer Navigation Panel
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v NavPaneShowAllFolders /t REG_DWORD /d 1 /f
+
+:: Disable snapbar
+REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableSnapBar /t REG_DWORD /d 0 /f
 
 :: Disable Libraries from Navigation Panel
 REG ADD "HKEY_CURRENT_USER\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}" /v System.IsPinnedToNameSpaceTree /t REG_DWORD /d 0 /f

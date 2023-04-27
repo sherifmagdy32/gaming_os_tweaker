@@ -512,6 +512,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MicrosoftEdgeEleva
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WcesComm" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RapiMgr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UxSms" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\pcw" /v Start /t REG_DWORD /d 4 /f
 
 :: Disable CPU turbo, only do if you decide to alter BCLK
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\intelppm" /v Start /t REG_DWORD /d 4 /f
