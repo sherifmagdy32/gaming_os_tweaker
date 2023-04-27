@@ -35,7 +35,7 @@ winget install -e --id dotPDNLLC.paintdotnet
 
 :: Replace calculator or if you want it back.
 :: winget install -e --id Qalculate.Qalculate
-:: winget install calculator
+:: winget install calculator --accept-package-agreements
 
 :: Screenshot and more
 :: winget install -e --id ShareX.ShareX
@@ -58,3 +58,14 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: winget install -e --id Valve.Steam
 :: winget install -e --id EpicGames.EpicGamesLauncher
 :: winget install -e --id OBSProject.OBSStudio
+
+:: -----------------------------------------------------------------------------------------
+
+:: Alternatively you can use the most popular one. Chocolatey. Install using the following command.
+
+:: Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+:: Packages at https://community.chocolatey.org/packages
+
+:: Replace File Explorer
+:: choco install files -y
