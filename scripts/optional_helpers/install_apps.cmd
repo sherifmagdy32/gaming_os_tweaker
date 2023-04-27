@@ -7,6 +7,10 @@ powershell "Install-Module WingetTools"
 :: You can update them all by running
 :: winget upgrade --all
 
+:: You can make it run automatically in every windows startup by running this command once
+:: powershell -c "$action = New-ScheduledTaskAction -Execute \"powershell\" -Argument \"-WindowStyle hidden -Command winget upgrade --all\"; $trigger = New-ScheduledTaskTrigger -AtLogOn; $principal = New-ScheduledTaskPrincipal -UserID $env:USERNAME -RunLevel Highest; Register-ScheduledTask -TaskName \"AutoUpdateWingetApps\" -Action $action -Trigger $trigger -Principal $principal;"
+
+
 :: You can install Windows Store apps by using their id
 :: https://apps.microsoft.com/store/detail/netflix/9WZDNCRFJ3TJ
 :: winget install -e --id 9WZDNCRFJ3TJ
@@ -55,6 +59,3 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: winget install -e --id Valve.Steam
 :: winget install -e --id EpicGames.EpicGamesLauncher
 :: winget install -e --id OBSProject.OBSStudio
-
-:: winget install -e --id Microsoft.PowerShell
-:: winget install -e --id Microsoft.WindowsTerminal
