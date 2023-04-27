@@ -4,8 +4,8 @@
 
 - If you have a monitor with HDMI 2.1, there is a way to reduce latency
   - Download CRU at <https://www.monitortests.com/forum/Thread-Custom-Resolution-Utility-CRU>
-  - Enable FastV Vactive
-  - Enable Auto Low LAtency Mode
+  - Enable Fast Vactive
+  - Enable Auto Low Latency Mode
   - Done
 - You can improve the Vibrance in each choosen game, without having to set for everything.
   - <https://vibrancegui.com/>
