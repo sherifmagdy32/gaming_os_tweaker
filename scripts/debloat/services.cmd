@@ -22,6 +22,11 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\amdlog" /v Start /
 
 :: ====================================================================================================================================
 
+:: Startup Types: 0 = Boot, 1 = System, 2 = Automatic, 3 = Manual, 4 = Disabled
+:: DelayedAutoStart 0 or 1, same level as Start key
+
+:: Alter reg through Linux by using chntpw -e /media/YOUR_DISK/Windows/System32/config/SYSTEM or a different value path that you want, from config folder.
+
 pushd "%~dp0"
 pushd ..\tools
 
@@ -517,8 +522,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WcesComm" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RapiMgr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UxSms" /v Start /t REG_DWORD /d 4 /f
 
-:: Can break task manager
-:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\pcw" /v Start /t REG_DWORD /d 3 /f
+:: Can break task manager or even cause BSOD, keep at 0, to boot
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\pcw" /v Start /t REG_DWORD /d 0 /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\cphs" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\cplspcon" /v Start /t REG_DWORD /d 4 /f
