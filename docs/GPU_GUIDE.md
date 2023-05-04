@@ -23,7 +23,7 @@
 - Select your GPU as Nvidia
 - Clean and Restart
 
-After Restart
+After Restart (Debloat)
 
 - Download at <https://www.techpowerup.com/download/techpowerup-nvcleanstall/> or the optional, but maybe less featured <https://forums.guru3d.com/threads/nvslimmer-nvidia-driver-slimming-utility.423072/>
 - Download the nvidia driver that you want
@@ -53,3 +53,5 @@ Optionally after
 ## AMD
 
 > I dont have one to do it correctly. But some steps should be similar to nvidia.
+
+Option to debloat AMD drivers before install <https://github.com/GSDragoon/RadeonSoftwareSlimmer>
