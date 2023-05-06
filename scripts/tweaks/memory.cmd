@@ -57,3 +57,5 @@ REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Mem
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management" /v SimulateCommitSavings /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management" /v TrackLockedPages /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management" /v TrackPtes /t REG_DWORD /d 0 /f
+
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" /v AlpcWakePolicy /t REG_DWORD /d 1 /f
