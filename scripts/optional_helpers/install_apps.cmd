@@ -67,8 +67,11 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: Make the system more responsive
 :: winget install -e --id BitSum.ProcessLasso
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Security ::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: Dont download executables you dont know to be safe or decently safe. Check them before. You can use https://www.virustotal.com/ if online. Or scan with an good antimalware. You can also isolate it from your enviromnent by using a Sandbox environment like Sandboxie.
 
 :: https://www.privacytools.io/
 
@@ -79,6 +82,14 @@ winget install -e --id dotPDNLLC.paintdotnet
 
 :: Protection against many types of malware
 :: winget install -e --id Malwarebytes.Malwarebytes
+
+:: Sandbox environment
+:: winget install -e --id Sandboxie.Plus
+
+:: Browser Extensions
+:: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
+:: https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp
+:: https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj
 
 :: -----------------------------------------------------------------------------------------
 
