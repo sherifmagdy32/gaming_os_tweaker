@@ -112,15 +112,17 @@ netsh int udp set global uro=enabled
 netsh interface ip set interface ethernet currenthoplimit=64
 netsh interface ip set interface ethernet weakhostsend=enabled
 netsh interface ip set interface ethernet weakhostreceive=enabled
-:: Find your optimal MTU that is not fragmented, use the command below. Start from 1500 and dont go below 1400. 
-:: Only problem here, is that this is based on a value already preset on windows, usually 1500. To be fragmented or not, is not considering what comes before your PC. 
-:: Why? Because it matters the MTU value from your ISP, Modem / Router and whatever else you might have in between, only then you would know the best value to not be fragmented, therefore have no packet loss (because they are dropped), most noticed in games. 
+
+:: Find your optimal MTU that is not fragmented, use the command below. Start from 1500 and dont go below 1400.
+:: ping 1.1.1.1 -f -l 1500
+:: Only problem here, is that this is based on a value already preset on windows, usually 1500. To be fragmented or not, it is not considering what comes before your PC.
+:: Why? Because it matters the MTU value from your ISP, Modem / Router and whatever else you might have in between, only then you would know the best value to not be fragmented, therefore have no packet loss (because the remaining bytes are dropped), most noticed in games.
 :: If I am not mistaken (I could be), you should use the lowest value from what comes from before your PC, set that on windows and then do the ping / packet fragmentation test from that value till not fragmented, then you set that value as the MTU, and it should be the optimal. I suppose 1400 could be a fragmentation safety value.
-:: https://www.cloudflare.com/learning/network-layer/what-is-mtu/
-:: Dont mind about MSS, that is based on the MTU value.
-:: ping 1.1.1.1 -f -l 1500 
-:: To see current MTU value set in Windows, use: netsh interface ipv4 show subinterface
+:: https://www.cloudflare.com/learning/network-layer/what-is-mtu/ - Dont mind about MSS, that is based on the MTU value.
+:: In the internet, you will find many repetitions of the same thing and that is not complete, probably one copied from the other without fully understanding. Not that I do.
+:: To see the current MTU value set in Windows, use: netsh interface ipv4 show subinterface
 netsh interface ipv4 set subinterface "Ethernet" mtu=1400 store=persistent
+
 ipconfig /flushdns
 ipconfig /release
 ipconfig /renew
