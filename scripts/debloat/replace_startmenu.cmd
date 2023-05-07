@@ -1,4 +1,4 @@
-:: Make sure you have run optional_helpers/install.cmd to install Winget + OpenShell, before running this.
+:: Make sure before you run this, to install Winget + OpenShell. Check /optional_helpers/install_apps.cmd
 cd %windir%\SystemApps
 
 :: Disable Search

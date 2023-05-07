@@ -1,6 +1,8 @@
 :: https://winget.run/
 :: https://winstall.app/
 
+:: Know that :: are considered a comment, so the command wont run with it, unless you get the command by itself and run, or remove it from before the command, then you can run the file, for whatever line you might want to be used. But only do so for commands, and not explaining text, otherwise that will break the script.
+
 :: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
 powershell "Install-Module WingetTools"
 
@@ -17,12 +19,12 @@ powershell "Install-Module WingetTools"
 winget install -e --id Microsoft.DirectX
 
 :: Replace native Windows Menu
-winget install -e --id Open-Shell.Open-Shell-Menu
+:: winget install -e --id Open-Shell.Open-Shell-Menu
 
 :: Replace every other browser
 winget install -e --id Brave.Brave --accept-package-agreements
 
-:: Replace 7Zip and WinRAR
+:: Replace 7Zip
 winget install -e --id M2Team.NanaZip
 
 :: Replace Notepad
@@ -33,9 +35,9 @@ winget install -e --id Notepad++.Notepad++
 :: Replace Paint
 winget install -e --id dotPDNLLC.paintdotnet
 
-:: Replace calculator or if you want it back.
+:: Replace Calculator, or if you want it back.
 :: winget install -e --id Qalculate.Qalculate
-:: winget install calculator --accept-package-agreements
+:: winget install Calculator --accept-package-agreements
 
 :: Screenshot and more
 :: winget install -e --id ShareX.ShareX
@@ -59,13 +61,32 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: winget install -e --id EpicGames.EpicGamesLauncher
 :: winget install -e --id OBSProject.OBSStudio
 
+:: Check drivers latency
+:: winget install -e --id Resplendence.LatencyMon
+
+:: Make the system more responsive
+:: winget install -e --id BitSum.ProcessLasso
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Security ::::::::::::::::::::::::::::::::::::::::::
+
+:: https://www.privacytools.io/
+
+:: Alternative to Windows Firewall
+:: winget install -e --id Henry++.simplewall
+:: winget install -e --id Safing.Portmaster
+:: winget install -e --id BiniSoft.WindowsFirewallControl
+
+:: Protection against many types of malware
+:: winget install -e --id Malwarebytes.Malwarebytes
+
 :: -----------------------------------------------------------------------------------------
 
-:: Alternatively you can use the most popular one. Chocolatey. Install using the following command.
+:: Alternatively you can use the most popular one. Chocolatey. Install with the following command, using powershell.
 
 :: Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-:: Packages at https://community.chocolatey.org/packages
+:: https://community.chocolatey.org/packages
 
 :: Replace File Explorer
 :: choco install files -y
