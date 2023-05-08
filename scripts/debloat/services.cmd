@@ -277,17 +277,17 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WSearch" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SCardSvr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RtkBtManServ" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn ace -ace "n:Administrators;p:full"
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn ace -ace "n:Administrators;p:full"
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v Start /t REG_DWORD /d 4 /f
 
 ::
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn ace -ace "n:Administrators;p:full"
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v Start /t REG_DWORD /d 4 /f
@@ -426,8 +426,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ProfSvc" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcEptMapper" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcSs" /v Start /t REG_DWORD /d 2 /f
 
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn ace -ace "n:Administrators;p:full"
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" /v Start /t REG_DWORD /d 4 /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SgrmBroker" /v Start /t REG_DWORD /d 4 /f

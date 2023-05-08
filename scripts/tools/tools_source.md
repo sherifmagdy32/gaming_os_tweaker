@@ -1,6 +1,6 @@
 # Tools Source (urls)
 
-> If you dont trust the stored files from this folder, you can download them yourself directly by the official place where it was downloaded from.
+> If you dont trust the stored files from this folder, you can download them yourself directly from the place where it was downloaded from.
 
 - Device Cleanup CMD - <https://www.majorgeeks.com/files/details/device_cleanup_cmd>
 
