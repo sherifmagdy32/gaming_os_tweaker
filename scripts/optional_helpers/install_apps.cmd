@@ -9,6 +9,9 @@ powershell "Install-Module WingetTools"
 :: You can update them all by running
 :: winget upgrade --all
 
+:: You can find apps options by using
+:: winget search whatyouwant
+
 :: You can make it run automatically in every windows startup by running this command once
 :: powershell -c "$action = New-ScheduledTaskAction -Execute \"powershell\" -Argument \"-WindowStyle hidden -Command winget upgrade --all\"; $trigger = New-ScheduledTaskTrigger -AtLogOn; $principal = New-ScheduledTaskPrincipal -UserID $env:USERNAME -RunLevel Highest; Register-ScheduledTask -TaskName \"AutoUpdateWingetApps\" -Action $action -Trigger $trigger -Principal $principal;"
 

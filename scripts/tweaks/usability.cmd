@@ -638,3 +638,7 @@ REG DELETE "HKEY_USERS\.DEFAULT\Keyboard Layout\Preload" /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsMSACloudSearchEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsAADCloudSearchEnabled /t REG_DWORD /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v IsDeviceSearchHistoryEnabled /t REG_DWORD /d 0 /f
+
+:: Add new templates
+REG ADD "HKEY_CLASSES_ROOT\.txt\ShellNew" /v NullFile /t REG_SZ /f
+REG ADD "HKEY_CLASSES_ROOT\.cmd\ShellNew" /v NullFile /t REG_SZ /f

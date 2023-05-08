@@ -70,6 +70,10 @@ Simply because as much as people tried to make it transparent by even putting it
 
 Main point is, there is no way to know how the image (ISO) are being built, it's not transparent there, whoever is responsible could use the opportunity to hide a rootkit in this part of the process, and no one would know, while keeping the argument that it was all open source. So, that's why.
 
+Rootkit means one could implement any sort of malicious code, like a spyware, among all others as root (has access to everything, much more than is visible to users), and by doing that, in a modified OS preinstall, all security measures that would have been already in place, could have been bypassed, therefore rendering the malicious code to be executed and also be kept undetected.
+
+I dont know about the legallity of distributing modified Windows OS.
+
 It doesnt mean they arent trustworthy, I don't know them, it just means it's not transparent enough as it is.
 
 <https://www.reddit.com/r/Windows10/comments/w54ign/am_i_out_of_my_mind_or_just_paranoid_ntlite_msmg/>
