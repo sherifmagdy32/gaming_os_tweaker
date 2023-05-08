@@ -71,16 +71,18 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:: Dont download executables you dont know to be safe or decently safe. Check them before. You can use https://www.virustotal.com/ if online. Or scan with an good antimalware. You can also isolate it from your enviromnent by using a Sandbox environment like Sandboxie.
+:: DO NOT download executables you dont know to be safe or decently safe. Check them before. You can use https://www.virustotal.com/ if online. Or scan with an good antimalware. You can also isolate it from your enviromnent by using a Sandbox environment like Sandboxie.
 
 :: https://www.privacytools.io/
+:: https://www.kaspersky.com.br/downloads/free-virus-removal-tool
 
-:: Alternative to Windows Firewall
+:: Replace Windows Firewall - I recommend at least simplewall as alternative, you have much more control and better visibility than Windows option, and more security.
 :: winget install -e --id Henry++.simplewall
 :: winget install -e --id Safing.Portmaster
 :: winget install -e --id BiniSoft.WindowsFirewallControl
 
-:: Protection against many types of malware
+:: Protection against many types of malware and more
+:: winget install -e --id=Bitdefender.Bitdefender
 :: winget install -e --id Malwarebytes.Malwarebytes
 
 :: Sandbox environment
@@ -91,7 +93,8 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp
 :: https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj
 
-:: -----------------------------------------------------------------------------------------
+:: ----------------------------------------------------------------------------------------------------------------
+:: ----------------------------------------------------------------------------------------------------------------
 
 :: Alternatively you can use the most popular one. Chocolatey. Install with the following command, using powershell.
 
