@@ -1,7 +1,3 @@
-echo "Started tweaks peripheral"
-
-:: ====================================================================================================================================
-
 :: Forcing RAW Mouse Input and Disabling Enhance Pointer Precision
 REG ADD "HKEY_CURRENT_USER\Control Panel\Mouse" /v MouseSensitivity /t REG_SZ /d 10 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Mouse" /v MouseSpeed /t REG_SZ /d 0 /f

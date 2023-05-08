@@ -1,7 +1,3 @@
-echo "Started debloat apps"
-
-:: ====================================================================================================================================
-
 :: Remove apps from windows
 powershell "Get-AppxPackage -Allusers *Microsoft.BingWeather* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.Getstarted* | Remove-AppxPackage"

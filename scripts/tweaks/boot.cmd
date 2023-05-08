@@ -1,7 +1,3 @@
-echo "Started tweaks boot"
-
-:: ====================================================================================================================================
-
 :: Constantly pool interrupts, dynamic tick was implemented as a power saving feature
 bcdedit /set disabledynamictick yes
 
@@ -49,7 +45,7 @@ bcdedit /set quietboot yes
 bcdedit /timeout 0
 bcdedit /set {globalsettings} custom:16000067 true
 
-:: ======================================================================================================================================================================================
+:: ===============================================================================================================================================================
 
 :: Speed up startup
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize" /v StartupDelayInMSec /t REG_DWORD /d 0 /f

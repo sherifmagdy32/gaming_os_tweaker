@@ -1,7 +1,3 @@
-echo "Started debloat cleanup"
-
-:: ====================================================================================================================================
-
 :: DISM.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase /SPSuperseded
 
 :: Nvidia cache cleanup

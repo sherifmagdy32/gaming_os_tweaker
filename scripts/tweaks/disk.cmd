@@ -1,7 +1,3 @@
-echo "Started tweaks disk"
-
-:: ====================================================================================================================================
-
 :: Improve NTFS performance
 fsutil behavior set disabledeletenotify 0
 fsutil behavior set disabledeletenotify refs 0
@@ -16,7 +12,7 @@ fsutil behavior set disablecompression 0
 fsutil behavior set disableencryption 0
 
 
-:: =================================================================================================================================================================================================
+:: ===============================================================================================================================================================
 
 :: Disable IoLatencyCap
 FOR /F "eol=E" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services" /S /F "IoLatencyCap"^| FINDSTR /V "IoLatencyCap"') DO (
@@ -38,7 +34,7 @@ FOR /F "tokens=*" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSe
 	)
 )
 
-:: =================================================================================================================================================================================================
+:: ==============================================================================================================================================================
 
 :: Disable Disk defrag
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction" /v Enable /t REG_SZ /d N /f

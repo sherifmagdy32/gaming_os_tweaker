@@ -1,7 +1,3 @@
-echo "Started tweaks usability"
-
-:: ====================================================================================================================================
-
 :: Keep last user
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DontDisplayLastUserName /t REG_DWORD /d 0 /f
 

@@ -1,7 +1,3 @@
-echo "Started debloat services"
-
-:: ====================================================================================================================================
-
 :: Disable Storage Sense
 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense" /f
 

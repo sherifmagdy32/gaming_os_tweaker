@@ -1,7 +1,3 @@
-echo "Started tweaks memory"
-
-:: ====================================================================================================================================
-
 :: Use big pagefile to improve microstuttering (reboot or system might become unstable and BSoD).
 wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=32768,MaximumSize=32768

@@ -1,5 +1,3 @@
-echo "Started tweaks gpu"
-
 for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {$_.PNPClass -match 'Display'} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "GPU_DEVICE_CLASS_GUID_WITH_KEY=%%a"
 
 :: Both below are optional related to Monitor bits and scaling setup. Both can be easily configured in Nvidia Control Panel.

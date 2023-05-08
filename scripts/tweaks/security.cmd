@@ -1,7 +1,3 @@
-echo "Started tweaks security"
-
-:: ====================================================================================================================================
-
 :: Disable SMBv1
 powershell -c "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 sc config lanmanworkstation depend= bowser/mrxsmb20/nsi
