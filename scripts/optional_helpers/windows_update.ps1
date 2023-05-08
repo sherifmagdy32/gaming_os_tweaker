@@ -1,9 +1,9 @@
 # Windows Update through powershell
 
-# Depending on the kind of tweaks you have done, this may or may not work.
-# If you have done them all, from all these folders, the cumulatives update will probably fail.
+# Depending on the kind of tweaks+debloat you have done, this may or may not work.
+# If you have done them all, from all these folders, at least the cumulatives updates will probably fail.
 
-# I dont know all the things in all the tweaks+debloat that would cause this to break, I know you can not have windows update and this would still work.
+# I dont know all the things in all the tweaks+debloat that would cause this to break, I know you can remove/disable windows update and this would still work.
 # If someone want to figure out in the simplest and cleanest way and make a PR.
 
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted

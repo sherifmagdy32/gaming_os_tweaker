@@ -1,8 +1,8 @@
-:: Use big pagefile to improve microstuttering (reboot or system might become unstable and BSoD).
+:: (Option1) Use big pagefile(swap) to improve microstuttering
 wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=32768,MaximumSize=32768
 
-:: (Alternative) Set to zero page file
+:: (Option2) Disable and remove pagefile
 :: wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 :: wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
 :: wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
