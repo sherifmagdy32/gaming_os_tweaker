@@ -1,6 +1,6 @@
 # Gaming OS Tweaker
 
-> Attempts to debloat, keep low input lag, low latency and have improved performance.
+> Attempts to debloat, keep low input lag, low latency, better hitreg and improved performance.
 
 ```txt
 I am not responsible for any damage the scripts could cause.
