@@ -1,6 +1,6 @@
 # Tools Source (urls)
 
-> If you dont trust the stored files from this folder, you can download them yourself directly from the place where it was downloaded from.
+> If you dont trust the stored files from this folder, you can download them yourself directly from the place where it was downloaded from. I just recommend that if you are going to use scripts, keep/overwrite them at this folder, otherwise some scripts will not work.
 
 - Device Cleanup CMD - <https://www.majorgeeks.com/files/details/device_cleanup_cmd>
 
