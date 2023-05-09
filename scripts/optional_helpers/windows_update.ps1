@@ -6,8 +6,8 @@
 # I dont know all the things in all the tweaks+debloat that would cause this to break, I know you can remove/disable windows update and this would still work.
 # If someone want to figure out in the simplest and cleanest way and make a PR.
 
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 if (!(Get-Module -Name PSWindowsUpdate)) {
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     Install-Module PSWindowsUpdate
     Add-WUServiceManager -MicrosoftUpdate
 }
