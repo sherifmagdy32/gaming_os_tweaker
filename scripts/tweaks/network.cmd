@@ -87,7 +87,11 @@ netsh int tcp set heuristics wsh=disabled forcews=enabled
 netsh int ip set global taskoffload=disabled
 netsh int ip set global neighborcachelimit=4096
 netsh int tcp set heuristics disabled
-netsh int tcp set global autotuninglevel=normal
+
+:: Disabled: Greatly reduce / complete remove bufferbloat in exchange of reducing bandwidth throughput slightly, depending on your connection. If not worth enough, I suggest the "normal" value instead.
+:: https://www.waveform.com/tools/bufferbloat
+netsh int tcp set global autotuninglevel=disabled
+
 netsh int tcp set supplemental Internet congestionprovider=newreno
 netsh int tcp set supplemental Internet congestionprovider=bbr2
 netsh int tcp set supplemental InternetCustom congestionprovider=newreno
