@@ -115,3 +115,4 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://github.com/dlwyatt/PolicyFileEditor>
   - <https://hexed.it/>
   - <https://systeminformer.sourceforge.io/>
+  - <https://github.com/thebookisclosed/ViVe>
