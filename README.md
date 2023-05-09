@@ -96,12 +96,6 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 ### Other
 
-- An option, would be to remove services
-  - <https://learn.microsoft.com/en-us/dotnet/framework/windows-services/how-to-install-and-uninstall-services>
-- RAM usage could be reduced if service drivers were looked into more completely.
-  - <https://systeminformer.sourceforge.io/>
-  - <https://woshub.com/huge-memory-usage-non-paged-pool-windows/>
-  - <https://superuser.com/questions/394430/identifying-root-cause-of-high-ram-usage-in-paged-pool>
 - Scheduling Priorities seem to have hard locks done by the OS, there is a way to undo those, but the tool recommended has a lot of red flags related to trojan. Maybe if built manually it would be worth using.
   - <https://www.youtube.com/watch?v=-jYnDuK-vB0>
   - <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities>
@@ -111,7 +105,7 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://github.com/HotCakeX/Harden-Windows-Security>
 
 - Tools that could be useful
-  - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell
+  - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell / regular scripting
   - <https://github.com/riverar/mach2>
   - <https://github.com/M2Team/NanaRun>
   - <https://www.zeus-software.com/downloads/ntfsaccess>
@@ -120,3 +114,4 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://www.snappy-driver-installer.org>
   - <https://github.com/dlwyatt/PolicyFileEditor>
   - <https://hexed.it/>
+  - <https://systeminformer.sourceforge.io/>
