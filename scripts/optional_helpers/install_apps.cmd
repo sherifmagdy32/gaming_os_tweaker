@@ -70,6 +70,9 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: Make the system more responsive
 :: winget install -e --id BitSum.ProcessLasso
 
+:: New Powershell
+:: winget install -e --id Microsoft.PowerShell
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -85,7 +88,7 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: winget install -e --id BiniSoft.WindowsFirewallControl
 
 :: Protection against many types of malware and more
-:: winget install -e --id=Bitdefender.Bitdefender
+:: winget install -e --id Bitdefender.Bitdefender
 :: winget install -e --id Malwarebytes.Malwarebytes
 
 :: Sandbox environment
