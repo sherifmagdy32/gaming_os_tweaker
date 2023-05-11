@@ -73,32 +73,6 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: New Powershell
 :: winget install -e --id Microsoft.PowerShell
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:: DO NOT download executables you dont know to be safe or decently safe. Check them before. You can use https://www.virustotal.com/ if online. Or scan with an good antimalware. You can also isolate it from your enviromnent by using a Sandbox environment like Sandboxie.
-
-:: https://www.privacytools.io/
-:: https://www.kaspersky.com.br/downloads/free-virus-removal-tool
-
-:: Replace Windows Firewall - I recommend at least simplewall as alternative, you have much more control and better visibility than Windows option, and more security.
-:: winget install -e --id Henry++.simplewall
-:: winget install -e --id Safing.Portmaster
-:: winget install -e --id BiniSoft.WindowsFirewallControl
-
-:: Protection against many types of malware and more
-:: winget install -e --id Bitdefender.Bitdefender
-:: winget install -e --id Malwarebytes.Malwarebytes
-
-:: Sandbox environment
-:: winget install -e --id Sandboxie.Plus
-
-:: Browser Extensions
-:: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
-:: https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp
-:: https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj
-
 :: ----------------------------------------------------------------------------------------------------------------
 :: ----------------------------------------------------------------------------------------------------------------
 
@@ -110,3 +84,34 @@ winget install -e --id dotPDNLLC.paintdotnet
 
 :: Replace File Explorer
 :: choco install files -y
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: DO NOT download executables you dont know to be safe or decently safe. Check them before. You can use https://www.virustotal.com/ if online. Or scan with an good antimalware. You can also isolate it from your enviromnent by using a Sandbox environment like Sandboxie.
+
+:: https://www.privacytools.io/
+:: https://www.kaspersky.com.br/downloads/free-virus-removal-tool
+:: https://www.kaspersky.com/anti-ransomware-tool
+:: https://www.malwarebytes.com/adwcleaner
+
+:: Replace Windows Firewall - I recommend at least simplewall as alternative, you have much more control and better visibility than Windows option, and more security.
+:: winget install -e --id Henry++.simplewall
+:: winget install -e --id Safing.Portmaster
+:: winget install -e --id GlassWire.GlassWire
+:: winget install -e --id BiniSoft.WindowsFirewallControl
+
+:: Protection against many types of malware and more
+:: winget install -e --id Bitdefender.Bitdefender
+:: winget install -e --id Malwarebytes.Malwarebytes
+:: choco install avirafreeantivirus
+:: choco install avastfreeantivirus
+
+:: Sandbox environment
+:: winget install -e --id Sandboxie.Plus
+
+:: Browser Extensions
+:: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
+:: https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp
+:: https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj
