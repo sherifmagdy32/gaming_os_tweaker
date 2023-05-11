@@ -76,9 +76,10 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: ----------------------------------------------------------------------------------------------------------------
 :: ----------------------------------------------------------------------------------------------------------------
 
-:: Alternatively you can use the most popular one. Chocolatey. Install with the following command, using powershell.
+:: Alternatively you can use the most popular one. Chocolatey.
 
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+:: Install Chocolatey
+powershell -c "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
 :: https://community.chocolatey.org/packages
 
