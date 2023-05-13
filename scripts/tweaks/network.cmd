@@ -13,11 +13,11 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *LsoV2IPv4 
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *LsoV2IPv6 -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PriorityVLANTag -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword AdaptiveIFS -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *IPChecksumOffloadIPv4 -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv4 -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv6 -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv4 -RegistryValue 0
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv6 -RegistryValue 0
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *IPChecksumOffloadIPv4 -RegistryValue 1
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv4 -RegistryValue 1
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *TCPChecksumOffloadIPv6 -RegistryValue 1
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv4 -RegistryValue 1
+powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksumOffloadIPv6 -RegistryValue 1
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMARPOffload -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMNSOffload -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *RSS -RegistryValue 1
@@ -44,7 +44,7 @@ powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 4
 
 powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled
 
-powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
+:: powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
 
 powershell Disable-NetAdapterLso -Name "*" -ErrorAction SilentlyContinue
 
@@ -265,11 +265,11 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*FlowControl" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TransmitBuffers" /t REG_SZ /d 1024 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*ReceiveBuffers" /t REG_SZ /d 1024 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv4" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv6" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*UDPChecksumOffloadIPv4" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*UDPChecksumOffloadIPv6" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*IPChecksumOffloadIPv4" /t REG_SZ /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv4" /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TCPChecksumOffloadIPv6" /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*UDPChecksumOffloadIPv4" /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*UDPChecksumOffloadIPv6" /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*IPChecksumOffloadIPv4" /t REG_SZ /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "ITR" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*InterruptModeration" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*PriorityVLANTag" /t REG_SZ /d 0 /f
