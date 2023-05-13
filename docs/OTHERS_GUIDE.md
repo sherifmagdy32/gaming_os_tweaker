@@ -55,13 +55,20 @@ CPU 4.
 8 Cores 16 Processors: Set Mask for GPU and its PCI Bridge to CPU 4. Set Mask for USB to
 CPU 8.
 ```
+> Before you read the rest, I found that PCI Bridge is not the best option at least for USB devices. Instead use AMD USB 3.10 extensible host controller. Goes by the name USB xHCI Compliant Host Controller. I didnt test to know that is correct or not.
+
+> I have been using the Core + Thread instead of just Core, since my CPU has Hyperthreading, and I dont know if that is the reason, the DPC avg are still the same, but the total DPC count are much lower.
+
+> You can do with any devices you want, I particularly do with GPU, Mouse and Network.
 
 Run `intPolicy_x64.exe` and use Device Manager, set View > Devices by Connection, Find the GPU and PCI-to-PCI Bridge and set to the same CPU, you can find the one if you go to Properties and Location in the General tab.
+
+(Optional): You can also use Physical Device Object Name from Details and compare with DevObj Name from the tool.
 
 For USB, if you do not know, go to Properties in the parent device, Details > Device description, that is the name, use the same Location. And follow the instructions.
 
 For USB Mouse, it has been HID-compliant mouse. Add all if more than one.
 
-You don't want to set the generic set that holds many values.
+You don't want to set the generic set that holds many values, like the PCI root.
 
 ---
