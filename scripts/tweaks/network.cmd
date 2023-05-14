@@ -4,6 +4,18 @@ for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName W
 
 :: Optmize network card settings
 
+powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
+powershell Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 10 -MinRto 300
+powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled
+powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterLso -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterRsc -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterIPsecOffload -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterPowerManagement -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterQos -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterEncapsulatedPacketTaskOffload -Name "*" -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterUso -Name "*" -ErrorAction SilentlyContinue
+
 :: Get-NetAdapterAdvancedProperty -Name "*" -AllProperties -IncludeHidden | SELECT * -ExpandProperty RegistryKeyword
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *FlowControl -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *InterruptModeration -RegistryValue 0
@@ -33,32 +45,10 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword ULPMode -Re
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword LogLinkStateEvent -RegistryValue 16
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *JumboPacket -RegistryValue 1514
 
-powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
-
-powershell Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 10 -MinRto 300
-
 powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 2
 powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 4
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 2
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 4
-
-powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled
-
-:: powershell Disable-NetAdapterChecksumOffload -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterLso -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterRsc -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterIPsecOffload -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterPowerManagement -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterQos -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterEncapsulatedPacketTaskOffload -Name "*" -ErrorAction SilentlyContinue
-
-powershell Disable-NetAdapterUso -Name "*" -ErrorAction SilentlyContinue
 
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lldp -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lltdio -ErrorAction SilentlyContinue
