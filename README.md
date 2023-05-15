@@ -10,7 +10,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 > Know that if you execute all the scripts, it will make your OS for games only, that is the focus. Dont expect to be usable for your everyday everything.
 
-> It will NOT leave your OS secure, because it remove and disable a lot of features in favor of performance. You need your good sense and just play games safely, like the ones installed by clients, e.g., steam, battle.net, etc.. Although I left some security options in `scripts/optional_helpers/install_apps.cmd`
+> It will NOT leave your OS secure, because it remove and disable a lot of features in favor of performance. You need your good sense and just play games safely, like the ones installed by clients, e.g., steam, battle.net, etc.. Although I left some security options in [scripts/optional_helpers/install_apps.cmd](/scripts/optional_helpers/install_apps.cmd)
 
 ---
 
@@ -70,9 +70,9 @@ Simply because as much as people tried to make it transparent by even putting it
 
 Main point is, there is no way to know how the image (ISO) are being built, it's not transparent there, whoever is responsible could use the opportunity to hide a rootkit in this part of the process, and no one would know, while keeping the argument that it was all open source. So, that's why.
 
-Rootkit means one could implement any sort of malicious code, like a spyware or any other type, as root (has access to everything, much more than is visible to users), and by doing that, in a modified OS preinstall, all security measures that would have been in place, could be bypassed, therefore allowing the malicious code to be executed and also be kept undetected.
+Rootkit means one could implement any sort of malicious code, like a spyware or any other type, as root (has access to everything, much more than is visible to users), and by doing that, in a modified OS preinstall, all security measures that would have been in place, could be bypassed, therefore allowing the malicious code to be executed and also be kept undetectable.
 
-I dont know about the legallity of distributing modified Windows OS.
+Also I dont know about the legallity of distributing modified Windows OS.
 
 It doesnt mean they arent trustworthy, I don't know them, it just means it's not transparent enough as it is.
 
