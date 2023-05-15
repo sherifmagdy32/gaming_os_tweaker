@@ -13,3 +13,5 @@ In that case:
 - Download Rufus at <https://rufus.akeo.ie/>
 - Create your bootable OS in your USB drive
 - Done!
+
+After you install, activate the windows before applying tweaks [scripts/optional_helpers/activate_windows.cmd](/scripts/optional_helpers/activate_windows.cmd) Add your KEY to the right place in the file.
