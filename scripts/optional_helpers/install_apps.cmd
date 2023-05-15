@@ -1,7 +1,9 @@
 :: https://winget.run/
 :: https://winstall.app/
 
-:: Know that :: are considered a comment, so the command wont run with it, unless you get the command by itself and run, or remove it from before the command, then you can run the file, for whatever line you might want to be used. But only do so for commands, and not explaining text, otherwise that will break the script.
+:: (IMPORTANT)
+:: Know that :: are considered a comment, so the command wont run if that on the left side of it, unless you get the command by itself and run, or remove it from before the command, then you can run the file. 
+:: But only do so for commands, and not the explaining text, otherwise that will break the script.
 
 :: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
 powershell "Install-Module WingetTools"
