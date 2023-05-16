@@ -57,7 +57,7 @@ CPU 8.
 ```
 > Before you read the rest, I found that PCI Bridge is not the best option at least for USB devices. Instead use AMD USB 3.10 extensible host controller. Goes by the name USB xHCI Compliant Host Controller. I didnt test to know that is correct or not.
 
-> I have been using the Core + Thread instead of just Core, since my CPU has Hyperthreading, and I dont know if that is the reason, the DPC avg are still the same, but the total DPC count are much lower.
+> ~~I have been using the Core + Thread instead of just Core, since my CPU has Hyperthreading, and I dont know if that is the reason, the DPC avg are still the same, but the total DPC count are much lower.~~
 
 > You can do with any devices you want, I particularly do with GPU, Mouse and Network.
 
