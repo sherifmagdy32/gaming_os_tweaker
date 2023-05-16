@@ -38,6 +38,7 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
 
 - Download at <https://www.techpowerup.com/download/microsoft-interrupt-affinity-tool/>
 - Alternative <https://github.com/spddl/GoInterruptPolicy>
+- (Optional) You can find the best core to assign the GPU affinity with <https://github.com/amitxv/AutoGpuAffinity>
 
 ### Guidelines
 
