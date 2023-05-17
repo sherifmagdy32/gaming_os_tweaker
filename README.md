@@ -30,6 +30,7 @@ Make sure you create a System Restore Point before running any scripts.
 - [OTHERS_GUIDE](/docs/OTHERS_GUIDE.md)
 - [AUDIO_GUIDE](/docs/AUDIO_GUIDE.md)
 - [CPU_GUIDE](/docs/CPU_GUIDE.md)
+- [RAM_GUIDE](/docs/RAM_GUIDE.md)
 - [PERIPHERALS_GUIDE](/docs/PERIPHERALS_GUIDE.md)
 
 ---
