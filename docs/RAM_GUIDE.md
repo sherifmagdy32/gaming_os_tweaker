@@ -6,7 +6,7 @@ Proper RAM OC seems to be what can help increase 1% LOW (FPS).
 
 Using the right tooling, you may have all the information you need plus what to stress and find errors.
 
-By finding those errors, you can consult a documentation which would point what you would need to do, what timing you would need to adjust.
+By finding those errors, you can consult a document which would point what you would need to do, what timing you would need to adjust.
 
 Most complete guide in the url below.
 
