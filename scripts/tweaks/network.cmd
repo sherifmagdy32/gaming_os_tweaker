@@ -165,7 +165,6 @@ for /f %%r in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\
 	REG ADD %%r /v TcpAckFrequency /t Reg_DWORD /d 1 /f
 	REG ADD %%r /v TcpInitialRTT /t Reg_DWORD /d 2 /f
 	REG ADD %%r /v TcpDelAckTicks /t Reg_DWORD /d 0 /f
-	REG ADD %%r /v MTU /t Reg_DWORD /d 1500 /f
 	REG ADD %%r /v UseZeroBroadcast /t Reg_DWORD /d 0 /f
 	REG ADD %%r /v InterfaceMetric /t Reg_DWORD /d 55 /f
 )
