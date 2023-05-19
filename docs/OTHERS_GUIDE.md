@@ -1,6 +1,6 @@
 # Tools that help
 
-## Timer Resolution
+## Timer Resolution / ISLC
 
 - Download at <https://www.wagnardsoft.com/forums/viewtopic.php?t=1256>
 - I recommend checking BOTH options on the bottom left
@@ -29,7 +29,7 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
   - (Optional) CPU Limiter > When CPU is 98% > Reduce by this Many Cores 1 > For a period of 1 > Add Rule
   - Options > Power > Performance Mode
     - Uncheck change power plan when engaged
-    - Uninstall Bitsum power plan 
+    - Uninstall Bitsum power plan
       - (Because it should use the Ultimate Performance plan only)
 - Done
 
@@ -57,6 +57,7 @@ CPU 4.
 8 Cores 16 Processors: Set Mask for GPU and its PCI Bridge to CPU 4. Set Mask for USB to
 CPU 8.
 ```
+
 > Before you read the rest, I found that PCI Bridge is not the best option at least for USB devices. Instead use AMD USB 3.10 extensible host controller. Goes by the name USB xHCI Compliant Host Controller. I didnt test to know that is correct or not.
 
 > ~~I have been using the Core + Thread instead of just Core, since my CPU has Hyperthreading, and I dont know if that is the reason, the DPC avg are still the same, but the total DPC count are much lower.~~
@@ -72,5 +73,24 @@ For USB, if you do not know, go to Properties in the parent device, Details > De
 For USB Mouse, it has been HID-compliant mouse. Add all if more than one.
 
 You don't want to set the generic set that holds many values, like the PCI root.
+
+---
+
+## MSI tool
+
+- Download v3 at <https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/>
+- If you applied my tweaks, all devices that support MSI will be enabled by default and all priority should be Undefined
+- However accordingly to this person, not using MSI (but LineBased) for certain devices is beneficial, as well as setting the priority. <https://www.youtube.com/watch?v=6CB8P0-hJRQ>
+- Particularly
+  - I left all MSI enabled except from the one from the Mouse
+  - I set Mouse USB and Ethernet priority to High, rest I left as Undefined
+
+---
+
+## Electromagnetic Interference or EMI
+
+Another one that seems to affect input lag and how snappy the mouse and camera move feels, is interference in electricity or EMI. <https://forums.blurbusters.com/viewtopic.php?t=6498>
+
+You can try buying a Line EMI Meter to measure Noise Voltage and AC Voltage. Also a EMF Meter to identify potential electromagnetic radiation. All to help you identify if there is a problem in your place.
 
 ---
