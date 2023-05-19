@@ -91,8 +91,8 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Ricochet (Call of Duty) - Working
 - BattleEye (Escape from Tarkov, Destiny 2) - Working
 - Punkbuster (BF4) - Working
-- Vanguard (Valorant) - Working **(But, only if you apply the `anticheat_fix.cmd` from `scripts/optional_helpers/` folder, to enable the exploit mitigations again.)**
-- FaceIT (CSGO) - Not Tested **(It seems that might be similar to Vanguard in terms of requirements. I dont play the game to know.)**
+- Vanguard (Valorant) - Working **(But, only if you apply the `anticheat_fix.cmd` from `scripts/optional_helpers/` folder, to enable the exploit mitigations.)**
+- FaceIT (CSGO) - Not Tested **(Might be similar to Vanguard in terms of requirements. I dont play the game to know.)**
 
 > I didnt have the opportunity to test every game, but most without Anti-Cheats should be working, except maybe VR/Mixed Reality. If anyone find any issue, feel free to create an issue and/or PR.
 
