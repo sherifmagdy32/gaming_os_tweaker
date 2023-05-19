@@ -99,6 +99,8 @@ netsh int tcp set global fastopen=enabled
 netsh int tcp set global fastopenfallback=disabled
 netsh int tcp set global initialRto=2000
 netsh int tcp set global maxsynretransmissions=2
+netsh int tcp set global pacingprofile=off
+netsh int tcp set global hystart=disabled
 netsh int tcp set security profiles=disabled
 netsh int tcp set security mpp=disable
 netsh int udp set global uro=enabled
@@ -146,11 +148,10 @@ FOR /F %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\
 	)
 )
 
-:: Core 2 Affinity
 for /f %%n in ('wmic path win32_networkadapter get PNPDeviceID ^| findstr /L "VEN_"') do (
-	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v AssignmentSetOverride /t REG_BINARY /d "04" /f >NUL 2>&1
-	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v DevicePolicy /t REG_DWORD /d 4 /f >NUL 2>&1
-	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Enum\%%n\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v MessageNumberLimit /t REG_DWORD /d 256 /f >NUL 2>&1
+	REG DELETE "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v AssignmentSetOverride /f >NUL 2>&1
+	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v DevicePolicy /t REG_DWORD /d 5 /f >NUL 2>&1
+	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\%%n\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v MessageNumberLimit /t REG_DWORD /d 256 /f >NUL 2>&1
 )
 
 :: Disable TCP delay
@@ -185,7 +186,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multime
 :: TCPIP and NetBT Optimizations
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v DefaultTTL /t REG_DWORD /d 64 /f :: Removed in favor of MultihopsSets
 REG DELETE "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v DefaultTTL /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v TcpTimedWaitDelay /t REG_DWORD /d 32 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v TcpTimedWaitDelay /t REG_DWORD /d 30 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v EnablePMTUBHDetect /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v KeepAliveTime /t REG_DWORD /d 0x006ddd00 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v QualifyingDestinationThreshold /t REG_DWORD /d 3 /f
@@ -210,6 +211,7 @@ REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" 
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v NodeType /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v EnablePMTUDiscovery /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v SackOpts /t REG_DWORD /d 0 /f
+REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NetBT\Parameters" /v TCPCongestionControl /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v UseDelayedAcceptance /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v MaxSockAddrLength /t REG_DWORD /d 16 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v MinSockAddrLength /t REG_DWORD /d 16 /f
@@ -242,15 +244,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameter
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\DnsClient" /v EnableMulticast /t REG_DWORD /d 0 /f
 
 :: Ethernet settings optimizations
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*RSSProfile" /t REG_SZ /d 3 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v ParamDesc /t REG_SZ /d "RSS load balancing profile" /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v default /t REG_SZ /d 1 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v type /t REG_SZ /d enum /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 1 /t REG_SZ /d ClosestProcessor /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 2 /t REG_SZ /d ClosestProcessorStatic /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 3 /t REG_SZ /d NUMAScaling /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 4 /t REG_SZ /d NUMAScalingStatic /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 5 /t REG_SZ /d ConservativeScaling /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*FlowControl" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*TransmitBuffers" /t REG_SZ /d 1024 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*ReceiveBuffers" /t REG_SZ /d 1024 /f
@@ -284,6 +277,13 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "RxIntModerationProfile" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "TxIntModerationProfile" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "AsyncReceiveIndicate" /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v TxIntDelay /t REG_SZ /d 5 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v PacketDirect /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v DisableDelayedPowerUp /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v EnableCoalesce /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v EnableUdpTxScaling /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v AlternateSemaphoreDelay /t REG_SZ /d 0 /f
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v CoalesceBufferSize /t REG_SZ /d 2048 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 1 /t REG_SZ /d "1 Queue" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 2 /t REG_SZ /d "2 Queues" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 3 /t REG_SZ /d "3 Queues" /f
@@ -302,8 +302,15 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v step /t REG_SZ /d 8 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v Base /t REG_SZ /d 10 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*TransmitBuffers" /v type /t REG_SZ /d int /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v TxIntDelay /t REG_SZ /d 5 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v PacketDirect /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*RSSProfile" /t REG_SZ /d 3 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v ParamDesc /t REG_SZ /d "RSS load balancing profile" /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v default /t REG_SZ /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile" /v type /t REG_SZ /d enum /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 1 /t REG_SZ /d ClosestProcessor /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 2 /t REG_SZ /d ClosestProcessorStatic /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 3 /t REG_SZ /d NUMAScaling /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 4 /t REG_SZ /d NUMAScalingStatic /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*RSSProfile\Enum" /v 5 /t REG_SZ /d ConservativeScaling /f
 
 :: NDIS tweaks
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NDIS\Parameters" /v ProcessorAffinityMask /t REG_DWORD /d 55 /f
@@ -379,6 +386,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WlanSvc\AnqpCache" /v OsuRegistra
 :: Disable more power saving features
 for /f %%a in ('REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*WakeOnMagicPacket" /s ^| findstr "HKEY"') do (
     for %%i in (
+				"EEE"
         "*EEE"
         "*FlowControl"
         "*LsoV2IPv4"
@@ -403,6 +411,33 @@ for /f %%a in ('REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*Wak
         "WakeOnLink"
         "WakeOnSlot"
         "WakeUpModeCap"
+				"PowerDownPll"
+				"*NicAutoPowerSaver"
+				"EeePhyEnable"
+				"MasterSlave"
+				"SavePowerNowEnabled"
+				"SipsEnabled"
+				"MPC"
+				"PowerSaveMode"
+				"ApCompatMode"
+				"bLeisurePs"
+				"bLowPowerEnable"
+				"bAdvancedLPs"
+				"InactivePs"
+				"Enable9KJFTpt"
+				"DMACoalescing"
+				"PMWiFiRekeyOffload"
+				"uAPSDSupport"
+				"*PacketCoalescing"
+				"NSOffloadEnable"
+				"ARPOffloadEnable"
+				"GTKOffloadEnable"
+				"WoWLANLPSLevel"
+				"*ModernStandbyWoLMagicPacket"
+				"S5WakeOnLan"
+				"WakeOnDisconnect"
+				"WoWLANS5Support"
+				"EnableWakeOnLan"
     ) do (
         for /f %%j in ('REG QUERY "%%a" /v "%%~i" ^| findstr "HKEY"') do (
             REG ADD "%%j" /v "%%~i" /t REG_SZ /d 0 /f
