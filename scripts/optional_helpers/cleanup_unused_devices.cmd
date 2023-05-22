@@ -1,3 +1,3 @@
 pushd "%~dp0"
 pushd ..\tools
-.\DeviceCleanupCmd *
+.\DeviceCleanupCmd -s *
