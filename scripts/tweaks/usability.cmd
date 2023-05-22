@@ -652,3 +652,6 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSetti
 :: Add new templates
 REG ADD "HKEY_CLASSES_ROOT\.txt\ShellNew" /v NullFile /t REG_SZ /f
 REG ADD "HKEY_CLASSES_ROOT\.cmd\ShellNew" /v NullFile /t REG_SZ /f
+
+:: Enable Nvidia Control Panel Desktop Context Menu (will appear only if installed)
+REG ADD "HKEY_CURRENT_USER\Software\NVIDIA Corporation\Global\NvCplApi\Policies" /v ContextUIPolicy /t REG_DWORD /d 2 /f

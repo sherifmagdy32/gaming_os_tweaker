@@ -41,7 +41,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multime
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\NVIDIA Corporation\NvTray" /v StartOnLogin /t REG_DWORD /d 0 /f
 
 :: Use advanced 3d image settings
-REG ADD "HKCU\Software\NVIDIA Corporation\Global\NVTweak" /v Gestalt /t REG_DWORD /d 2 /f
+REG ADD "HKEY_CURRENT_USER\Software\NVIDIA Corporation\Global\NVTweak" /v Gestalt /t REG_DWORD /d 2 /f
 
 :: Disable HDCP
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%GPU_DEVICE_CLASS_GUID_WITH_KEY%" /v RMHdcpKeyglobZero /t "REG_DWORD" /d 1 /f
@@ -58,7 +58,7 @@ REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Avalon.Graphics" /v DisableHWAccel
 :: Enable hardware accelerated scheduling
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v HwSchMode /t REG_DWORD /d 2 /f
 
-:: Before driver 451.48 was working, had less dps but snappier feeling on the input
+:: Before driver 451.48 was working, had less fps but snappier feeling on the input
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\nvlddmkm" /v DisableWriteCombining /t REG_DWORD /d 1 /f
 
 :: Show low latency mode options in NVCP. Or did.
@@ -391,6 +391,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%GPU_DEVICE_C
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\State\DisplayDatabase\%YOUR_DISPLAY_NAME%" /v DitherRegistryKey /t REG_BINARY /d db010000101010104f3000000 /f
 
 :: Set scaling to No Scaling in Nvidia Control Panel
+:: TODO: Find a way to automate this
+:: https://docs.google.com/spreadsheets/d/1ZWQFycOWdODkUOuYZCxm5lTp08V2m7gjZQSCjywAsl8/edit#gid=168557452 - Another good tweak to have would be "Override the scaling mode"
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration\%YOUR_CURRENT_DISPLAY_SETUP%\00\00" /v Scaling /t REG_DWORD /d 2 /f
 
 :: Disable display scaling
@@ -420,3 +422,6 @@ for /f %%n in ('wmic path Win32_VideoController get PNPDeviceID ^| findstr /L "V
 	REG DELETE "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v AssignmentSetOverride /f >NUL 2>&1
 	REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\%%n\Device Parameters\Interrupt Management\Affinity Policy" /v DevicePolicy /t REG_DWORD /d 3 /f >NUL 2>&1
 )
+
+:: Variable refresh rate / Optimizations for windowed games
+REG ADD "HKEY_CURRENT_USER\Software\Microsoft\DirectX\UserGpuPreferences" /v DirectXUserGlobalSettings /t REG_SZ /d "VRROptimizeEnable=0;SwapEffectUpgradeEnable=0;" /f

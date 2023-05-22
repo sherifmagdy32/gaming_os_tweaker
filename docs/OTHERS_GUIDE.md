@@ -80,9 +80,9 @@ You don't want to set the generic set that holds many values, like the PCI root.
 
 - Download v3 at <https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/>
 - If you applied my tweaks, all devices that support MSI will be enabled by default and all priority should be Undefined
-- However accordingly to this person, not using MSI (but LineBased) for certain devices is beneficial, as well as setting the priority. <https://www.youtube.com/watch?v=6CB8P0-hJRQ>
+- However accordingly to this person, not using MSI (but LineBased) for certain devices is beneficial, as well as setting the priority. <https://www.youtube.com/watch?v=6CB8P0-hJRQ> and <https://www.overclock.net/threads/msi-mode-disabled-for-network-adapter-works-much-better-than-enabled.1801132/>
 - Particularly
-  - I left all MSI enabled except from the one from the Mouse
+  - I left all with MSI enabled except from the device from the Mouse and Ethernet
   - I set Mouse USB and Ethernet priority to High, rest I left as Undefined
 
 ---

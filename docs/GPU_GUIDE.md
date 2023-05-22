@@ -43,8 +43,7 @@ After
 
 Optionally after
 
-- You can download the MSI utility v3 to make affinity tweaks. If you have run the tweaks scripts, you should have mostly MSI activated by default, just not the affinity.
-- <https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/>
+- In Nvidia Control Panel > Display > Adjust desktop size and position > No Scaling + Display + Override the scaling mode ON. Multiple sources said to have the lowest latency, at least on recent hardware.
 
 **You are done!**
 

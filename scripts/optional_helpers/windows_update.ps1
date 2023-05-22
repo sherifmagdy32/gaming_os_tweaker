@@ -33,7 +33,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -AutoReboot -Verbose
 
 # Exclude specific updates from installing
-# Hide-WindowsUpdate -KBArticleID KB4052623
+# Hide-WindowsUpdate -KBArticleID KB2267602
 
 # Install specific update
 # Install-WindowsUpdate -KBArticleID KB2267602

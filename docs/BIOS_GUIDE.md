@@ -21,7 +21,7 @@
 - Wifi - **Disabled**
 - Bluetooth - **Disabled**
 - USB Power (S5) - **Disabled**
-- AMD CoolnQuiet aka PSS - **Disabled**
+- AMD CoolnQuiet function aka (PSS Support) - **Disabled**
 - AI Tweaks > AI Overclock Tuner - **DOCP**
 - AI Tweaks > Memory Clock - **3800mhz**
 - AI Tweaks > FCLK Frequency - **1900mhz** (to keep 1:1 stable)
@@ -36,6 +36,8 @@
 - NBIO Common Options > SMU Common Options > SOC P-State - **P0**
 - NBIO Common Options > SMU Common Options > DF Cstates - **Disabled**
 - NBIO Common Options > SMU Common Options > NBIO LCLK DPM - **Manual and all to 2**
+- PEG ASPM - **Disabled**
+- PCIe Clock Gating - **Disabled** 
 
 ## Intel
 
