@@ -133,6 +133,9 @@ REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Mem
 :: Disable additional NTFS/ReFS mitigations.
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager" /v ProtectionMode /t REG_DWORD /d 0 /f
 
+:: Disable Intel TSX mitigation
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel" /v DisableTsx /t REG_DWORD /d 0 /f
+
 :: Improve Windows firewall settings
 netsh advfirewall set allprofiles firewallpolicy blockinbound,blockoutbound
 netsh advfirewall firewall delete rule all

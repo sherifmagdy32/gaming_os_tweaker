@@ -156,20 +156,20 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfile
 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" /f
 
 :: Remove Favorites from file explorer
-REG ADD "HKCR\CLSID\{323CA680-C24D-4099-B94D-446DD2D7249E}\ShellFolder" /v Attributes /t REG_DWORD /d 2696937728 /f
-REG ADD "HKCR\WOW6432Node\CLSID\{323CA680-C24D-4099-B94D-446DD2D7249E}\ShellFolder" /v Attributes /t REG_DWORD /d 2696937728 /f
+REG ADD "HKEY_CLASSES_ROOT\CLSID\{323CA680-C24D-4099-B94D-446DD2D7249E}\ShellFolder" /v Attributes /t REG_DWORD /d 2696937728 /f
+REG ADD "HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{323CA680-C24D-4099-B94D-446DD2D7249E}\ShellFolder" /v Attributes /t REG_DWORD /d 2696937728 /f
 
 :: Remove Family Group from file explorer
-REG ADD "HKCR\CLSID\{B4FB3F98-C1EA-428d-A78A-D1F5659CBA93}\ShellFolder" /v Attributes /t REG_DWORD /d 2962489612 /f
-REG ADD "HKCR\WOW6432Node\CLSID\{B4FB3F98-C1EA-428d-A78A-D1F5659CBA93}\ShellFolder" /v Attributes /t REG_DWORD /d 2962489612 /f
+REG ADD "HKEY_CLASSES_ROOT\CLSID\{B4FB3F98-C1EA-428d-A78A-D1F5659CBA93}\ShellFolder" /v Attributes /t REG_DWORD /d 2962489612 /f
+REG ADD "HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{B4FB3F98-C1EA-428d-A78A-D1F5659CBA93}\ShellFolder" /v Attributes /t REG_DWORD /d 2962489612 /f
 
 :: Remove OneDrive from file explorer
-REG ADD "HKCR\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\ShellFolder" /v Attributes /t REG_DWORD /d 4035969101 /f
-REG ADD "HKCR\WOW6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\ShellFolder" /v Attributes /t REG_DWORD /d 4035969101 /f
+REG ADD "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\ShellFolder" /v Attributes /t REG_DWORD /d 4035969101 /f
+REG ADD "HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\ShellFolder" /v Attributes /t REG_DWORD /d 4035969101 /f
 
 :: Remove Quick Access from file explorer
-REG ADD "HKCR\CLSID\{679f85cb-0220-4080-b29b-5540cc05aab6}\ShellFolder" /v Attributes /t REG_DWORD /d 2689597440 /f
-REG ADD "HKCR\WOW6432Node\CLSID\{679f85cb-0220-4080-b29b-5540cc05aab6}\ShellFolder" /v Attributes /t REG_DWORD /d 2689597440 /f
+REG ADD "HKEY_CLASSES_ROOT\CLSID\{679f85cb-0220-4080-b29b-5540cc05aab6}\ShellFolder" /v Attributes /t REG_DWORD /d 2689597440 /f
+REG ADD "HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{679f85cb-0220-4080-b29b-5540cc05aab6}\ShellFolder" /v Attributes /t REG_DWORD /d 2689597440 /f
 
 :: Windows Update related
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoWindowsUpdate /t REG_DWORD /d 1 /f
@@ -253,7 +253,7 @@ REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Pers
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableBlurBehind /t REG_DWORD /d 0 /f
 
 :: Disable acrylic blur effect on sign-in screen background
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableAcrylicBackgroundOnLogon /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableAcrylicBackgroundOnLogon /t REG_DWORD /d 1 /f
 
 :: Disable Notifications
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell" /v UseActionCenterExperience /t REG_DWORD /d 0 /f
@@ -493,6 +493,9 @@ REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Mu
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v SynchronousUserGroupPolicy /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v SynchronousMachineGroupPolicy /t REG_DWORD /d 0 /f
 
+:: Fix Mouse Disappearing cursor
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableCursorSuppression /t REG_DWORD /d 0 /f
+
 :: Remove quick access
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer" /v HubMode /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer" /v ShowRecent /t REG_DWORD /d 0 /f
@@ -612,7 +615,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VSCommon\15.0\SQM" /v
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\usbhub\hubg" /v DisableOnSoftRemove /t REG_DWORD /d 1 /f
 
 :: Remove print from context menu
-REG ADD "HKCR\SystemFileAssociations\image\shell\print" /v ProgrammaticAccessOnly /t REG_SZ /d "" /f
+REG ADD "HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\print" /v ProgrammaticAccessOnly /t REG_SZ /d "" /f
 for %%a in (
     "batfile"
     "cmdfile"
@@ -633,7 +636,7 @@ for %%a in (
     "VBSFile"
     "WSFFile"
 ) do (
-    REG ADD "HKCR\%%~a\shell\print" /v ProgrammaticAccessOnly /t REG_SZ /d "" /f
+    REG ADD "HKEY_CLASSES_ROOT\%%~a\shell\print" /v ProgrammaticAccessOnly /t REG_SZ /d "" /f
 )
 
 :: Get Insider Updates without joining the Insider Program and without having Telemetry enabled
@@ -655,3 +658,9 @@ REG ADD "HKEY_CLASSES_ROOT\.cmd\ShellNew" /v NullFile /t REG_SZ /f
 
 :: Enable Nvidia Control Panel Desktop Context Menu (will appear only if installed)
 REG ADD "HKEY_CURRENT_USER\Software\NVIDIA Corporation\Global\NvCplApi\Policies" /v ContextUIPolicy /t REG_DWORD /d 2 /f
+
+:: Disable ActiveProbing
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet" /v EnableActiveProbing /t REG_DWORD /d 0 /f
+
+:: Disable heap termination on corruption for explorer
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoHeapTerminationOnCorruption /t REG_DWORD /d 1 /f
