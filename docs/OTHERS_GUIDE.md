@@ -1,14 +1,5 @@
 # Tools that help
 
-## Timer Resolution / ISLC
-
-- Download at <https://www.wagnardsoft.com/forums/viewtopic.php?t=1256>
-- I recommend checking BOTH options on the bottom left
-- Set `0.0` on Wanted timer resolution and Check `Enable custom timer resolution`
-- Press `Start` and you are done
-
----
-
 ## Process Lasso
 
 - Download at <https://bitsum.com/>
@@ -31,6 +22,7 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
     - Uncheck change power plan when engaged
     - Uninstall Bitsum power plan
       - (Because it should use the Ultimate Performance plan only)
+  - Options > Tools > System Timer Resolution > Set to 0.5 and check Set a every boot.
 - Done
 
 ---
@@ -84,6 +76,17 @@ You don't want to set the generic set that holds many values, like the PCI root.
 - Particularly
   - I left all with MSI enabled except from the device from the Mouse and Ethernet
   - I set Mouse USB and Ethernet priority to High, rest I left as Undefined
+
+---
+
+## Timer Resolution / ISLC 
+
+> Optional, since Process Lasso recently added support for Timer Resolution, unless you have stuttering problems in-game, no point in using this.
+
+- Download at <https://www.wagnardsoft.com/forums/viewtopic.php?t=1256>
+- I recommend checking BOTH options on the bottom left
+- Set `0.0` on Wanted timer resolution and Check `Enable custom timer resolution` -
+- Press `Start` and you are done
 
 ---
 
