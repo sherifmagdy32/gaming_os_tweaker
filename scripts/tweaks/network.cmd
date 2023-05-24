@@ -3,7 +3,6 @@ for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName W
 :: ====================================================================================================================================
 
 :: Optmize network card settings
-
 powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
 powershell Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 10 -MinRto 300
 powershell Set-NetIPv4Protocol -MulticastForwarding Disabled -MediaSenseEventLog Disabled
