@@ -23,6 +23,12 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
     - Uninstall Bitsum power plan
       - (Because it should use the Ultimate Performance plan only)
   - Options > Tools > System Timer Resolution > Set to 0.5 and check Set a every boot.
+  - Options > Memory > SmartTrim Options
+    - Enable SmartTrim
+    - Enable Trim Working Sets
+    - Enable Purge standby list and system file cache
+    - Disable Only purge while in performance mode
+    - Leave all values as default or customize on what works for you
 - Done
 
 ---
@@ -79,9 +85,9 @@ You don't want to set the generic set that holds many values, like the PCI root.
 
 ---
 
-## Timer Resolution / ISLC 
+## Timer Resolution / ISLC
 
-> Optional, since Process Lasso recently added support for Timer Resolution, unless you have stuttering problems in-game, no point in using this.
+> Optional, if you use Process Lasso, recently they added support for Timer Resolution, and they already have SmartTrim Options that does exactly the same as this tool, so no point in using this.
 
 - Download at <https://www.wagnardsoft.com/forums/viewtopic.php?t=1256>
 - I recommend checking BOTH options on the bottom left
