@@ -24,7 +24,9 @@
 :: Reset DevicePriority from all other devices
 :: It would make use of regedit to alter certain aspects
 
-:: There could be certain user choices depending how much results can be filtered. Also in some cases, there are multiple of the same devices, and it could have a different device parent, hence, each child device would need to be dealt separately. But I could use one core per each type of device. If multiple mouses, all in same core, along with its parent.
+:: There could be certain user choices depending how much results can be filtered. Also in some cases, there are multiple of the same devices, and it could have a different device parent, hence, each child device would need to be dealt separately. 
+:: But I could use one core per each type of device. If multiple mouses, all in same core, along with its parent.
+:: Usually parent device would be separate from type, so I suppose maybe there is no problem there. Unless in some cases they were to be same parent for LAN, USB and even GPU.
 
 :: This would replace Interrupt Affinity Tool and MSI Tool.
 :: It would be based on pre-choices in attempt to reduce latency to the max in every aspect. Like some mentioned above.
