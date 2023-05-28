@@ -78,10 +78,11 @@ netsh int ip set global neighborcachelimit=4096
 netsh int tcp set heuristics disabled
 
 :: Disabled: Greatly reduce / complete remove bufferbloat in exchange of reducing bandwidth throughput slightly, depending on your connection. If not worth enough, I suggest the "normal" value instead.
-:: It will resolve the bufferbloat only in your machine, if you are making downloads/uploads while playing. It will NOT resolve the issue in your whole network, for that to happen it needs to be in the router, and your router and/or router OS must support it.
+:: It will resolve the bufferbloat only in your machine, if you are making downloads/uploads while playing. It will NOT resolve the issue in your whole network, for that to happen it needs to be in the router, and your router/routerOS must support and enable it.
 :: https://www.waveform.com/tools/bufferbloat
 netsh int tcp set global autotuninglevel=disabled
 
+:: CongestionProvider bbr2 recently added into Win11, should bring better performance over all others, it will be set if available.
 netsh int tcp set supplemental Internet congestionprovider=newreno
 netsh int tcp set supplemental Internet congestionprovider=bbr2
 netsh int tcp set supplemental InternetCustom congestionprovider=newreno

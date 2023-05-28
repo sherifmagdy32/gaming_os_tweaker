@@ -30,14 +30,14 @@
 - AMD CBS > NBIO > SMU > CCPC - **Disabled**
 - AMD CBS > NBIO > SMU > Preferred - **Disabled**
 - USB > XHCI handoff - **Disabled** (Optional, to turn usb 3.0 into 2.0)
-- AI Tweaker > Spread Spectrum - **Disabled**
+- AI Tweaker > Spread Spectrum - **Enabled** (Enable to help prevent/reduce EMI caused issues, like jitter. Check if cause input lag for you)
 - AMD CBS > Prefetcher Settings > L1 and L2 Stream - **Enabled**
 - NBIO Common Options > SMU Common Options > APBDIS - **1**
 - NBIO Common Options > SMU Common Options > SOC P-State - **P0**
 - NBIO Common Options > SMU Common Options > DF Cstates - **Disabled**
 - NBIO Common Options > SMU Common Options > NBIO LCLK DPM - **Manual and all to 2**
 - PEG ASPM - **Disabled**
-- PCIe Clock Gating - **Disabled** 
+- PCIe Clock Gating - **Disabled**
 
 ## Intel
 

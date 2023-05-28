@@ -1,5 +1,5 @@
 :: Optimize priorties to processes
-:: (CpuPriorityClass) 1 = Idle, 2 = Normal, 3 = High, 4 = RealTime, 5 = Below Normal, 6 = Above Normal
+:: (CpuPriorityClass) 1 = Low, 2 = Normal, 3 = High, 4 = RealTime, 5 = Below Normal, 6 = Above Normal
 :: (IoPriority) 0 = Very Low, 1 = Low, 2 = Normal, 3 = High, 4 = Critical
 
 :: Win processes
