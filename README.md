@@ -109,8 +109,6 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 - Could help improve security script
   - <https://github.com/atlantsecurity/windows-hardening-scripts>
   - <https://github.com/HotCakeX/Harden-Windows-Security>
-- Possible usefull explanations for low latency, even though not for windows
-  - <https://rigtorp.se/low-latency-guide/>
 
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell / regular scripting
