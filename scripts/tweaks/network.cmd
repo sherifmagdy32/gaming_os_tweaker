@@ -78,7 +78,8 @@ netsh int ip set global neighborcachelimit=4096
 netsh int tcp set heuristics disabled
 
 :: Disabled: Greatly reduce / complete remove bufferbloat in exchange of reducing bandwidth throughput slightly, depending on your connection. If not worth enough, I suggest the "normal" value instead.
-:: It will resolve the bufferbloat only in your machine, if you are making downloads/uploads while playing. It will NOT resolve the issue in your whole network, for that to happen it needs to be in the router, and your router/routerOS must support and enable it.
+:: It will resolve the bufferbloat only in your machine, if you are making downloads/uploads while playing. It will NOT resolve the issue in your whole network, for that to happen it needs to be in the router, and your router and routerOS must support and enable it.
+:: Why router and routerOS, because router must have good enough hardware to be able to handle if you have a internet connection with a lot of bandwidth and routerOS as software functionality so you can enable it.
 :: https://www.waveform.com/tools/bufferbloat
 netsh int tcp set global autotuninglevel=disabled
 
