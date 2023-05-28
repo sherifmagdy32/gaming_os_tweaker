@@ -1,4 +1,5 @@
-:: Get-PnpDevice -PresentOnly -Status OK, DEGRADED, UNKNOWN
+:: IAPT includes all status options. But this command is even better, as the tool shows generic naming, this show what actually is, if non-generic, it's more clear.
+:: Get-PnpDevice -PresentOnly
 
 :: Get-WmiObject Win32_PNPEntity | Select Name, DeviceID
 
@@ -31,5 +32,9 @@
 :: This would replace Interrupt Affinity Tool and MSI Tool.
 :: It would be based on pre-choices in attempt to reduce latency to the max in every aspect. Like some mentioned above.
 
+:: Depending how I build, I could include: InstanceId, DevObj Name, Location Info and maybe more.
+
 :: https://learn.microsoft.com/en-us/powershell/module/pnpdevice/get-pnpdeviceproperty
 :: https://learn.microsoft.com/en-us/powershell/module/pnpdevice/get-pnpdevice
+
+:: https://stackoverflow.com/questions/28172019/is-there-any-way-to-set-processor-affinity-of-a-powershell-script-before-executi

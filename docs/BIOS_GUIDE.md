@@ -29,7 +29,8 @@
 - Monitor > Q-Fan Configuration > WATER PUMP+ Control and AIO Pump - **Auto**
 - AMD CBS > NBIO > SMU > CCPC - **Disabled**
 - AMD CBS > NBIO > SMU > Preferred - **Disabled**
-- USB > XHCI handoff - **Disabled** (Optional, to turn usb 3.0 into 2.0)
+- USB > XHCI handoff - **Disabled** (Optional, to turn usb 3.0 into 2.0. Feels less floaty and more responsive. Alternative is a External PCIe USB card)
+- USB > Legacy USB Support - **Auto**
 - AI Tweaker > Spread Spectrum - **Enabled** (Enable to help prevent/reduce EMI caused issues, like jitter. Check if cause input lag for you)
 - AMD CBS > Prefetcher Settings > L1 and L2 Stream - **Enabled**
 - NBIO Common Options > SMU Common Options > APBDIS - **1**
