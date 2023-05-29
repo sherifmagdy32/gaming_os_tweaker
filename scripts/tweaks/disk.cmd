@@ -34,7 +34,6 @@ for /F "tokens=*" %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\System\CurrentControlSe
 )
 
 :: Disable disk power savings
-for /f "tokens=*" %%i in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "StorPort"^| findstr "StorPort"') do REG ADD "%%i" /v EnableIdlePowerManagement /t REG_DWORD /d 0 /f >nul 2>&1
 for %%i in (EnableHIPM EnableDIPM EnableHDDParking) do for /f %%a in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services" /s /f "%%i" ^| findstr "HKEY"') do REG ADD "%%a" /v "%%i" /t REG_DWORD /d 0 /f >nul 2>&1
 for /f %%i in ('call "resources\smartctl.exe" --scan') do (
     call "resources\smartctl.exe" -s apm,off %%i
@@ -46,7 +45,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\stornvme\Parameter
 :: Disable disk defrag
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction" /v Enable /t REG_SZ /d N /f
 
-:: Disable persistent timestamp refresh 
+:: Disable persistent timestamp refresh
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v TimeStampInterval /t REG_DWORD /d 0 /f
 
 :: File System tweaks
