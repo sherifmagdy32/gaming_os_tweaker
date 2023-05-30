@@ -32,8 +32,10 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *UDPChecksu
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMARPOffload -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *PMNSOffload -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *RSS -RegistryValue 1
+
+:: For FPS multiplayer gaming, it seems that 2 are better than 4, where that would be more beneficial for throughput
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *NumRssQueues -RegistryValue 2
-powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *NumRssQueues -RegistryValue 4
+
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *WakeOnMagicPacket -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *WakeOnPattern -RegistryValue 0
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword EEELinkAdvertisement -RegistryValue 0
@@ -45,9 +47,7 @@ powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword LogLinkStat
 powershell Set-NetAdapterAdvancedProperty -Name "*" -RegistryKeyword *JumboPacket -RegistryValue 1514
 
 powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 2
-powershell Set-NetAdapterRss -Name "*" -BaseProcessorNumber 4
 powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 2
-powershell Set-NetAdapterRss -Name "*" -MaxProcessorNumber 4
 
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lldp -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_lltdio -ErrorAction SilentlyContinue
@@ -270,7 +270,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*WakeOnPattern" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*WakeOnMagicPacket" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "WakeOnLink" /t REG_SZ /d 0 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*NumRssQueues" /t REG_SZ /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*NumRssQueues" /t REG_SZ /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "*RSS" /t REG_SZ /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "ULPMode" /t REG_SZ /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v "AllowAllSpeedsLPLU" /t REG_SZ /d 1 /f
@@ -287,8 +287,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEV
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%" /v CoalesceBufferSize /t REG_SZ /d 2048 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 1 /t REG_SZ /d "1 Queue" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 2 /t REG_SZ /d "2 Queues" /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 3 /t REG_SZ /d "3 Queues" /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*NumRssQueues\Enum" /v 4 /t REG_SZ /d "4 Queues" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v ParamDesc /t REG_SZ /d "Receive Buffers" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v default /t REG_SZ /d 256 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\%ETHERNET_DEVICE_CLASS_GUID_WITH_KEY%\Ndi\Params\*ReceiveBuffers" /v min /t REG_SZ /d 32 /f

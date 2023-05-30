@@ -38,3 +38,4 @@
 :: https://learn.microsoft.com/en-us/powershell/module/pnpdevice/get-pnpdevice
 
 :: https://stackoverflow.com/questions/28172019/is-there-any-way-to-set-processor-affinity-of-a-powershell-script-before-executi
+:: https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/page-26#post-5447998
