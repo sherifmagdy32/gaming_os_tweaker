@@ -15,6 +15,7 @@ powershell Enable-MMAgent -ApplicationPreLaunch
 
 :: Disallow drivers to get paged into virtual memory.
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management" /v DisablePagingExecutive /t REG_DWORD /d 1 /f
+REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager" /v DisablePagingExecutive /t REG_DWORD /d 1 /f
 
 :: Use big system memory caching to improve microstuttering.
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management" /v LargeSystemCache /t REG_DWORD /d 1 /f
