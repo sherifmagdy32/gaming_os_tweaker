@@ -125,3 +125,12 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
 
 - Videos that could be informative
   - <https://www.youtube.com/watch?v=6CB8P0-hJRQ>
+
+---
+
+### TODO
+
+> If anyone want to help, I might not have time to do these for now.
+
+-  [fix_installers.cmd](/scripts/optional_helpers/fix_installers.cmd) - **Priority**
+-  [interrupt_affinity_auto.ps1](/scripts/optional_helpers/interrupt_affinity_auto.ps1)
