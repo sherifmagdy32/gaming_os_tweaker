@@ -7,9 +7,9 @@
   Decimal/Hex values were used instead of Binary, hence why Interrupt Affinity Policy Tool will not recognize the core assigned. LatencyMon should show though.
 
   Script applies same core to each category, if you have 2 GPUs, it will assign same core for both. Script could evolve later, but wont be for now.
-  I put the same class of devices in same core, it could be that they are on different parent, that could be a problem, mainly for USB devices, or not.
+  I put the same class of devices in the same core, it could be that they are on different parent, that could be a problem, mainly for USB devices, or not.
 
-  There could be variation in USB Controller naming, if anyone have any device that are not being considered in this script, please can create an issue.
+  There could be variation in USB Controller naming, if anyone have any device that are not being considered in this script, you can create an issue.
 
   Current Choices:
     - Reset all interrupt affinity related options
