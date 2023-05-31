@@ -11,6 +11,12 @@
 
   There could be variation in controller naming, if anyone have any device that are not being considered in this script, can create an issue.
 
+	# Current Choices:
+		- Reset all interrupt affinity related options
+		- Enable MSI to everything that supports
+		- Change Priority to High and Disable MSI to both Mouse and LAN
+		- Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU) and their parent device.
+
   DevicePolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_device_policy
   DevicePriority: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_priority
   GroupPolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/miniport/ns-miniport-_group_affinity
