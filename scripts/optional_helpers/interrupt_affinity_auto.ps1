@@ -11,11 +11,11 @@
 
   There could be variation in controller naming, if anyone have any device that are not being considered in this script, can create an issue.
 
-	# Current Choices:
-		- Reset all interrupt affinity related options
-		- Enable MSI to everything that supports
-		- Change Priority to High and Disable MSI to both Mouse and LAN
-		- Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU) and their parent device.
+  Current Choices:
+	  - Reset all interrupt affinity related options
+    - Enable MSI to everything that supports
+    - Change Priority to High and Disable MSI to both Mouse and LAN
+    - Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU) and their proper parent device.
 
   DevicePolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_device_policy
   DevicePriority: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_priority
@@ -188,6 +188,7 @@ foreach ($item in $relevantData) {
 	$childAffinityPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ChildDeviceInstanceId\Device Parameters\Interrupt Management\Affinity Policy"
 	$parentMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ParentDeviceInstanceId\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
 	$childMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ChildDeviceInstanceId\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
+
 	if ($ClassType -eq 'Net') {
 		Set-ItemProperty -Path $childAffinityPath -Name "DevicePriority" -Value 3 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path $childMsiPath -Name "MSISupported" -Value 0 -Force -Type Dword -ErrorAction Ignore
