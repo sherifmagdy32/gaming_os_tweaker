@@ -12,6 +12,7 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
     - I/O Priority > Always to High
     - CPU Affinity > Uncheck Core 0 in Always
     - Disable Windows dynamic thread priority boosts
+    - It's also recommended to Uncheck the Core that you assigned to GPU in Interrupt Affinity, it helps with Frame Pacing. <https://github.com/amitxv/PC-Tuning/blob/main/docs/post-install.md#final-thoughts-and-tips>
   - Set Application Power Profile to Ultimate Performance scheme.
   - Main
     - Disable ProBalance.
@@ -30,6 +31,18 @@ heavy processes like games, it help to keep the OS more responsive, but more tha
     - Disable Only purge while in performance mode
     - Leave all values as default or customize on what works for you
 - Done
+
+---
+
+## Interrupt Affinity Auto
+
+I have built this script that can automatically assign cores to device and parent devices to all 3 main categories of devices, that is, Mouse, GPU and LAN.
+
+It's also made to replace Interrupt affinity policy tool and MSI tool, or at least automate what you would do with them.
+
+You can run with powershell and will ask to run as administrator.
+
+Script can be found at [interrupt_affinity_auto.ps1](../scripts/optional_helpers/interrupt_affinity_auto.ps1)
 
 ---
 
