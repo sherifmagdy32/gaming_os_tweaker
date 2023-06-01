@@ -3,7 +3,7 @@
   Whatever it is, it would be in any property -Value
 
   This script are able to replace Interrupt Affinity Policy Tool and MSI Tool.
-  It's based on pre-choices in attempt to reduce latency in every worth aspect. You can still change values to test if something else works better for you.
+  It's based on pre-choices in attempt to reduce latency / DPC avg / input lag in every worth aspect. You can still change values to test if something else works better for you.
   Decimal/Hex values were used instead of Binary, hence why Interrupt Affinity Policy Tool will not recognize the core assigned. LatencyMon should show though.
 
   Script applies same core to each category, if you have 2 GPUs, it will assign same core for both. Script could evolve later, but wont be for now.
