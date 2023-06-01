@@ -106,9 +106,6 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://www.youtube.com/watch?v=-jYnDuK-vB0>
   - <https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities>
   - <https://github.com/katlogic/WindowsD>
-- Could help improve security script
-  - <https://github.com/atlantsecurity/windows-hardening-scripts>
-  - <https://github.com/HotCakeX/Harden-Windows-Security>
 
 - Tools that could be useful
   - <https://msfn.org/board/topic/152688-win6x_registry_tweak/> - To remove apps not possible with powershell / regular scripting
