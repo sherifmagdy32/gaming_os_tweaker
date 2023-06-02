@@ -115,5 +115,6 @@ It doesnt mean they arent trustworthy, I don't know them, it just means it's not
   - <https://systeminformer.sourceforge.io/>
   - <https://github.com/thebookisclosed/ViVe>
 
-- Videos that could be informative
+- Videos/Channels that could be informative
   - <https://www.youtube.com/watch?v=6CB8P0-hJRQ>
+  - <https://www.youtube.com/@Savitarax/videos>
