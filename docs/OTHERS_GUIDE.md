@@ -109,6 +109,12 @@ You don't want to set the generic set that holds many values, like the PCI root.
 
 ---
 
+## A way to know your latency sensitivity
+
+<https://www.youtube.com/watch?v=fE-P_7-YiVM>
+
+---
+
 ## Electromagnetic Interference or EMI
 
 Another one that seems to affect input lag and how snappy the mouse and camera move feels, is interference in electricity or EMI. <https://forums.blurbusters.com/viewtopic.php?t=6498>
