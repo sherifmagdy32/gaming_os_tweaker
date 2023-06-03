@@ -3,8 +3,6 @@ powershell -c "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 sc config lanmanworkstation depend= bowser/mrxsmb20/nsi
 sc config mrxsmb10 start= disabled
 
-:: =====================================================================================================================================================
-
 :: Disable Windows Defender Antivirus
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableRoutinelyTakingAction /t REG_DWORD /d 1 /f
