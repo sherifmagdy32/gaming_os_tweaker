@@ -1,7 +1,3 @@
-for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {($_.PNPClass -match 'Net') -and ($_.Status -match 'OK') -and ($_.Name -like '*Connection*')} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY=%%a"
-
-:: ====================================================================================================================================
-
 :: Optmize network card settings
 powershell Set-NetOffloadGlobalSetting -ReceiveSegmentCoalescing Disabled -PacketCoalescingFilter Disabled -Chimney Disabled -ReceiveSideScaling Enabled -TaskOffload Enabled -ScalingHeuristics Disabled
 powershell Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 10 -MinRto 300
@@ -127,6 +123,9 @@ netsh interface ip delete arpcache
 netsh branchcache reset
 
 :: =============================================================================================================================================================================================
+
+:: Find the LAN/Ethernet device guid with key
+for /f "delims=" %%a in ('powershell -noprofile -c "Get-CimInstance -ClassName Win32_PnPEntity | where-object {($_.PNPClass -match 'Net') -and ($_.Status -match 'OK') -and ($_.Name -like '*Connection*')} | ForEach-Object { ($_ | Invoke-CimMethod -MethodName GetDeviceProperties).deviceProperties.where({$_.KeyName -EQ 'DEVPKEY_Device_Driver'}).data }"') do set "ETHERNET_DEVICE_CLASS_GUID_WITH_KEY=%%a"
 
 :: Disable QoS and NdisCap
 FOR /F "tokens=3*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\NetworkCards" /F "ServiceName" /S^| FINDSTR /I /L "ServiceName"') DO (
