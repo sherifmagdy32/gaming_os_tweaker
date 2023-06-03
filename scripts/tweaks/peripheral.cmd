@@ -124,5 +124,3 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\FLxHCIc\Parameters
 
 :: Disable device stop to save power in certain windows state
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\USB\AutomaticSurpriseRemovals" /v AttemptRecoveryFromUsbPowerDrain /t REG_DWORD /d 0 /f
-
-pause
