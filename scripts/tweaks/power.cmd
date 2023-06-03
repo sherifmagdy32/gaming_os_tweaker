@@ -1,6 +1,6 @@
 :: DC means on battery, usually a laptop, so, configurations will be all on AC.
 :: https://bitsum.com/known-windows-power-guids/
-:: For whatever reason you have to run this script twice the first time, it's not applying the powercfg changes after unlocking ultimate plan and removing the others.
+:: (Important) You have to run this script twice the first time. It's not applying the powercfg changes after unlocking ultimate plan and removing the others. (For now)
 
 :: Unlock Ultimate Performance power scheme and set as active
 for /f "tokens=2 delims=()" %%i IN ('powercfg /getactivescheme') do set CURRENT_PLAN=%%i
