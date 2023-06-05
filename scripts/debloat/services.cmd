@@ -40,6 +40,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\pcmcia" /v Start /
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\luafv" /v Start /t REG_DWORD /d 4 /f
 
 :: Windows Defender Firewall
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f
 
 :: If stopped, firewall stop working
@@ -53,8 +55,10 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\FontCache" /v Star
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\rdyboost" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\CSC" /v Start /t REG_DWORD /d 4 /f
 
-:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Schedule" /v Start /t REG_DWORD /d 2 /f :: Task Scheduler
-:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TimeBrokerSvc" /v Start /t REG_DWORD /d 4 /f :: Background work on Task scheduler
+:: Task Scheduler
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Schedule" /v Start /t REG_DWORD /d 2 /f 
+:: Background work on Task scheduler
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TimeBrokerSvc" /v Start /t REG_DWORD /d 4 /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\storflt" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\srvnet" /v Start /t REG_DWORD /d 4 /f
@@ -219,8 +223,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\dmwappushservice" 
 :: Cause issues with nvcleaninstall driver telemetry tweak
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\KeyIso" /v Start /t REG_DWORD /d 3 /f
 
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NcbService" /v Start /t REG_DWORD /d 4 /f
-
 :: Can break Nework setting view
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WpnService" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WpnUserService" /v Start /t REG_DWORD /d 4 /f
@@ -236,6 +238,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DiagTrack" /v Star
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\GraphicsPerfSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SstpSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\XboxGipSvc" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NcbService" /v Start /t REG_DWORD /d 4 /f
 
 :: VR
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\perceptionsimulation" /v Start /t REG_DWORD /d 4 /f
