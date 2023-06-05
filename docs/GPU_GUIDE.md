@@ -15,6 +15,7 @@
   - Alternative tool <https://displaycal.net/>
     - It can improve further than windows does, but it seems you need to keep it open.
     - <https://www.youtube.com/watch?v=65VVCXBmnbs>
+- You can reduce input lag and crosstalk by making adjustments to pixel and refresh rate <https://forums.blurbusters.com/viewtopic.php?t=8946>
 
 ## Nvidia
 
