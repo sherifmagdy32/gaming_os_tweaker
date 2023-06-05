@@ -12,7 +12,7 @@ Make sure you create a System Restore Point before running any scripts.
 
 > Do not blindly apply everything without even understanding what you are doing, I recommend checking each script before doing so. Some have comments about certain choices in them.
 
-> It will NOT leave your OS secure, because it remove and disable a lot of features in favor of performance. You need your good sense and just play games safely, like the ones installed by clients, e.g., steam, battle.net, etc.. Although I left some security options in [scripts/optional_helpers/install_apps.cmd](/scripts/optional_helpers/install_apps.cmd) in the security section.
+> It will NOT leave your OS secure, because scripts will remove and/or disable all of Windows Defender ecosystem features in favor of performance. You need your good sense and just play games safely, like the ones installed by clients, e.g., steam, battle.net, etc.. Although I left some security options in [scripts/optional_helpers/install_apps.cmd](/scripts/optional_helpers/install_apps.cmd) in the security section.
 
 ---
 
@@ -44,7 +44,7 @@ From a fresh Windows 10 22H2 install and completely updated, and applying the sc
 
 No additional tools were used.
 
-It's a very clean OS, while being decently functional. Task scheduler, UAC and Firewall are kept enabled. Windows Update are disabled due to not being able to complete installation.
+It's a very clean OS, while being decently functional. Task Scheduler and UAC (minimum) are kept enabled, I enabled the installation of `simplewall` which is better than Windows Firewall if you execute the `install_apps.cmd` script. Windows Update are disabled due to not being able to complete installation.
 
 In my 5800X3D, the average DPC Latency are at `0.7`. Maybe with a high-end Intel that would be even less. Though latest nvidia drivers are having high dpc issues, and they have recognized and are working on it, when they fix, maybe even with Ryzen will be less in the average. With the CPU idle state disabled, it was able to go to `0.5`, but the average fps in Overwatch 2 for example were less than when enabled.
 
