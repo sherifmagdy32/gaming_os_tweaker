@@ -35,6 +35,7 @@ Make sure you create a System Restore Point before running any scripts.
 - [RAM_GUIDE](/docs/RAM_GUIDE.md)
 - [BIOS_GUIDE](/docs/BIOS_GUIDE.md)
 - [PERIPHERALS_GUIDE](/docs/PERIPHERALS_GUIDE.md)
+- [SECURITY_GUIDE](/docs/SECURITY_GUIDE.md)
 
 ---
 
