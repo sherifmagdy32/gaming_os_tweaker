@@ -109,7 +109,7 @@ powershell -c "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.Ser
 :: https://www.malwarebytes.com/adwcleaner
 
 :: Replace Windows Firewall - I recommend at least simplewall as alternative, you have much more control and better visibility than Windows option, and more security.
-:: winget install -e --id Henry++.simplewall
+winget install -e --id Henry++.simplewall
 :: winget install -e --id Safing.Portmaster
 :: winget install -e --id GlassWire.GlassWire
 :: winget install -e --id BiniSoft.WindowsFirewallControl
