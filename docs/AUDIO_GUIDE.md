@@ -19,3 +19,7 @@
     - RoughtRider3 <https://www.audiodamage.com/pages/free-downloads>
   - I know that Loudmax and Reacomp can work together.
   - You may look for how to do the setting or setup how you want.
+  - (References)
+    - <https://www.reddit.com/r/EscapefromTarkov/comments/f04go3/comment/fgs0sgw/?utm_source=share&utm_medium=web2x&context=3>
+    - <https://www.youtube.com/watch?v=vXuAwpt4WsQ>
+    - <https://www.youtube.com/watch?v=OeW5sZ6djt8>

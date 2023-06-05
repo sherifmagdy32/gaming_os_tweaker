@@ -50,7 +50,7 @@ Script can be found at [interrupt_affinity_auto.ps1](../scripts/optional_helpers
 
 - Download at <https://www.techpowerup.com/download/microsoft-interrupt-affinity-tool/>
 - Alternative <https://github.com/spddl/GoInterruptPolicy>
-- (Optional) You can find the best core to assign the GPU affinity with <https://github.com/amitxv/AutoGpuAffinity>
+- (Optional) You can find the best core to assign the GPU affinity with <https://github.com/amitxv/AutoGpuAffinity> or <https://github.com/spddl/AutoGpuAffinity>
 
 ### Guidelines
 
@@ -112,6 +112,22 @@ You don't want to set the generic set that holds many values, like the PCI root.
 ## A way to know your latency sensitivity
 
 <https://www.youtube.com/watch?v=fE-P_7-YiVM>
+
+---
+
+## LAN Card option
+
+A decent option if you have a LAN problem.
+
+<https://www.asus.com/networking-iot-servers/wired-networking/all-series/xg-c100c/>
+
+---
+
+## NVME
+
+### Samsung
+
+If you have Samsung NVME, install the driver, it may bring speed improvements <https://www.guru3d.com/files-details/samsung-nvme-ssd-driver-download.html>
 
 ---
 

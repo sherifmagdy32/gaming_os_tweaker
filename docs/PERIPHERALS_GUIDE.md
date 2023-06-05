@@ -6,6 +6,8 @@
 
 - (At your own risk), you can disable xCHI Interrupt Moderation for USB, mainly to benefit mouses. <https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md>
 
+- Convert games or DPI sensitivity by using <https://www.mouse-sensitivity.com/>
+
 ## Mouse
 
 - Best solution for mouse acceleration <https://github.com/a1xd/rawaccel>

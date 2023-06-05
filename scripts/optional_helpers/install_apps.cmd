@@ -2,7 +2,7 @@
 :: https://winstall.app/
 
 :: (IMPORTANT)
-:: Know that :: are considered a comment, so the command wont run if that on the left side of it, unless you get the command by itself and run, or remove it from before the command, then you can run the file. 
+:: Know that :: are considered a comment, so the command wont run if that on the left side of it, unless you get the command by itself and run, or remove it from before the command, then you can run the file.
 :: But only do so for commands, and not the explaining text, otherwise that will break the script.
 
 :: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
@@ -66,7 +66,7 @@ winget install -e --id dotPDNLLC.paintdotnet
 :: winget install -e --id EpicGames.EpicGamesLauncher
 :: winget install -e --id OBSProject.OBSStudio
 
-:: Check drivers latency
+:: Test DPC and interrupt latency
 :: winget install -e --id Resplendence.LatencyMon
 
 :: Make the system more responsive
@@ -87,6 +87,15 @@ powershell -c "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.Ser
 
 :: Replace File Explorer
 :: choco install files -y
+
+:: Test to find WHEA errors
+:: choco install occt -y
+
+:: ----------------------------------------------------------------------------------------------------------------
+:: ----------------------------------------------------------------------------------------------------------------
+
+:: One of the best tunneling tools to lower ping/use better routes for MMORPGs
+:: https://www.exitlag.com/
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Security :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

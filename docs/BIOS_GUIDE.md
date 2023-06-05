@@ -6,6 +6,10 @@
 
 > Note2: There are even hidden BIOS settings that I currently am not using, if someone want to risk. <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPuLJPi5D7xYJgQ4sxDM/edit#heading=h.aas727jxt9fk>
 
+> Note3: Ideally you would want Infinite Fabric Clock (FCLK) and Memory Controller Clock (UCLK) the same as Memory Clock.
+
+> BIOS UPDATE: Use Ez Flash Utility in BIOS setup instead of USB or their software, if you have the option, less potential problems.
+
 - SVM Mode - **Disabled** (I keep Enabled due to using virtualization functionality in another OS)
 - CSM - **Disabled**
 - Fast Boot - **Disabled**
