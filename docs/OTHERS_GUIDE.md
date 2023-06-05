@@ -115,11 +115,9 @@ You don't want to set the generic set that holds many values, like the PCI root.
 
 ---
 
-## LAN Card option
+## LAN
 
-A decent option if you have a LAN problem.
-
-<https://www.asus.com/networking-iot-servers/wired-networking/all-series/xg-c100c/>
+A decent option if you have a LAN card problem <https://www.asus.com/networking-iot-servers/wired-networking/all-series/xg-c100c/>
 
 ---
 
