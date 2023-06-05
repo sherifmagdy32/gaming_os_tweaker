@@ -13,15 +13,12 @@ REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Class\{6bdd1fc6-810
 REG ADD "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Class\{71a27cdd-812a-11d0-bec7-08002be2092f}" /v LowerFilters /t REG_MULTI_SZ /d "" /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fvevol" /v ErrorControl /t REG_DWORD /d 0 /f
 
-:: Disable AMD Logging
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\amdlog" /v Start /t REG_DWORD /d 4 /f
-
 :: ====================================================================================================================================
 
 :: Startup Types: 0 = Boot, 1 = System, 2 = Automatic, 3 = Manual, 4 = Disabled
 :: DelayedAutoStart 0 or 1, same level as Start key
 
-:: Alter reg through Linux by using chntpw -e /media/YOUR_DISK/Windows/System32/config/SYSTEM or a different value path that you want, from config folder.
+:: Alter reg/registry through Linux by using "chntpw -e /media/YOUR_DISK/Windows/System32/config/SYSTEM" or a different value path that you want, from config folder.
 
 pushd "%~dp0"
 pushd ..\tools
@@ -196,6 +193,9 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Telemetry" /v Star
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\esifsvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\GpuEnergyDrv" /v Start /t REG_DWORD /d 4 /f
+
+:: Disable AMD Logging
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\amdlog" /v Start /t REG_DWORD /d 4 /f
 
 :: Can break microsoft store games
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\wcifs" /v Start /t REG_DWORD /d 4 /f
