@@ -8,6 +8,8 @@
 
 - Convert games or DPI sensitivity by using <https://www.mouse-sensitivity.com/>
 
+- Keyboard measurements <https://github.com/mat1jaczyyy/Keyboard-Inspector> and <https://blog.seethis.link/scan-rate-estimator/>
+
 ## Mouse
 
 - Best solution for mouse acceleration <https://github.com/a1xd/rawaccel>
