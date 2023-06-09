@@ -70,7 +70,6 @@ Get-WmiObject Win32_NetworkAdapter | Where-Object PNPDeviceID -Match "PCI\\VEN*"
 	Remove-ItemProperty -Path $affinityPath -Name "DevicePolicy" -Force -ErrorAction Ignore
 	Remove-ItemProperty -Path $affinityPath -Name "DevicePriority" -Force -ErrorAction Ignore
 	Set-ItemProperty -Path $msiPath -Name "MSISupported" -Value 1 -Force -Type Dword -ErrorAction Ignore
-	Set-ItemProperty -Path $msiPath -Name "MessageNumberLimit" -Value 256 -Force -Type Dword -ErrorAction Ignore
 }
 Get-WmiObject Win32_IDEController | Where-Object PNPDeviceID -Match "PCI\\VEN*" | Select-Object -ExpandProperty PNPDeviceID | ForEach {
 	$devicePath = $_
@@ -192,6 +191,7 @@ foreach ($item in $relevantData) {
 	if ($ClassType -eq 'Net') {
 		Set-ItemProperty -Path $childAffinityPath -Name "DevicePriority" -Value 3 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path $childMsiPath -Name "MSISupported" -Value 0 -Force -Type Dword -ErrorAction Ignore
+		Set-ItemProperty -Path $childMsiPath -Name "MessageNumberLimit" -Value 2 -Force -Type Dword -ErrorAction Ignore
 	}
 	if ($ClassType -eq 'Mouse') {
 	 	Set-ItemProperty -Path $parentAffinityPath -Name "DevicePriority" -Value 3 -Force -Type Dword -ErrorAction Ignore

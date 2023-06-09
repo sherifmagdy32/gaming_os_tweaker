@@ -92,9 +92,8 @@ schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" /f
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\UpdateOrchestrator\*' | Unregister-ScheduledTask -Confirm:$false"
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\WindowsUpdate\*' | Unregister-ScheduledTask -Confirm:$false"
 
-:: Deleting this task, it comes back after restart, temp solution is disable, till cause is found
-:: schtasks /delete /tn "Microsoft\Windows\WindowsUpdate\Scheduled Start" /f
-schtasks /change /tn "Microsoft\Windows\WindowsUpdate\Scheduled Start" /disable
+:: Deleting this task, it comes back after restart. Even if disabled, it comes back at some point. Same as Windows update services. Fix needed.
+schtasks /delete /tn "Microsoft\Windows\WindowsUpdate\Scheduled Start" /f
 
 schtasks /delete /tn "Microsoft\Windows\Device Information\Device" /f
 schtasks /delete /tn "Microsoft\Windows\Device Information\Device User" /f
