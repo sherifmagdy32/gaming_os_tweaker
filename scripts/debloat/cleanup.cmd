@@ -14,3 +14,6 @@ del /s /f /q %userprofile%\Recent\*.*
 del /s /f /q %systemdrive%\Windows\Prefetch\*.*
 del /s /f /q %systemdrive%\Windows\Temp\*.*
 del /s /f /q %USERPROFILE%\appdata\local\temp\*.*
+
+:: Delete downloaded windows update files
+erase /f /s /q %systemdrive%\windows\softwaredistribution\*.* && rmdir /s /q %systemdrive%\windows\softwaredistribution
