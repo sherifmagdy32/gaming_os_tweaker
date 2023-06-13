@@ -101,7 +101,7 @@ function Is-Even {
 }
 
 # Get all relevant child devices
-$allDevices = Get-PnpDevice -PresentOnly -Class ('Mouse', 'Display', 'Net') -Status OK | Sort-Object -Property Class
+$allDevices = Get-PnpDevice -PresentOnly -Class ('Mouse', 'Display', 'Net', 'Media') -Status OK | Sort-Object -Property Class
 
 [PsObject[]]$relevantData = @()
 

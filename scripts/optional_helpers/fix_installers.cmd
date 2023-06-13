@@ -29,7 +29,7 @@
 :: net start WSService :: Maybe it was removed too, it was invalid when I tried
 
 :: net start InstallService :: Was kept default manual
-:: net start PushToInstall :: Was kept default manual
+:: net start PushToInstall :: Was kept default manual - But in my case, was removed by mistake.
 :: net start DcomLaunch :: Was kept default auto, to not break other dependent parts.
 :: net start TrustedInstaller :: Was kept default manual.
 
