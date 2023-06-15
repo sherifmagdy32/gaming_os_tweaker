@@ -11,11 +11,15 @@
 
   There could be variation in USB Controller naming, if anyone have any device that are not being considered in this script, you can create an issue.
 
+  Beware: Audio USB and Keyboard might be on the same parent as Mouse, so the parent being the same, it would lose the core assigned of one to the other. Recommended to plug into a different controller. 
+  Check # Priorities to enable/disable and prioritize types of class of devices
+
   Current Choices:
     - Reset all interrupt affinity related options
     - Enable MSI to everything that supports
     - Change Priority to High and Disable MSI to both Mouse and LAN
-    - Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU) and their proper parent device.
+    - Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU, Audio USB) and their proper parent device
+	- Keyboard will be disabled by default
 
   DevicePolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_device_policy
   DevicePriority: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_priority
@@ -30,13 +34,15 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit
 }
 
+$MIN_CORES_ALLOWED = 4
+
 # Core pre-check
 $processorCounts = Get-WmiObject Win32_Processor | Select NumberOfCores, NumberOfLogicalProcessors
 $coresAmount = $processorCounts.NumberOfCores
 $threadsAmount = $processorCounts.NumberOfLogicalProcessors
 $isHyperThreadingActive = $threadsAmount -gt $coresAmount
-if ($coresAmount -lt 4) {
-	Write-Host 'To apply Interrupt Affinity tweaks, you must have 4 or more cores'
+if ($coresAmount -lt $MIN_CORES_ALLOWED) {
+	Write-Host "To apply Interrupt Affinity tweaks, you must have $MIN_CORES_ALLOWED or more cores"
 	exit
 }
 
@@ -100,25 +106,49 @@ function Is-Even {
 	$value % 2 -eq 0
 }
 
+# Priorities - Where lowest number is first.
+$priorities = @(
+	[PsObject]@{Class = 'Display'; Priority = 1; Enabled = $true; Description = 'GPU'; isUSB = $false},
+	[PsObject]@{Class = 'Mouse'; Priority = 2; Enabled = $true; Description = 'Mouse'; isUSB = $true},
+	[PsObject]@{Class = 'Net'; Priority = 3; Enabled = $true; Description = 'LAN / Ethernet'; isUSB = $false},
+	[PsObject]@{Class = 'Media'; Priority = 4; Enabled = $false; Description = 'Audio'; isUSB = $true},
+	[PsObject]@{Class = 'Keyboard'; Priority = 5; Enabled = $false; Description = 'Keyboard'; isUSB = $true}
+)
+
+$enabledClasses = $priorities | Where-Object { $_.Enabled -eq $true } | ForEach-Object { $_.Class }
+$enabledUSBClasses = $priorities | Where-Object { $_.Enabled -eq $true -and $_.isUSB -eq $true } | ForEach-Object { $_.Class }
+
 # Get all relevant child devices
-$allDevices = Get-PnpDevice -PresentOnly -Class ('Mouse', 'Display', 'Net', 'Media') -Status OK | Sort-Object -Property Class
+$allDevices = Get-PnpDevice -PresentOnly -Class $enabledClasses -Status OK
+$prioritizedDevices = $allDevices | ForEach-Object {
+	$device = $_ 
+	$priorityDevice = $priorities | Where-Object { $_.Class -eq $device.Class}
+	return [PsObject]@{
+		Class = $device.Class; 
+		FriendlyName = $device.FriendlyName; 
+		InstanceId = $device.InstanceId; 
+		Priority = $priorityDevice.Priority; 
+		Enabled = $priorityDevice.Enabled; 
+		isUSB = $priorityDevice.isUSB
+	}
+} | Sort-Object { $_.Priority }
 
 [PsObject[]]$relevantData = @()
 
 # Get all relevant devices data
-for ($i=0; $i -lt $allDevices.Length; $i++) {
-	$childDevice = $allDevices[$i]
+for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
+	$childDevice = $prioritizedDevices[$i]
 	$childDeviceName = $childDevice.FriendlyName
 	$childDeviceInstanceId = $childDevice.InstanceId
 	$childPnpDevice = Get-PnpDeviceProperty -InstanceId $childDeviceInstanceId
+
+	$childDeviceClass = $childDevice.Class
+	$isUSB = $childDeviceClass -in $enabledUSBClasses
 
 	$childPnpDeviceLocationInfo = $childPnpDevice | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
 	$childPnpDevicePDOName = $childPnpDevice | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
 
 	$parentDeviceInstanceId = $childPnpDevice | Where KeyName -eq 'DEVPKEY_Device_Parent' | Select -ExpandProperty Data
-
-	$childDeviceClass = $childDevice.Class
-	$isUSB = $childDeviceClass -in @('Mouse')
 
 	$parentDevice = $null
 	$parentDeviceName = ""
@@ -147,10 +177,11 @@ for ($i=0; $i -lt $allDevices.Length; $i++) {
 	}
 }
 
+$coresValues = if ($isHyperThreadingActive) { $threadsAmount } else { $coresAmount }
+
 # Build masks per core
 [System.Collections.ArrayList]$coresMask = @()
 $tempDecimalValue = 1;
-$coresValues = if ($isHyperThreadingActive) { $threadsAmount } else { $coresAmount }
 for ($i=0; $i -lt $coresValues; $i++) {
 	# https://poweradm.com/set-cpu-affinity-powershell/
 	[void]$coresMask.Add(@{ Core = $i; Decimal = $tempDecimalValue; })
@@ -160,7 +191,7 @@ for ($i=0; $i -lt $coresValues; $i++) {
 # Build cores to be used
 [System.Collections.ArrayList]$coresToBeUsed = @()
 foreach ($item in $relevantData) {
-	for ($i=1; $i -le $coresAmount; $i++) {
+	for ($i=1; $i -le $coresValues; $i++) {
 		$core = if ($isHyperThreadingActive) { if (Is-Even -value $i) { $i } else { $i+1 } } else { $i }
 		if (!($coresToBeUsed | Where-Object { $_.Core -eq $core })) {
 			if (!($coresToBeUsed | Where-Object { $_.ClassType -eq $item.ClassType })) {
