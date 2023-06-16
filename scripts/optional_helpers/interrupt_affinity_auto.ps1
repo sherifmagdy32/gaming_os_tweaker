@@ -21,6 +21,18 @@
     - Apply each core (not thread) that is not 0 and is available to each type of devices that is being looked up (Mouse, LAN, GPU, Audio USB) and their proper parent device
 	- Keyboard will be disabled by default
 
+  ---------------------------
+
+  In case you get problems running the script in Win11, you can run the command to allow, and after, another to set back to a safe or undefined policy
+  
+  You can check the current policy settings
+  Get-ExecutionPolicy -List
+
+  Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser -Confirm:$false -Force
+  Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Confirm:$false -Force
+
+  ---------------------------
+
   DevicePolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_device_policy
   DevicePriority: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ne-wdm-_irq_priority
   GroupPolicy: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/miniport/ns-miniport-_group_affinity

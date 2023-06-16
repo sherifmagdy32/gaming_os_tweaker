@@ -85,10 +85,18 @@ schtasks /delete /tn "Microsoft\Windows\MemoryDiagnostic\RunFullMemoryDiagnostic
 schtasks /delete /tn "Microsoft\Windows\HelloFace\FODCleanupTask" /f
 schtasks /delete /tn "Microsoft\Windows\Defrag\ScheduledDefrag" /f
 schtasks /delete /tn "Microsoft\Windows\Clip\License Validation" /f
+
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\UpdateModelTask" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Report policies" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\UUS Failover Task" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Refresh Settings" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule work" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate" /f
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\UpdateOrchestrator\*' | Unregister-ScheduledTask -Confirm:$false"
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\WindowsUpdate\*' | Unregister-ScheduledTask -Confirm:$false"
 
@@ -198,6 +206,7 @@ schtasks /delete /tn "Microsoft\Windows\Shell\ThemesSyncedImageDownload" /f
 schtasks /delete /tn "Microsoft\Windows\Shell\UpdateUserPictureTask" /f
 schtasks /delete /tn "Microsoft\Windows\TaskScheduler\Maintenance Configurator" /f
 schtasks /delete /tn "Microsoft\Windows\WindowsColorSystem\Calibration Loader" /f
+schtasks /delete /tn "Microsoft\Windows\Printing\PrintJobCleanupTask" /f
 
 schtasks /change /tn "CreateExplorerShellUnelevatedTask" /enable
 :: schtasks /change /tn "Microsoft\Windows\TextServicsFramework\MsCtfMonitor" /enable :: (keylogger) is required to be able to type within Settings and etc

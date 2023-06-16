@@ -143,6 +143,10 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NfsClnt" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WMPNetworkSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\edgeupdate" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\edgeupdatem" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TextInputManagementService" /v Start /t REG_DWORD /d 4 /f
+
+:: Related to Undocked Dev Kit / runtime lib
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\UdkUserSv" /v Start /t REG_DWORD /d 4 /f
 
 :: Wifi
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WlanSvc" /v Start /t REG_DWORD /d 4 /f
@@ -265,14 +269,24 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdBoot" /v Start /
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdFilter" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisDrv" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wdnsfltr" /v Start /t REG_DWORD /d 4 /f
+
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WdNisSvc" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WdNisSvc" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v Start /t REG_DWORD /d 4 /f
+
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WinDefend" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WinDefend" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v Start /t REG_DWORD /d 4 /f
+
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TrkWks" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TrkWks" -ot reg -actn ace -ace "n:Administrators;p:full"
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f
+
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NPSMSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NcaSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\diagsvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UserDataSvc" /v Start /t REG_DWORD /d 4 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\GoogleChromeElevationService" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ibtsiva" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\pla" /v Start /t REG_DWORD /d 4 /f

@@ -1,3 +1,6 @@
+setlocal enabledelayedexpansion
+setlocal enableextensions
+
 :: DC means on battery, usually a laptop, so, configurations will be all on AC.
 :: https://bitsum.com/known-windows-power-guids/
 :: (Important) You have to run this script twice the first time. It's not applying the powercfg changes after unlocking ultimate plan and removing the others. (For now)
@@ -5,8 +8,8 @@
 :: Unlock Ultimate Performance power scheme and set as active
 for /f "tokens=2 delims=()" %%i IN ('powercfg /getactivescheme') do set CURRENT_PLAN=%%i
 if NOT "%CURRENT_PLAN%"=="Ultimate Performance" (
-	for /f "tokens=4" %%I in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set ultscheme=%%I
-	powercfg /setactive %ultscheme%
+	for /f "tokens=4" %%s in ('powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61') do set ULT_SCHEME=%%s
+	powercfg /setactive !ULT_SCHEME!
 )
 
 :: Remove Power Save scheme
