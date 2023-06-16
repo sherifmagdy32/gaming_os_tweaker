@@ -18,7 +18,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fvevol" /v ErrorCo
 :: Startup Types: 0 = Boot, 1 = System, 2 = Automatic, 3 = Manual, 4 = Disabled
 :: DelayedAutoStart 0 or 1, same level as Start key
 
-:: Alter reg/registry through Linux by using "chntpw -e /media/YOUR_DISK/Windows/System32/config/SYSTEM" or a different value path that you want, from config folder.
+:: Alter reg/registry through Linux by using "chntpw -e /media/YOUR_USER/YOUR_MOUNTED_DISK/Windows/System32/config/SYSTEM" or a different value path that you want, from config folder. You can use ? to show commands, but ls and ed REGKEY is enough to alter unless you want to add new.
 
 pushd "%~dp0"
 pushd ..\tools
@@ -53,7 +53,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\rdyboost" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\CSC" /v Start /t REG_DWORD /d 4 /f
 
 :: Task Scheduler
-:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Schedule" /v Start /t REG_DWORD /d 2 /f 
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Schedule" /v Start /t REG_DWORD /d 2 /f
 :: Background work on Task scheduler
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TimeBrokerSvc" /v Start /t REG_DWORD /d 4 /f
 
@@ -143,7 +143,9 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NfsClnt" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WMPNetworkSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\edgeupdate" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\edgeupdatem" /v Start /t REG_DWORD /d 4 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TextInputManagementService" /v Start /t REG_DWORD /d 4 /f
+
+:: Cannot disable otherwise Win11 will be stuck right after boot on infinite loading, waiting Local Session manager to load.
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TextInputManagementService" /v Start /t REG_DWORD /d 2 /f
 
 :: Related to Undocked Dev Kit / runtime lib
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\UdkUserSv" /v Start /t REG_DWORD /d 4 /f

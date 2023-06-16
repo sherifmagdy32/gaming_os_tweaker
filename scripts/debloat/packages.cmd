@@ -142,6 +142,9 @@ powershell "Get-AppxPackage -Allusers *Microsoft.OneDrive* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *MicrosoftCorporationII.QuickAssist* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *SpotifyAB.SpotifyMusic* | Remove-AppxPackage"
 
+:: Widgets Win11
+powershell "Get-AppxPackage -Allusers *WebExperience* | Remove-AppxPackage"
+
 :: Do not remove this, to install packages outside MS Store
 :: powershell "Get-AppxPackage "Microsoft.DesktopAppInstaller" | Remove-AppxPackage -ErrorAction SilentlyContinue"
 

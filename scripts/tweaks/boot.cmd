@@ -12,7 +12,7 @@ bcdedit /set MSI Default
 bcdedit /set hypervisorlaunchtype off
 
 :: Avoid the use of uncontiguous portions of low-memory from the OS. Boosts memory performance and improves microstuttering at least 80% of the cases. Also fixes the command buffer stutter after disabling 5-level paging on 10th gen Intel. Causes system freeze on unstable memory sticks.
-:: Caused random boot locks on Windows 10 and always on Windows 11, so it's disabled. 
+:: Caused random boot locks on Windows 10 and always on Windows 11, so it's disabled.
 :: You can test yourself if you prefer. In case it locks, you can access command prompt inside recovery options and delete the options yourself.
 :: bcdedit /set firstmegabytepolicy UseAll
 :: bcdedit /set avoidlowmemory 0x8000000
@@ -28,7 +28,7 @@ bcdedit /set configaccesspolicy Default
 bcdedit /set usephysicaldestination No
 bcdedit /set usefirmwarepcisettings No
 
-:: Disable Early Launch Anti-Malware Protection. Wont disable because no need at this point.
+:: Disable Early Launch Anti-Malware Protection.
 bcdedit /set disableelamdrivers Yes
 
 :: Disable some of the kernel memory mitigations. Causes boot crash/loops if Intel SGX is enforced and not set to "Application Controlled" or "Off" in your Firmware. Gamers don't use SGX under any possible circumstance.

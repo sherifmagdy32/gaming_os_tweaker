@@ -684,3 +684,6 @@ REG DELETE "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentD
 :: Remove Chat from taskbar
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarMn /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" /v ChatIcon /t REG_DWORD /d 3 /f
+
+:: Unhide tray icons - Win11 - Not working
+REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoTrayItemsDisplay /t REG_DWORD /d 0 /f
