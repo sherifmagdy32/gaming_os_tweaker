@@ -1,8 +1,9 @@
 # Windows Download
 
 Download the ISO through the official microsoft website 
-Windows 10 - <https://www.microsoft.com/software-download/windows10ISO>
-Windows 11 - <https://www.microsoft.com/software-download/windows11>
+
+- Windows 10 - <https://www.microsoft.com/software-download/windows10ISO>
+- Windows 11 - <https://www.microsoft.com/software-download/windows11>
 
 In case you ARE on windows, you might not enter the page that is for downloading the ISO image directly.
 
