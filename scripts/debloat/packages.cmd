@@ -1,3 +1,7 @@
+:: To list all installed packages with ids
+:: Get-AppxPackage -AllUsers | select Name, PackageFamilyName
+:: winget list
+
 :: Remove packages from windows
 powershell "Get-AppxPackage -Allusers *Microsoft.BingWeather* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.Getstarted* | Remove-AppxPackage"
@@ -66,7 +70,7 @@ powershell "Get-AppxPackage -Allusers *ConnectivityStore* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Messaging* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *MicrosoftPowerBIForWindows* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *NetworkSpeedTest* | Remove-AppxPackage"
-powershell "Get-AppxPackage -Allusers *Microsoft.MSPaint* | Remove-AppxPackage"
+:: powershell "Get-AppxPackage -Allusers *Microsoft.MSPaint* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Print3D* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Whiteboard* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *WindowsReadingList* | Remove-AppxPackage"
@@ -124,16 +128,27 @@ powershell "Get-AppxPackage -Allusers *XING* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *SAMSUNGELECTRONICSCO* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.Advertising.Xaml* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.PrintDialog* | Remove-AppxPackage"
-powershell "Get-AppxPackage -Allusers *Microsoft.WindowsCalculator* | Remove-AppxPackage"
+:: powershell "Get-AppxPackage -Allusers *Microsoft.WindowsCalculator* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.WebpImageExtension* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.WebMediaExtensions* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.VP9VideoExtensions* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.HEIFImageExtension* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Windows.CBSPreview* | Remove-AppxPackage"
 powershell "Get-AppxPackage -Allusers *Microsoft.Windows.ContentDeliveryManager* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.BingNews* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.GamingApp* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.ZuneMusic* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *Microsoft.OneDrive* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *MicrosoftCorporationII.QuickAssist* | Remove-AppxPackage"
+powershell "Get-AppxPackage -Allusers *SpotifyAB.SpotifyMusic* | Remove-AppxPackage"
 
 :: Do not remove this, to install packages outside MS Store
 :: powershell "Get-AppxPackage "Microsoft.DesktopAppInstaller" | Remove-AppxPackage -ErrorAction SilentlyContinue"
+
+:: =============================================================================
+
+:: List installed packages with
+:: Get-AppxProvisionedPackage -Online | Format-Table DisplayName, PackageName
 
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.ScreenSketch* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MicrosoftStickyNotes* | Remove-AppxProvisionedPackage -online"
@@ -151,7 +166,7 @@ powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Micros
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MicrosoftSolitaireCollection* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MicrosoftStickyNotes* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MixedReality.Portal* | Remove-AppxProvisionedPackage -online"
-powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MSPaint* | Remove-AppxProvisionedPackage -online"
+:: powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.MSPaint* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.Office.OneNote* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.People* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.StorePurchaseApp* | Remove-AppxProvisionedPackage -online"
@@ -171,6 +186,17 @@ powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Micros
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.XboxSpeechToTextOverlay* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.ZuneMusic* | Remove-AppxProvisionedPackage -online"
 powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.ZuneVideo* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.BingNews* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.GamingApp* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Clipchamp.Clipchamp* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.PowerAutomateDesktop* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.Todos* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.WindowsMaps* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *Microsoft.XboxGamingOverlay* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *MicrosoftCorporationII.QuickAssist* | Remove-AppxProvisionedPackage -online"
+powershell "Get-AppxProvisionedPackage -online | Where PackageName -like *MicrosoftTeams* | Remove-AppxProvisionedPackage -online"
+
+:: ======================================================================================
 
 powershell "Get-WindowsPackage -Online | Where PackageName -like *QuickAssist* | Remove-WindowsPackage -Online -NoRestart"
 powershell "Get-WindowsPackage -Online | Where PackageName -like *Hello-Face* | Remove-WindowsPackage -Online -NoRestart"
@@ -193,8 +219,8 @@ powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.
 powershell "Get-WindowsCapability -Online | Where Name -like *App.StepsRecorder* | Remove-WindowsCapability -Online | Out-Null"
 powershell "Get-WindowsCapability -Online | Where Name -like *OneCoreUAP.OneSync* | Remove-WindowsCapability -Online | Out-Null"
 powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.PowerShell.ISE* | Remove-WindowsCapability -Online | Out-Null"
-powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.Notepad* | Remove-WindowsCapability -Online | Out-Null"
-powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.MSPaint* | Remove-WindowsCapability -Online | Out-Null"
+:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.Notepad* | Remove-WindowsCapability -Online | Out-Null"
+:: powershell "Get-WindowsCapability -Online | Where Name -like *Microsoft.Windows.MSPaint* | Remove-WindowsCapability -Online | Out-Null"
 
 powershell "Get-AppPackage -Allusers *MicrosoftWindows.Client.CBS* | Remove-AppPackage"
 powershell "Get-AppPackage -Allusers *Microsoft.Windows.SecureAssessmentBrowser* | Remove-AppPackage"
@@ -213,7 +239,7 @@ powershell "Get-AppPackage -Allusers *Microsoft.MicrosoftEdge* | Remove-AppPacka
 :: DISM /Online /Get-ProvisionedAppxPackages | select-string Packagename
 DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.XboxGamingOverlay_2.34.28001.0_neutral_~_8wekyb3d8bbwe
 DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.WindowsMaps_2019.716.2316.0_neutral_~_8wekyb3d8bbwe
-DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.WindowsCalculator_2021.2210.0.0_neutral_~_8wekyb3d8bbwe
+:: DISM /Online /Remove-ProvisionedAppxPackage /PackageName:Microsoft.WindowsCalculator_2021.2210.0.0_neutral_~_8wekyb3d8bbwe
 
 :: ==============================================================================================================
 

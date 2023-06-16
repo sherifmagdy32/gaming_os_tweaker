@@ -6,7 +6,7 @@
 :: But only do so for commands, and not the explaining text, otherwise that will break the script.
 
 :: Install Winget through this or use https://github.com/microsoft/winget-cli/releases with .msixbundle file
-powershell "Install-Module WingetTools"
+powershell "If(-not(Get-InstalledModule WingetTools -ErrorAction silentlycontinue)){ Install-PackageProvider -Name NuGet -MinimumVersion '2.8.5.201' -Force -Scope AllUsers; Install-Module WingetTools -Confirm:$False -Force }"
 
 :: You can update them all by running
 :: winget upgrade --all
@@ -21,7 +21,10 @@ powershell "Install-Module WingetTools"
 :: https://apps.microsoft.com/store/detail/netflix/9WZDNCRFJ3TJ
 :: winget install -e --id 9WZDNCRFJ3TJ
 
-winget install -e --id Microsoft.DirectX
+winget install -e --id Microsoft.VCRedist.2015+.x64
+winget install -e --id Microsoft.VCRedist.2015+.x86
+
+winget install -e --id Microsoft.DirectX --accept-source-agreements --accept-package-agreements
 
 :: Replace native Windows Menu
 :: winget install -e --id Open-Shell.Open-Shell-Menu
@@ -33,12 +36,12 @@ winget install -e --id Brave.Brave --accept-package-agreements
 winget install -e --id M2Team.NanaZip
 
 :: Replace Notepad
-winget install -e --id Notepad++.Notepad++
+:: winget install -e --id Notepad++.Notepad++
 :: winget install -e --id VSCodium.VSCodium
 :: winget install -e --id Microsoft.VisualStudioCode
 
 :: Replace Paint
-winget install -e --id dotPDNLLC.paintdotnet
+:: winget install -e --id dotPDNLLC.paintdotnet
 
 :: Replace Calculator, or if you want it back.
 :: winget install -e --id Qalculate.Qalculate

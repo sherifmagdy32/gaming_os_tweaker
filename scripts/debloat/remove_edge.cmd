@@ -16,7 +16,6 @@ call :delshortcut "C:\Users\Public\Desktop\Microsoft Edge.lnk"
 call :delshortcut "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk"
 call :delshortcut "%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Microsoft Edge.lnk"
 echo Finished!
-pause
 exit
 
 :killdir
