@@ -17,3 +17,6 @@ del /s /f /q %USERPROFILE%\appdata\local\temp\*.*
 
 :: Delete downloaded windows update files
 erase /f /s /q %systemdrive%\windows\softwaredistribution\*.* && rmdir /s /q %systemdrive%\windows\softwaredistribution
+
+:: Remove all bloatware from start menu - Win11
+erase /s /f /q %localappdata%\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\*.*

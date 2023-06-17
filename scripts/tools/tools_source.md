@@ -9,3 +9,5 @@
 - install_wim_tweak - <https://msfn.org/board/topic/152688-win6x_registry_tweak>
 
 - Nvidia Profile Inspector - <https://github.com/Orbmu2k/nvidiaProfileInspector/releases>
+
+- NanaRun (MiniSudo) - <https://github.com/M2Team/NanaRun/releases>

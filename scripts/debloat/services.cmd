@@ -41,6 +41,11 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\pcmcia" /v Start /
 .\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" -ot reg -actn ace -ace "n:Administrators;p:full"
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f
 
+:: Security Center
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\wscsvc" -ot reg -actn setowner -ownr n:Administrators
+.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\wscsvc" -ot reg -actn ace -ace "n:Administrators;p:full"
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f
+
 :: If stopped, firewall stop working
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PolicyAgent" /v Start /t REG_DWORD /d 3 /f
 
