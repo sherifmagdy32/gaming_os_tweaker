@@ -21,6 +21,9 @@ powershell "If(-not(Get-InstalledModule WingetTools -ErrorAction silentlycontinu
 :: https://apps.microsoft.com/store/detail/netflix/9WZDNCRFJ3TJ
 :: winget install -e --id 9WZDNCRFJ3TJ
 
+:: Send feedback / bug report to Microsoft with Feedback Hub
+:: winget install -e --id 9NBLGGH4R32N --accept-source-agreements --accept-package-agreements
+
 winget install -e --id Microsoft.VCRedist.2015+.x64
 winget install -e --id Microsoft.VCRedist.2015+.x86
 
