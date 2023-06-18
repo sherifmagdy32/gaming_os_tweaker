@@ -39,14 +39,10 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\pcmcia" /v Start /
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\luafv" /v Start /t REG_DWORD /d 4 /f
 
 :: Windows Defender Firewall
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f
 
 :: Security Center
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\wscsvc" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\wscsvc" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f
 
 :: If stopped, firewall stop working
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PolicyAgent" /v Start /t REG_DWORD /d 3 /f
@@ -279,20 +275,14 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdFilter" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisDrv" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wdnsfltr" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WdNisSvc" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WdNisSvc" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WinDefend" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\WinDefend" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TrkWks" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\TrkWks" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NPSMSvc" /v Start /t REG_DWORD /d 4 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time" /v Start /t REG_DWORD /d 3 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NcaSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\diagsvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UserDataSvc" /v Start /t REG_DWORD /d 4 /f
@@ -313,18 +303,11 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WSearch" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SCardSvr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RtkBtManServ" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" /v Start /t REG_DWORD /d 4 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v Start /t REG_DWORD /d 4 /f
 
-::
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wercplsupport" /v Start /t REG_DWORD /d 4 /f
@@ -457,9 +440,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ProfSvc" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcEptMapper" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcSs" /v Start /t REG_DWORD /d 2 /f
 
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn setowner -ownr n:Administrators
-.\SetACL.exe -silent -on "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" -ot reg -actn ace -ace "n:Administrators;p:full"
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" /v Start /t REG_DWORD /d 4 /f
+.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" /v Start /t REG_DWORD /d 4 /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SgrmBroker" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\StateRepository" /v Start /t REG_DWORD /d 3 /f

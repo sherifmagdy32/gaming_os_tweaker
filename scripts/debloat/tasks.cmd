@@ -1,3 +1,6 @@
+pushd "%~dp0"
+pushd ..\tools
+
 :: Disabled scheduled apps tasks
 schtasks /delete /tn "Microsoft\Windows\Customer Experience Improvement Program\BthSQM" /f
 schtasks /delete /tn "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /f
@@ -97,6 +100,9 @@ schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule work" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan" /f
 schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work" /f
+schtasks /delete /tn "Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" /f
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\UpdateOrchestrator\*' | Unregister-ScheduledTask -Confirm:$false"
 powershell -c "Get-ScheduledTask -TaskPath 'Microsoft\Windows\WindowsUpdate\*' | Unregister-ScheduledTask -Confirm:$false"
 
