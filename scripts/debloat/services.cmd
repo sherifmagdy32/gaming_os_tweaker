@@ -20,6 +20,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fvevol" /v ErrorCo
 
 :: Alter reg/registry through Linux by using "chntpw -e /media/YOUR_USER/YOUR_MOUNTED_DISK/Windows/System32/config/SYSTEM" or a different value path that you want, from config folder. You can use ? to show commands, but ls and ed REGKEY is enough to alter unless you want to add new.
 
+:: Currently, only way to disable certain services like from Windows Defender in Win11, is entering safemode. Check /optional_scripts/safeboot_toggle.cmd script.
+
 pushd "%~dp0"
 pushd ..\tools
 
