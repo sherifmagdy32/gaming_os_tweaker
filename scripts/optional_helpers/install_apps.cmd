@@ -35,8 +35,8 @@ winget install -e --id Microsoft.DirectX --accept-source-agreements --accept-pac
 :: Replace every other browser
 winget install -e --id Brave.Brave --accept-package-agreements
 
-:: Replace 7Zip
-winget install -e --id M2Team.NanaZip
+winget install -e --id 7zip.7zip
+:: winget install -e --id M2Team.NanaZip
 
 :: Replace Notepad
 :: winget install -e --id Notepad++.Notepad++

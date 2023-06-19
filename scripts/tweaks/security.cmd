@@ -108,12 +108,12 @@ REG ADD "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\SmartSc
 takeown /s %computername% /u %username% /f "%WinDir%\System32\smartscreen.exe"
 icacls "%WinDir%\System32\smartscreen.exe" /grant:r %username%:F
 taskkill /im smartscreen.exe /f
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\System32\smartscreen.exe" /s /f /q
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\System32\smartscreen.dll" /s /f /q
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\System32\smartscreenps.dll" /s /f /q
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\SysWOW64\smartscreen.exe" /s /f /q
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\SysWOW64\smartscreenps.dll" /s /f /q
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c del "%WinDir%\SysWOW64\smartscreen.dll" /s /f /q
+call ..\optional_helpers\run_minsudo "del "%WinDir%\System32\smartscreen.exe" /s /f /q"
+call ..\optional_helpers\run_minsudo "del "%WinDir%\System32\smartscreen.dll" /s /f /q"
+call ..\optional_helpers\run_minsudo "del "%WinDir%\System32\smartscreenps.dll" /s /f /q"
+call ..\optional_helpers\run_minsudo "del "%WinDir%\SysWOW64\smartscreen.exe" /s /f /q"
+call ..\optional_helpers\run_minsudo "del "%WinDir%\SysWOW64\smartscreenps.dll" /s /f /q"
+call ..\optional_helpers\run_minsudo "del "%WinDir%\SysWOW64\smartscreen.dll" /s /f /q"
 
 :: Disable DMA memory protection and cores isolation ("virtualization-based protection")
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\FVE" /v DisableExternalDMAUnderLock /t REG_DWORD /d 0 /f

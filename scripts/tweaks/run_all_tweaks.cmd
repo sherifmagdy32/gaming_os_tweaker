@@ -1,16 +1,16 @@
 pushd "%~dp0"
 pushd ..\tools
 
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "audio.cmd" ..\tweaks\audio.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "boot.cmd" ..\tweaks\boot.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "disk.cmd" ..\tweaks\disk.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "gpu.cmd" ..\tweaks\gpu.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "memory.cmd" ..\tweaks\memory.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "network.cmd" ..\tweaks\network.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "peripheral.cmd" ..\tweaks\peripheral.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "power.cmd" ..\tweaks\power.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "processes.cmd" ..\tweaks\processes.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "security.cmd" ..\tweaks\security.cmd
-.\NanaRun\MinSudo --NoLogo --Verbose --System --TrustedInstaller --Privileged cmd /c start "usability.cmd" ..\tweaks\usability.cmd
+call ..\optional_helpers\run_minsudo "start "audio.cmd" ..\tweaks\audio.cmd"
+call ..\optional_helpers\run_minsudo "start "boot.cmd" ..\tweaks\boot.cmd"
+call ..\optional_helpers\run_minsudo "start "disk.cmd" ..\tweaks\disk.cmd"
+call ..\optional_helpers\run_minsudo "start "gpu.cmd" ..\tweaks\gpu.cmd"
+call ..\optional_helpers\run_minsudo "start "memory.cmd" ..\tweaks\memory.cmd"
+call ..\optional_helpers\run_minsudo "start "network.cmd" ..\tweaks\network.cmd"
+call ..\optional_helpers\run_minsudo "start "peripheral.cmd" ..\tweaks\peripheral.cmd"
+call ..\optional_helpers\run_minsudo "start "power.cmd" ..\tweaks\power.cmd"
+call ..\optional_helpers\run_minsudo "start "processes.cmd" ..\tweaks\processes.cmd"
+call ..\optional_helpers\run_minsudo "start "security.cmd" ..\tweaks\security.cmd"
+call ..\optional_helpers\run_minsudo "start "usability.cmd" ..\tweaks\usability.cmd"
 
 exit
