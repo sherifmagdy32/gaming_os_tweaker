@@ -10,10 +10,15 @@
 
 :: WIP Notes
 
+:: sc query service_name
+
 :: sc config wuauserv start= demand
 :: sc config BITS start= auto
 :: sc config DoSvc start= delayed-auto
-:: sc config uhssvc start= delayed-auto
+
+:: Does not exist on Win11
+:: sc config uhssvc start= delayed-auto 
+
 :: sc config UsoSvc start= auto
 :: sc config WaaSMedicSVC start= demand
 
