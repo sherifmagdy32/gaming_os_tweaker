@@ -59,6 +59,7 @@ powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_wfplwf_upper -Err
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_wfplwf_lower -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_netbt -ErrorAction SilentlyContinue
 powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_netbios -ErrorAction SilentlyContinue
+powershell Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6 -ErrorAction SilentlyContinue
 
 :: ===================================================================================================================================================================================
 
@@ -432,7 +433,7 @@ for /f %%a in ('REG QUERY "HKLM\SYSTEM\CurrentControlSet\Control\Class" /v "*Wak
 			"EnableWakeOnLan"
     ) do (
         for /f %%j in ('REG QUERY "%%a" /v "%%~i" ^| findstr "HKEY"') do (
-            REG ADD "%%j" /v "%%~i" /t REG_SZ /d 0 /f
+            REG ADD "%%j" /v "%%~i" /t REG_SZ /d 0 /f 1>nul 2>&1
         )
     )
 )

@@ -20,15 +20,38 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fvevol" /v ErrorCo
 
 :: Alter reg/registry through Linux by using "chntpw -e /media/YOUR_USER/YOUR_MOUNTED_DISK/Windows/System32/config/SYSTEM" or a different value path that you want, from config folder. You can use ? to show commands, but ls and ed REGKEY is enough to alter unless you want to add new.
 
-:: In case some services are not able to be disabled in normal mode, only way to disable will be by entering safemode. Check /optional_scripts/safeboot_toggle.cmd script.
-
 pushd "%~dp0"
 pushd ..\tools
 
 :: Disable Services
-:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hwpolicy" /v Start /t REG_DWORD /d 4 /f :: Last time it caused problems with Valorant anti-cheat
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\rdbss" /v Start /t REG_DWORD /d 3 /f
 
+:: -----------------------------------------------------------
+:: Services requiring additional permissions
+
+:: Windows Defender Firewall
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f"
+
+:: Security Center
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f"
+
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" /v Start /t REG_DWORD /d 4 /f"
+
+:: Windows Defender
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v Start /t REG_DWORD /d 4 /f"
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v Start /t REG_DWORD /d 4 /f"
+
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f"
+
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" /v Start /t REG_DWORD /d 4 /f"
+
+call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v Start /t REG_DWORD /d 4 /f"
+
+:: -----------------------------------------------------------
+
+:: Last time it caused problems with Valorant anti-cheat
+:: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hwpolicy" /v Start /t REG_DWORD /d 4 /f 
+
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\rdbss" /v Start /t REG_DWORD /d 3 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AxInstSV" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinRM" /v Start /t REG_DWORD /d 4 /f
@@ -37,12 +60,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\pcmcia" /v Start /
 
 :: UAC
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\luafv" /v Start /t REG_DWORD /d 4 /f
-
-:: Windows Defender Firewall
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\mpssvc" /v Start /t REG_DWORD /d 4 /f"
-
-:: Security Center
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wscsvc" /v Start /t REG_DWORD /d 4 /f"
 
 :: If stopped, firewall stop working
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PolicyAgent" /v Start /t REG_DWORD /d 3 /f
@@ -172,7 +189,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\PcaSvc" /v Start /
 :: Disable IPV6
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\iphlpsvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\Tcpip6" /v Start /t REG_DWORD /d 4 /f
-powershell "Disable-NetAdapterBinding -Name * -ComponentID ms_tcpip6"
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\PNRPsvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\RemoteRegistry" /v Start /t REG_DWORD /d 4 /f
@@ -274,13 +290,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdBoot" /v Start /
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdFilter" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisDrv" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wdnsfltr" /v Start /t REG_DWORD /d 4 /f
-
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdNisSvc" /v Start /t REG_DWORD /d 4 /f"
-
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v Start /t REG_DWORD /d 4 /f"
-
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TrkWks" /v Start /t REG_DWORD /d 4 /f"
-
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NPSMSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time" /v Start /t REG_DWORD /d 3 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NcaSvc" /v Start /t REG_DWORD /d 4 /f
@@ -303,11 +312,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WSearch" /v Start 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SCardSvr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RtkBtManServ" /v Start /t REG_DWORD /d 4 /f
 
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS" /v Start /t REG_DWORD /d 4 /f"
-
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v Start /t REG_DWORD /d 4 /f"
-
-call ..\optional_helpers\run_minsudo "REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f"
+REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wercplsupport" /v Start /t REG_DWORD /d 4 /f
@@ -439,8 +444,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PlugPlay" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ProfSvc" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcEptMapper" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcSs" /v Start /t REG_DWORD /d 2 /f
-
-call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SamSs" /v Start /t REG_DWORD /d 4 /f"
 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SgrmBroker" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\StateRepository" /v Start /t REG_DWORD /d 3 /f

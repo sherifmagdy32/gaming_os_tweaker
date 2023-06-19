@@ -276,7 +276,7 @@ for %%a in (
     "IdleInWorkingState"
 ) do (
     for /f "delims=" %%b in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "%%~a" ^| findstr "HKEY"') do (
-        REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f > nul 2>&1
+        REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f 1>nul 2>&1
     )
 )
 for %%a in (
@@ -284,14 +284,14 @@ for %%a in (
     "WdkSelectiveSuspendEnable"
 ) do (
     for /f "delims=" %%b in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class" /s /f "%%~a" ^| findstr "HKEY"') do (
-        REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f > nul 2>&1
+        REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 0 /f 1>nul 2>&1
     )
 )
 for %%a in (
     "DisableIdlePowerManagement"
 ) do (
 	for /f "delims=" %%b in ('REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "%%~a" ^| findstr "HKEY"') do (
-		REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 1 /f > nul
+		REG ADD "%%b" /v "%%~a" /t REG_DWORD /d 1 /f 1>nul 2>&1
 	)
 )
 
