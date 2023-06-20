@@ -55,6 +55,10 @@ Good reference:  <https://docs.google.com/document/d/1ILugrwtHfmisYzI1MdCOhSzBPu
 
 To give some perspective on the FPS, before I was on Win11 only with some tweaks and debloat changes. I had to use the nvidia driver optimized for Overwatch 2 to be able to keep consistent 420fps at 1440p with pretty much no dips, but were not possible with other driver versions. Now in Win10 with the scripts from this repo, it never goes below 500fps, stays on 600fps when there is no fights and 540fps~ in mid fights most of the time, and I am using the latest driver from nvidia, not the optimized for [Overwatch 2](/docs/overwatch2_fps.png).
 
+(Update on Windows 11 22H2) I have now finished most fixes/tweaks for this OS, result was good, pretty much same avg fps on games, DPC avg went from 0.76 to 0.81 though, a small increase in comparison to Win10. But this is mostly paying attention in games that I played, not based on benchmarks. If someone wants to do benchmarks and create a PR, they are welcome, I dont have time for it. <https://www.capframex.com/>
+
+It's not a bad DPC avg for Ryzen CPU, while not having Processor Idle disabled. Should be even better on Intel.
+
 ![processes](./docs/processes.png)
 
 ---

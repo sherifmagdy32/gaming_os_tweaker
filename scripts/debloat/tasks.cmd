@@ -213,6 +213,10 @@ schtasks /delete /tn "Microsoft\Windows\Shell\UpdateUserPictureTask" /f
 schtasks /delete /tn "Microsoft\Windows\TaskScheduler\Maintenance Configurator" /f
 schtasks /delete /tn "Microsoft\Windows\WindowsColorSystem\Calibration Loader" /f
 schtasks /delete /tn "Microsoft\Windows\Printing\PrintJobCleanupTask" /f
+schtasks /delete /tn "Microsoft\Windows\InstallService\WakeUpAndContinueUpdates" /f
+schtasks /delete /tn "Microsoft\Windows\InstallService\WakeUpAndScanForUpdates" /f
+schtasks /delete /tn "Microsoft\Windows\Input\InputSettingsRestoreDataAvailable" /f
+schtasks /delete /tn "Microsoft\Windows\Input\syncpensettings" /f
 
 schtasks /change /tn "CreateExplorerShellUnelevatedTask" /enable
 :: schtasks /change /tn "Microsoft\Windows\TextServicsFramework\MsCtfMonitor" /enable :: (keylogger) is required to be able to type within Settings and etc

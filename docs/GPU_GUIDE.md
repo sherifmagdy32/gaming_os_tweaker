@@ -16,6 +16,10 @@
     - It can improve further than windows does, but it seems you need to keep it open.
     - <https://www.youtube.com/watch?v=65VVCXBmnbs>
 - You can reduce input lag and crosstalk by making adjustments to pixel and refresh rate <https://forums.blurbusters.com/viewtopic.php?t=8946>
+- Fix 1% and 0.1% lows with MSI Afterburner + Rivaturner <https://www.guru3d.com/files-details/msi-afterburner-beta-download.html>
+  - Cap the fps using Rivaturner to a value that is able to withhold, and you should see improvements in not dropping much below that value, where in other cases may cause stutters
+  - Only seem to work with Rivaturner limiter
+  - Reference <https://www.youtube.com/watch?v=3QFH_YBOhNg>
 
 ## Nvidia
 
