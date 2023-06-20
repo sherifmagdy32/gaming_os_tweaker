@@ -11,7 +11,7 @@
 
   There could be variation in USB Controller naming, if anyone have any device that are not being considered in this script, you can create an issue.
 
-  Beware: Audio USB and Keyboard might be on the same parent as Mouse, so the parent being the same, it would lose the core assigned of one to the other. Recommended to plug into a different controller. 
+  Beware: Audio USB and Keyboard might be on the same parent as Mouse, so the parent being the same, it would lose the core assigned of one to the other. Recommended to plug into a different controller.
   Check # Priorities to enable/disable and prioritize types of class of devices
 
   Current Choices:
@@ -24,7 +24,7 @@
   ---------------------------
 
   In case you get problems running the script in Win11, you can run the command to allow, and after, another to set back to a safe or undefined policy
-  
+
   You can check the current policy settings
   Get-ExecutionPolicy -List
 
@@ -133,14 +133,14 @@ $enabledUSBClasses = $priorities | Where-Object { $_.Enabled -eq $true -and $_.i
 # Get all relevant child devices
 $allDevices = Get-PnpDevice -PresentOnly -Class $enabledClasses -Status OK
 $prioritizedDevices = $allDevices | ForEach-Object {
-	$device = $_ 
+	$device = $_
 	$priorityDevice = $priorities | Where-Object { $_.Class -eq $device.Class}
 	return [PsObject]@{
-		Class = $device.Class; 
-		FriendlyName = $device.FriendlyName; 
-		InstanceId = $device.InstanceId; 
-		Priority = $priorityDevice.Priority; 
-		Enabled = $priorityDevice.Enabled; 
+		Class = $device.Class;
+		FriendlyName = $device.FriendlyName;
+		InstanceId = $device.InstanceId;
+		Priority = $priorityDevice.Priority;
+		Enabled = $priorityDevice.Enabled;
 		isUSB = $priorityDevice.isUSB
 	}
 } | Sort-Object { $_.Priority }
