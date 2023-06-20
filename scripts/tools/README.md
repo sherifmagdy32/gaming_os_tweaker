@@ -1,4 +1,4 @@
-# Tools Source (urls)
+# Tools Source
 
 > If you dont trust the stored files from this folder, you can download them yourself directly from the place where it was downloaded from. I just recommend that if you are going to use scripts, keep/overwrite the .exe you download at this folder, the way it is, otherwise some scripts will not work.
 

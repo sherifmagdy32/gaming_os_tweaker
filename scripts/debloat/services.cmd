@@ -57,6 +57,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\diagnosticshub.sta
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinRM" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinHttpAutoProxySvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\pcmcia" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\DevicesFlowUserSvc" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\DevicePickerUserSvc" /v Start /t REG_DWORD /d 4 /f
 
 :: UAC
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\luafv" /v Start /t REG_DWORD /d 4 /f
@@ -468,7 +470,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wbengine" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Smartcard" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\embeddedmode" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wlpasvc" /v Start /t REG_DWORD /d 4 /f
-
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppReadiness" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppHostSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\aspnet_state" /v Start /t REG_DWORD /d 4 /f
@@ -509,6 +510,8 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PerfHost" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PNRPAutoReg" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\QWAVE" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\iprip" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PenService" /v Start /t REG_DWORD /d 4 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\P9RdrService" /v Start /t REG_DWORD /d 4 /f
 
 :: If stopped, logon stop working
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\seclogon" /v Start /t REG_DWORD /d 3 /f
@@ -552,7 +555,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tiledatamodelsvc" 
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WFDSConMgrSvc" /v Start /t REG_DWORD /d 3 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ZoomCptService" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DevicesFlowUserSvc" /v Start /t REG_DWORD /d 3 /f
-REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PrintWorkflowUserSvc" /v Start /t REG_DWORD /d 3 /f
+REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PrintWorkflowUserSvc" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CldFlt" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\i8042prt" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Modem" /v Start /t REG_DWORD /d 4 /f
