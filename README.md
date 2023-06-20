@@ -27,6 +27,8 @@ Make sure you create a System Restore Point before running any scripts.
 - **For every `.cmd` script you run, run as administrator.** | *It's not enforced, but the scripts will NOT work, if you dont run as admin.*
 - Reboot and Done!
 
+> I would say to also apply all tweaks before debloat, as well as installing everything that you need and configuring, before creating the next restore point, because restore point could break, at least it does in win11, after you run debloat scripts. At least you will have that point to restore. Though I suppose services script from debloat could be why, leave it for last.
+
 > After running the scripts, follow some guides from the `docs` folder.
 
 - [GPU_GUIDE](/docs/GPU_GUIDE.md)
