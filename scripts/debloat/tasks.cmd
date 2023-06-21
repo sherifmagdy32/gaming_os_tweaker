@@ -2,26 +2,23 @@ pushd "%~dp0"
 pushd ..\tools
 
 :: Disabled scheduled apps tasks
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Scan' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\UpdateModelTask' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\USO_UxBroker' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Report policies' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\UUS Failover Task' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Refresh Settings' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule work' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work' /f"'
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work' /f"'
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Scan' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\UpdateModelTask' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\USO_UxBroker' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Report policies' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\UUS Failover Task' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Refresh Settings' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule work' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work' /f"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work' /f"
 
 :: Deleting this task, it comes back after restart. Even if disabled, it comes back at some point. Same as Windows update services. Fix needed.
-call ..\optional_helpers\run_minsudo '"schtasks /delete /tn 'Microsoft\Windows\WindowsUpdate\Scheduled Start' /f"'
-
-powershell -c "Unregister-ScheduledTask -TaskPath 'Microsoft\Windows\UpdateOrchestrator\*' -Confirm:$false"
-powershell -c "Unregister-ScheduledTask -TaskPath 'Microsoft\Windows\WindowsUpdate\*' -Confirm:$false"
+call ..\optional_helpers\run_minsudo "powershell schtasks /delete /tn 'Microsoft\Windows\WindowsUpdate\Scheduled Start' /f"
 
 schtasks /delete /tn "Microsoft\Windows\Customer Experience Improvement Program\BthSQM" /f
 schtasks /delete /tn "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /f
