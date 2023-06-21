@@ -35,6 +35,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Input\Settings\ControllerProcesso
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Input\Settings\ControllerProcessor\CursorMagnetism" /v VelocityInDIPSPerSecond /t REG_DWORD /d 0 /f
 
 :: Tweak mouse and keyboard events queue buffer size
+:: I found that 40 is a good value, because lower, it affected the mouse small movements negatively. It could be dependant on the mouse, in how much data it uses. One should test different values and find the lowest that does not negatively effect.
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mouclass\Parameters" /v MouseDataQueueSize /t REG_DWORD /d 40 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v KeyboardDataQueueSize /t REG_DWORD /d 40 /f
 
@@ -129,3 +130,11 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\FLxHCIc\Parameters
 
 :: Disable device stop to save power in certain windows state
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\USB\AutomaticSurpriseRemovals" /v AttemptRecoveryFromUsbPowerDrain /t REG_DWORD /d 0 /f
+
+:: Remove mouse scheme (optional)
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v ContactVisualization /t REG_DWORD /d 0 /f
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v GestureVisualization /t REG_DWORD /d 0 /f
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v CursorBaseSize /t REG_DWORD /d 32 /f
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" /t REG_DWORD /d 0 /f
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v Crosshair /t REG_SZ /d "" /f
+:: REG ADD "HKEY_CURRENT_USER\Control Panel\Cursors" /v IBeam /t REG_SZ /d "" /f
