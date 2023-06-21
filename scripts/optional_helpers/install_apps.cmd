@@ -24,8 +24,8 @@ powershell "If(-not(Get-InstalledModule WingetTools -ErrorAction silentlycontinu
 :: Send feedback / bug report to Microsoft with Feedback Hub
 :: winget install -e --id 9NBLGGH4R32N --accept-source-agreements --accept-package-agreements
 
-winget install -e --id Microsoft.VCRedist.2015+.x64
-winget install -e --id Microsoft.VCRedist.2015+.x86
+winget install -e --id Microsoft.VCRedist.2015+.x64 --accept-source-agreements --accept-package-agreements
+winget install -e --id Microsoft.VCRedist.2015+.x86 --accept-source-agreements --accept-package-agreements
 
 winget install -e --id Microsoft.DirectX --accept-source-agreements --accept-package-agreements
 
@@ -52,9 +52,6 @@ winget install -e --id 7zip.7zip
 
 :: Screenshot and more
 :: winget install -e --id ShareX.ShareX
-
-:: GPU OC + OSD
-:: winget install -e --id Guru3D.Afterburner
 
 :: Voice + Chat
 :: winget install -e --id Discord.Discord

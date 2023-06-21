@@ -17,4 +17,8 @@ In that case:
 - Create your bootable OS in your USB drive
 - Done!
 
-After you install, activate the windows before applying tweaks [scripts/optional_helpers/activate_windows.cmd](/scripts/optional_helpers/activate_windows.cmd) Add your KEY to the right place in the file.
+> I recommend disconnecting Wifi/Ethernet from the internet, before you start installing, that way, you can install without requiring a microsoft account and if you do a limited install, it will skip a lot of steps. Primarily useful for Windows 11.
+
+> After you install, activate the windows before applying tweaks [scripts/optional_helpers/activate_windows.cmd](/scripts/optional_helpers/activate_windows.cmd) Add your KEY to the right place in the file. Run as administrator.
+
+> Do all windows update before continuing with scripts. 

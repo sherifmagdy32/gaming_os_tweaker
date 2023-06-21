@@ -6,4 +6,6 @@ pushd ..\tools
 :: Put in this same folder as this file, and run this file (remove_windows_defender)
 :: Wait, once is finish, do a reboot and done
 
-call ..\optional_helpers\run_minsudo "start "" ..\optional_helpers\disable_windows_defender.cmd"
+call ..\optional_helpers\run_minsudo "start "" ..\debloat\disable_windows_defender.cmd"
+
+exit
