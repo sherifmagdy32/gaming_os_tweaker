@@ -15,7 +15,7 @@
 - Fast Boot - **Disabled**
 - Eco Mode - **Disabled**
 - Monitor > CPU Fan Speed - **Disabled**
-- Curve Optimizer - **All Cores, Negative 25**
+- Curve Optimizer - **All Cores, Negative 20** - (It will depend on your machine, mine above 20 was causing random reboots with no errors)
 - PBO Limits - **PPT 125, TDC 90, EDC 130 or Motherboard Limit** - (Just Auto with new CPU)
 - Max CPU Boost Clock Override - **200mhz**
 - Global C-State Control - **Disabled**

@@ -48,6 +48,8 @@ call ..\optional_helpers\run_minsudo "REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\Current
 
 :: -----------------------------------------------------------
 
+REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
+
 :: Last time it caused problems with Valorant anti-cheat
 :: REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hwpolicy" /v Start /t REG_DWORD /d 4 /f 
 
@@ -313,9 +315,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RemoteAccess" /v S
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WSearch" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SCardSvr" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RtkBtManServ" /v Start /t REG_DWORD /d 4 /f
-
-REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C855DFE3-7C4B-41B6-92D3-CEFA7D42FE20}" /f
-
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wercplsupport" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\shpamsvc" /v Start /t REG_DWORD /d 4 /f
@@ -387,7 +386,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Microsoft_Bluetoot
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RFCOMM" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\cnghwassist" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CmBatt" /v Start /t REG_DWORD /d 4 /f
-
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\gencounter" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hvcrash" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hvservice" /v Start /t REG_DWORD /d 4 /f
@@ -446,7 +444,6 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PlugPlay" /v Start
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ProfSvc" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcEptMapper" /v Start /t REG_DWORD /d 2 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcSs" /v Start /t REG_DWORD /d 2 /f
-
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SgrmBroker" /v Start /t REG_DWORD /d 4 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\StateRepository" /v Start /t REG_DWORD /d 3 /f
 REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SystemEventsBroker" /v Start /t REG_DWORD /d 2 /f

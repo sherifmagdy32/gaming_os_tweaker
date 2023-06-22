@@ -274,6 +274,9 @@ REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ad
 :: Hide cortana taskbar button
 REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCortanaButton /t REG_DWORD /d 0 /f
 
+:: Taskbar Alignment to left - Win11
+REG ADD "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarAl /t REG_DWORD /d 0 /f
+
 :: Disable DWM settings
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\DWM" /v EnableAeroPeek /t REG_DWORD /d 0 /f
 REG ADD "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\DWM" /v Blur /t REG_DWORD /d 0 /f
