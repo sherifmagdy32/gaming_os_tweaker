@@ -33,13 +33,13 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -AutoReboot -Verbose
 
 # Exclude specific updates from installing
-# Hide-WindowsUpdate -KBArticleID KB2267602
+# Hide-WindowsUpdate -KBArticleID KB5026446
 
-# Install specific update
-# Install-WindowsUpdate -KBArticleID KB2267602
+# Install specific update - Like the one with Mouse Pooling fixes KB5026446
+# Install-WindowsUpdate -KBArticleID KB5026446
 
 # Remove specific update
-# Remove-WindowsUpdate -KBArticleID KB2267602
+# Remove-WindowsUpdate -KBArticleID KB5026446
 
 # Check if update require reboot
 # Get-WURebootStatus
@@ -49,4 +49,4 @@ Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -AutoReboot -Verbose
 
 # -------------------------------------------------------------------------------
 
-Set-ExecutionPolicy Restricted -Scope CurrentUser -Force
+Set-ExecutionPolicy Undefined -Scope CurrentUser -Force

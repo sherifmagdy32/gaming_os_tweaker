@@ -14,6 +14,8 @@ Make sure you create a System Restore Point before running any scripts.
 
 > It will NOT leave your OS secure, because scripts will remove and/or disable all of Windows Defender ecosystem features in favor of performance. You need your good sense and just play games safely, like the ones installed by clients, e.g., steam, battle.net, etc.. Although I left some security options in [scripts/optional_helpers/install_apps.cmd](/scripts/optional_helpers/install_apps.cmd) in the security section.
 
+> If you have something additional to contribute, please open an issue or create a PR.
+
 ---
 
 ### How to
