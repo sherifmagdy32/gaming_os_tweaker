@@ -9,3 +9,5 @@
 - Nvidia Profile Inspector - <https://github.com/Orbmu2k/nvidiaProfileInspector/releases>
 
 - NanaRun (MinSudo) - <https://github.com/M2Team/NanaRun/releases> - It's the alternative recommendation and from the same team as the now archived NSudo - <https://github.com/M2TeamArchived/NSudo>
+
+- RW (X64 Portable) - <http://rweverything.com/download/>

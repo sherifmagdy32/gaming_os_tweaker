@@ -1,5 +1,9 @@
 <#
-  WIP
+  WIP (not done)
+
+  It's done in a way, it works in normal processes, but in system processes like csrss.exe, it doesnt go beyond the normal basepriority value of 13. So, unless that can be resolved, it's not done.
+
+  -------------------------
 
   https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities
 
@@ -18,7 +22,6 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 }
 Push-Location $PSScriptRoot
 
-
 $RealtimeProcesses = @("csrss.exe", "wininit.exe")
 
 # Set priority to every process in list
@@ -26,11 +29,9 @@ foreach ($item in $RealtimeProcesses) {
     $Process = Get-WmiObject -Class Win32_Process -Filter "name='$item'"; $Process.SetPriority(256);
 }
 
-
 # Check processes priority
 $RealtimeProcessesFormatted = $RealtimeProcesses | ForEach-Object { $_.split(".")[0] }
 Get-Process $RealtimeProcessesFormatted | Format-List Name, PriorityClass, BasePriority
-
 
 # Setup this script to be re-executed in every boot
 $taskName = "SchedulingPriorities"
