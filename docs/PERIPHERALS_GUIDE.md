@@ -17,7 +17,9 @@
   - (Check) De-bounce (ignore) rapid mouse button clicks to 1ms
   - (Check) Fixup (debounce) tilt wheel auto-repeat - Repeat tilt rate to 1ms
   - CPU Priority to Realtime
-- (At your own risk) You can overclock the USB mouse hz by following this tutorial <https://www.overclock.net/threads/usb-mouse-hard-overclocking-2000-hz.1589644/> It should help reduce input lag / make it more responsive at some extent. <https://www.youtube.com/watch?v=x0wcJM4FtXQ> - <https://www.youtube.com/watch?v=ahsO5bhBUtk>
+- (At your own risk) You can overclock the USB mouse hz by following this tutorial <https://www.overclock.net/threads/usb-mouse-hard-overclocking-2000-hz.1589644/> 
+  - It should help reduce input lag / make it more responsive at some extent. <https://www.youtube.com/watch?v=x0wcJM4FtXQ> - <https://www.youtube.com/watch?v=ahsO5bhBUtk>
+  - If you dont want to overclock, in some devices like controllers, you can at least reduce the input delay, by setting what will make bInterval to 1. <https://www.youtube.com/watch?v=_Sqgy95iAwE>
 
 ### Logitech
 
