@@ -47,6 +47,10 @@ Write-Host "Started disabling interrupt moderation in all usb controllers"
 [Environment]::NewLine
 
 Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 0 -Force -Type Dword -ErrorAction Ignore
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 0 -Force -Type Dword -ErrorAction Ignore
 
 [PsObject[]]$USBControllersAddresses = @()
 
@@ -80,8 +84,12 @@ foreach ($item in $USBControllersAddresses) {
 		Write-Host "Device ID: $($item.DeviceId)"
 		Write-Host "Starting Address: $($item.StartingAddress)"
 		Write-Host "Memory Range: $($item.MemoryRange)"
+		Write-Host "Address Used: $Address"
 		[Environment]::NewLine
 	}
 }
+
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 1 -Force -Type Dword -ErrorAction Ignore
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 1 -Force -Type Dword -ErrorAction Ignore
 
 cmd /c pause
