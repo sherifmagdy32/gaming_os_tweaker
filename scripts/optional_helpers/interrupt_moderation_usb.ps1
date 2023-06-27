@@ -84,6 +84,7 @@ foreach ($item in $USBControllersAddresses) {
 		Write-Host "Memory Range: $($item.MemoryRange)"
 		Write-Host "Address Used: $Address"
 		[Environment]::NewLine
+		Start-Sleep -Seconds 2
 	}
 }
 
