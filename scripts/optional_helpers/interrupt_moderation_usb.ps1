@@ -1,13 +1,7 @@
 <#
 	WIP (not done)
 
-	I might have disabled a service or it's because I am using Win11 22H2 and the tool are not working, I am unable to run RWEverything to test/check if it's correct and finish the script. And I have AMD, so unless there is a proper value or it's the same value, then no way to test for sure.
-
-	https://www.powershellgallery.com/packages/PSMemory/1.0.0/Content/PSMemory.psm1
-
-	Get Hex 18 value 16bit decimal and sum 24 to it, append as the last 4 digits, be sure to be 4 digits even if start with 1 or more zeroes.
-	Unsure if the 24 are Intel only and if the right place in memory is the the same or not for AMD.
-	I could try to dump a temp file with the mem, it would be 8bit but not problem, get the right value as 16bit and remove after. A 32bit size is enough to dump.
+	It should be done for Intel, but not AMD, I dont have any information about it, to know if it's the same address space value and if it's the 24 value to sum with it.
 
 	-------------------------
 
@@ -16,6 +10,8 @@
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61
 	https://github.com/djdallmann/GamingPCSetup/tree/master/CONTENT/RESEARCH/PERIPHERALS#universal-serial-bus-usb
 	https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md
+
+	Beware: RW command will not run if you have the GUI version open.
 
 	-------------------------
 
@@ -84,21 +80,31 @@ foreach ($usbController in $allUSBControllers) {
 	}
 }
 
+$tempMemDumpFileName = "TEMP_MEM_DUMP"
+
 foreach ($item in $USBControllersAddresses) {
 	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
 		continue
 	}
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
+
+	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
+	..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 ..\tools\RW\$fileName" | Out-Null
+
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
+		$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
+		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
+		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
 		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
-		$Address = $leftWithoutLast4Digits + 2024
+		$Address = $leftWithoutLast4Digits + $rightSideValue
 	}
 	if ($item.Name.Contains('AMD')) {
 		# TODO
 	}
 	if (![string]::IsNullOrWhiteSpace($Address)) {
 		..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="W16 $Address 0x0000"
+		Start-Sleep -Seconds 1
 
 		$deviceIdMinInfo = $item.DeviceId.Split("\")[1].Split("&")
 		$deviceIdVENValue = $deviceIdMinInfo[0].Split("_")[1]
@@ -113,8 +119,10 @@ foreach ($item in $USBControllersAddresses) {
 		Write-Host "Memory Range: $($item.MemoryRange)"
 		Write-Host "Address Used: $Address"
 		[Environment]::NewLine
-		Start-Sleep -Seconds 2
 	}
 }
+
+Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
+Remove-Item -Path ..\tools\Rw\$tempMemDumpFileName*
 
 cmd /c pause
