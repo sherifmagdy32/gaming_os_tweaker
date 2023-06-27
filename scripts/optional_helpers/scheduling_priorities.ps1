@@ -22,6 +22,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 }
 Push-Location $PSScriptRoot
 
+# Must include the extension, add other executables in here.
 $RealtimeProcesses = @("csrss.exe", "wininit.exe")
 
 # Set priority to every process in list
@@ -29,7 +30,7 @@ foreach ($item in $RealtimeProcesses) {
     $Process = Get-WmiObject -Class Win32_Process -Filter "name='$item'"; $Process.SetPriority(256);
 }
 
-# Check processes priority
+# List changed processes priority
 $RealtimeProcessesFormatted = $RealtimeProcesses | ForEach-Object { $_.split(".")[0] }
 Get-Process $RealtimeProcessesFormatted | Format-List Name, PriorityClass, BasePriority
 

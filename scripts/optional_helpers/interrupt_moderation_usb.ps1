@@ -68,6 +68,9 @@ foreach ($usbController in $allUSBControllers) {
 }
 
 foreach ($item in $USBControllersAddresses) {
+	if (!$item.MemoryRange) {
+		continue
+	}
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
