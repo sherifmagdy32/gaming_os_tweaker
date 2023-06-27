@@ -90,6 +90,7 @@ foreach ($item in $USBControllersAddresses) {
 
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 	..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 ..\tools\RW\$fileName" | Out-Null
+	Start-Sleep -Seconds 1
 
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
