@@ -47,6 +47,8 @@ Write-Host "Started disabling interrupt moderation in all usb controllers"
 [Environment]::NewLine
 
 Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
+
+# REGs that attempt to help with tools compatibility issues in Win11 22H2
 # Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
 # Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 0 -Force -Type Dword -ErrorAction Ignore
 # Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
@@ -61,7 +63,6 @@ foreach ($usbController in $allUSBControllers) {
 	$USBControllersAddresses += [PsObject]@{
 		Name = $usbController.Name
 		DeviceId = $usbController.DeviceID
-		StartingAddress = $allocatedResource.StartingAddress
 		MemoryRange = $deviceMemory.Name
 	}
 }
@@ -80,14 +81,10 @@ foreach ($item in $USBControllersAddresses) {
 		..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Command="W16 $Address 0x0000"
 		Write-Host "Device: $($item.Name)"
 		Write-Host "Device ID: $($item.DeviceId)"
-		Write-Host "Starting Address: $($item.StartingAddress)"
 		Write-Host "Memory Range: $($item.MemoryRange)"
 		Write-Host "Address Used: $Address"
 		[Environment]::NewLine
 	}
 }
-
-# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 1 -Force -Type Dword -ErrorAction Ignore
-# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 1 -Force -Type Dword -ErrorAction Ignore
 
 cmd /c pause
