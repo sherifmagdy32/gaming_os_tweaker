@@ -68,7 +68,7 @@ foreach ($usbController in $allUSBControllers) {
 }
 
 foreach ($item in $USBControllersAddresses) {
-	if (![string]::IsNullOrWhiteSpace($item.MemoryRange)) {
+	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
 		continue
 	}
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
