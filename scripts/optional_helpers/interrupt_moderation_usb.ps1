@@ -66,16 +66,14 @@ foreach ($usbController in $allUSBControllers) {
 	}
 }
 
-$ProcessorName = Get-WMIObject Win32_PnPEntity | Where-Object {$_.PnpClass -eq 'Processor' } | Where-Object { $_.Caption -like "*AMD*" -or $_.Caption -like "*Intel*" } | Select -ExpandProperty Caption -First 1
-
 foreach ($item in $USBControllersAddresses) {
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
 	$Address = ''
-	if ($ProcessorName.Contains('Intel')) {
+	if ($item.Name.Contains('Intel')) {
 		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
 		$Address = $leftWithoutLast4Digits + '2024'
 	}
-	if ($ProcessorName.Contains('AMD')) {
+	if ($item.Name.Contains('AMD')) {
 		# TODO
 	}
 	if (![string]::IsNullOrWhiteSpace($Address)) {
