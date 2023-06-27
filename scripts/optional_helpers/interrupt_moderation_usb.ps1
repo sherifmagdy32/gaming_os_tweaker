@@ -10,6 +10,7 @@
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61
 	https://github.com/djdallmann/GamingPCSetup/tree/master/CONTENT/RESEARCH/PERIPHERALS#universal-serial-bus-usb
 	https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md
+	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
 
 	Beware: RW command will not run if you have the GUI version open.
 
@@ -31,9 +32,10 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 # Startup command is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized.
 # If you want to execute startup script, change from $false to $true
+$enableApplyStartupScript = $false
 $taskName = "InterruptModerationUsb"
 $taskExists = Get-ScheduledTask | Where-Object {$_.TaskName -like $taskName }
-if (!$taskExists -And $false) {
+if (!$taskExists -And $enableApplyStartupScript) {
   $action = New-ScheduledTaskAction -Execute "powershell" -Argument "-WindowStyle hidden -ExecutionPolicy Bypass -File $PSScriptRoot\interrupt_moderation_usb.ps1"
 	$delay = New-TimeSpan -Seconds 10
 	$trigger = New-ScheduledTaskTrigger -AtLogOn -RandomDelay $delay
@@ -94,11 +96,14 @@ foreach ($item in $USBControllersAddresses) {
 
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
-		$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
-		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
-		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
-		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
-		$Address = $leftWithoutLast4Digits + $rightSideValue
+		$fileExists = Test-Path -Path ..\tools\RW\$fileName
+		if ($fileExists) {
+			$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
+			$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
+			$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
+			$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
+			$Address = $leftWithoutLast4Digits + $rightSideValue
+		}
 	}
 	if ($item.Name.Contains('AMD')) {
 		# TODO
