@@ -3,8 +3,7 @@
 
 	It's not done for Intel nor AMD, I dont have any information about it, to know if it's the same address space value and if it's the 24 value to sum with it.
 	For Intel, there are cases not addressed by docs in links below, so unless someone who understand the domain provide a fix or complete information, it will stay unfinished.
-	1- If values that are supposed to be summed are non-numbers, what to do?
-	2- How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, it could also be wrong there.
+	How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, it could also be wrong there.
 
 	-------------------------
 
@@ -86,6 +85,16 @@ foreach ($usbController in $allUSBControllers) {
 	}
 }
 
+function Convert-Decimal-To-Hex {
+	param ([int64] $value)
+	'0x' + [System.Convert]::ToString($value, 16).ToUpper()
+}
+
+function Convert-Hex-To-Decimal {
+	param ([string] $value)
+	[convert]::toint64($value, 16)
+}
+
 $tempMemDumpFileName = "TEMP_MEM_DUMP"
 $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
@@ -97,7 +106,9 @@ foreach ($item in $USBControllersAddresses) {
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
-	Start-Sleep -Seconds 1
+	do {
+		Start-Sleep -Seconds 1
+	} while (!(Test-Path -Path $RWPath\$fileName))
 }
 
 # Process controllers and disable imod
@@ -111,10 +122,12 @@ foreach ($item in $USBControllersAddresses) {
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
 		$selectedValues = (Get-Content -Path $RWPath\$fileName -Wait | Select -Index 3).Split(" ")
-		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
-		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
-		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
-		$Address = $leftWithoutLast4Digits + $rightSideValue
+		$eighteenPositionValue = $selectedValues[4] + $selectedValues[3]
+		$LeftSideMemoryRangeDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
+		$EighteenPositionDecimal = Convert-Hex-To-Decimal -value $eighteenPositionValue
+		$TwentyFourHexInDecimal = 36
+		$summedDecimals = $LeftSideMemoryRangeDecimal + $EighteenPositionDecimal + $TwentyFourHexInDecimal
+		$Address = Convert-Decimal-To-Hex -value $summedDecimals
 	}
 	if ($item.Name.Contains('AMD')) {
 		# TODO
