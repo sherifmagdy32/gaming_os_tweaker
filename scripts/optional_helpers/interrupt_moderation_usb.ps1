@@ -1,9 +1,9 @@
 <#
 	WIP (not done)
 
-	It's not done for Intel nor AMD, I dont have any information about it, to know if it's the same address space value and if it's the 24 value to sum with it.
+	It's not done for Intel nor AMD, for AMD I dont have any information about it, to know if it's the same address space value and if it's the 24h value to sum with it.
 	For Intel, there are cases not addressed by docs in links below, so unless someone who understand the domain provide a fix or complete information, it will stay unfinished.
-	How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, it could also be wrong there.
+	How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, this part could also be wrong.
 
 	-------------------------
 
@@ -76,6 +76,10 @@ foreach ($usbController in $allUSBControllers) {
 	$locationInfo = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
 	$PDOName = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
 
+	if ([string]::IsNullOrWhiteSpace($deviceMemory.Name)) {
+		continue
+	}
+
 	$USBControllersAddresses += [PsObject]@{
 		Name = $usbController.Name
 		DeviceId = $usbController.DeviceID
@@ -87,59 +91,73 @@ foreach ($usbController in $allUSBControllers) {
 
 function Convert-Decimal-To-Hex {
 	param ([int64] $value)
-	'0x' + [System.Convert]::ToString($value, 16).ToUpper()
+	return '0x' + [System.Convert]::ToString($value, 16).ToUpper()
+}
+
+function Get-Left-Side-From-MemoryRange {
+	param ([string] $memoryRange)
+	return $memoryRange.Split("-")[0]
 }
 
 function Convert-Hex-To-Decimal {
 	param ([string] $value)
-	[convert]::toint64($value, 16)
+	return [convert]::toint64($value, 16)
+}
+
+function Get-VendorId-From-DeviceId {
+	param ([string] $deviceId)
+	if ([string]::IsNullOrWhiteSpace($deviceId)) {
+		return "None"
+	}
+	$deviceIdMinInfo = $deviceId.Split("\")[1].Split("&")
+	$deviceIdVENValue = $deviceIdMinInfo[0].Split("_")[1]
+	$deviceIdDEVValue = $deviceIdMinInfo[1].Split("_")[1]
+	return "0x" + $deviceIdDEVValue + $deviceIdVENValue
+}
+
+function Build-Intel-Address {
+	param ([string] $path)
+	$selectedValues = (Get-Content -Path $path -Wait | Select -Index 3).Split(" ")
+	$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
+	$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
+	$BaseAddressOffset = Convert-Hex-To-Decimal -value $eighteenPositionValue
+	$TwentyFourHexInDecimal = Convert-Hex-To-Decimal -value '0x24'
+	$AddressInDecimal = $BaseAddress + $BaseAddressOffset + $TwentyFourHexInDecimal
+	return Convert-Decimal-To-Hex -value $AddressInDecimal
+}
+
+function Build-AMD-Address {
+	# TODO - Missing information in how
+	return ''
 }
 
 $tempMemDumpFileName = "TEMP_MEM_DUMP"
 $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
-# Generate / Dump memory with address values
 foreach ($item in $USBControllersAddresses) {
-	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
-		continue
-	}
-	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $item.MemoryRange
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
-	do {
+	while (!(Test-Path -Path $RWPath\$fileName)) {
 		Start-Sleep -Seconds 1
-	} while (!(Test-Path -Path $RWPath\$fileName))
+	}
 }
 
-# Process controllers and disable imod
 foreach ($item in $USBControllersAddresses) {
-	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
-		continue
-	}
-	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $item.MemoryRange
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
+	$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
 
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
-		$selectedValues = (Get-Content -Path $RWPath\$fileName -Wait | Select -Index 3).Split(" ")
-		$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
-		$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
-		$BaseAddressOffset = Convert-Hex-To-Decimal -value $eighteenPositionValue
-		$TwentyFourHexInDecimal = Convert-Hex-To-Decimal -value '0x24'
-		$AddressInDecimal = $BaseAddress + $BaseAddressOffset + $TwentyFourHexInDecimal
-		$Address = Convert-Decimal-To-Hex -value $AddressInDecimal
+		$Address = Build-Intel-Address -path "$RWPath\$fileName"
 	}
 	if ($item.Name.Contains('AMD')) {
-		# TODO
+		$Address = Build-AMD-Address
 	}
 	if (![string]::IsNullOrWhiteSpace($Address)) {
 		& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W16 $Address 0x0000"
 		Start-Sleep -Seconds 1
-
-		$deviceIdMinInfo = $item.DeviceId.Split("\")[1].Split("&")
-		$deviceIdVENValue = $deviceIdMinInfo[0].Split("_")[1]
-		$deviceIdDEVValue = $deviceIdMinInfo[1].Split("_")[1]
-		$VendorId = "0x" + $deviceIdDEVValue + $deviceIdVENValue
 
 		Write-Host "Device: $($item.Name)"
 		Write-Host "Device ID: $($item.DeviceId)"
@@ -152,7 +170,6 @@ foreach ($item in $USBControllersAddresses) {
 	}
 }
 
-# Stop process if not closed and remove temp files
 Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 Remove-Item -Path $RWPath\$tempMemDumpFileName*
 
