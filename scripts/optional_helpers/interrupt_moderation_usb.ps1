@@ -141,8 +141,9 @@ function Disable-IMOD-From-Address {
 }
 
 function Build-Intel-Address {
-	param ([string] $path, [string] $memoryRange)
-	$selectedValues = (Get-Content -Path $path -Wait | Select -Index 3).Split(" ")
+	param ([string] $memoryRange)
+	$fileName = Build-Filename -memoryRange $memoryRange
+	$selectedValues = (Get-Content -Path "$RWPath\$fileName" -Wait | Select -Index 3).Split(" ")
 	$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
@@ -160,11 +161,9 @@ function Build-AMD-Address {
 foreach ($item in $USBControllersAddresses) {
 	Dump-Memory-File -memoryRange $item.MemoryRange
 
-	$fileName = Build-Filename -memoryRange $item.MemoryRange
-
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
-		$Address = Build-Intel-Address -path "$RWPath\$fileName" -memoryRange $item.MemoryRange
+		$Address = Build-Intel-Address -memoryRange $item.MemoryRange
 	}
 	if ($item.Name.Contains('AMD')) {
 		$Address = Build-AMD-Address
