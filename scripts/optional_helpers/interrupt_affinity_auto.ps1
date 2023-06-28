@@ -137,13 +137,23 @@ for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
 	$parentDevicePDOName = ""
 	do {
 		$parentDevice = Get-PnpDeviceProperty -InstanceId $parentDeviceInstanceId
+		if (!$parentDevice) {
+			continue
+		}
 		$parentDeviceName = $parentDevice | Where KeyName -eq 'DEVPKEY_NAME' | Select -ExpandProperty Data
+		if (!$parentDeviceName) {
+			continue
+		}
 		$parentDeviceLocationInfo = $parentDevice | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
 		$parentDevicePDOName = $parentDevice | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
 		if ($isUSB -and !$parentDeviceName.Contains('Controller')) {
 			$parentDeviceInstanceId = $parentDevice | Where KeyName -eq 'DEVPKEY_Device_Parent' | Select -ExpandProperty Data
 		}
 	} while (!$parentDeviceName.Contains('Controller') -and $isUSB)
+
+	if (!$parentDeviceName) {
+		continue
+	}
 
 	$relevantData += [PsObject]@{
 		ChildDeviceName = $childDeviceName;
