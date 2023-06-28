@@ -84,26 +84,33 @@ foreach ($usbController in $allUSBControllers) {
 
 $tempMemDumpFileName = "TEMP_MEM_DUMP"
 
+# Generate / Dump memory with address values
 foreach ($item in $USBControllersAddresses) {
 	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
 		continue
 	}
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
-
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 	..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 ..\tools\RW\$fileName" | Out-Null
-	Start-Sleep -Seconds 1
+}
+
+Start-Sleep -Seconds 1
+
+# Process controllers and disable imod
+foreach ($item in $USBControllersAddresses) {
+	if ([string]::IsNullOrWhiteSpace($item.MemoryRange)) {
+		continue
+	}
+	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
+	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 
 	$Address = ''
-	if ($item.Name.Contains('Intel')) {
-		$fileExists = Test-Path -Path ..\tools\RW\$fileName
-		if ($fileExists) {
-			$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
-			$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
-			$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
-			$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
-			$Address = $leftWithoutLast4Digits + $rightSideValue
-		}
+	if (!$item.Name.Contains('Intel')) {
+		$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
+		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
+		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
+		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
+		$Address = $leftWithoutLast4Digits + $rightSideValue
 	}
 	if ($item.Name.Contains('AMD')) {
 		# TODO
@@ -128,6 +135,7 @@ foreach ($item in $USBControllersAddresses) {
 	}
 }
 
+# Stop process if not closed and remove temp files
 Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 Remove-Item -Path ..\tools\Rw\$tempMemDumpFileName*
 
