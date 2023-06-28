@@ -12,7 +12,8 @@
 	https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
 
-	Beware: RW command will not run if you have the GUI version open.
+	Note1: RW command will not run if you have the GUI version open.
+	Note2: You should be able to run this script from anywhere as long as you have downloaded the gaming_os_tweaks folder.
 
 	-------------------------
 
@@ -83,6 +84,7 @@ foreach ($usbController in $allUSBControllers) {
 }
 
 $tempMemDumpFileName = "TEMP_MEM_DUMP"
+$RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
 # Generate / Dump memory with address values
 foreach ($item in $USBControllersAddresses) {
@@ -91,10 +93,9 @@ foreach ($item in $USBControllersAddresses) {
 	}
 	$LeftSideMemoryRange = $item.MemoryRange.Split("-")[0]
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
-	..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 ..\tools\RW\$fileName" | Out-Null
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
+	Start-Sleep -Seconds 1
 }
-
-Start-Sleep -Seconds 1
 
 # Process controllers and disable imod
 foreach ($item in $USBControllersAddresses) {
@@ -106,7 +107,7 @@ foreach ($item in $USBControllersAddresses) {
 
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
-		$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
+		$selectedValues = (Get-Content -Path $RWPath\$fileName -Wait | Select -Index 3).Split(" ")
 		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
 		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
 		$leftWithoutLast4Digits = $LeftSideMemoryRange.Substring(0, $LeftSideMemoryRange.length - 4)
@@ -116,7 +117,7 @@ foreach ($item in $USBControllersAddresses) {
 		# TODO
 	}
 	if (![string]::IsNullOrWhiteSpace($Address)) {
-		..\tools\RW\Rw.exe /Min /NoLogo /Stdout /Stderr /Command="W16 $Address 0x0000"
+		& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W16 $Address 0x0000"
 		Start-Sleep -Seconds 1
 
 		$deviceIdMinInfo = $item.DeviceId.Split("\")[1].Split("&")
@@ -137,6 +138,6 @@ foreach ($item in $USBControllersAddresses) {
 
 # Stop process if not closed and remove temp files
 Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
-Remove-Item -Path ..\tools\Rw\$tempMemDumpFileName*
+Remove-Item -Path $RWPath\$tempMemDumpFileName*
 
 cmd /c pause
