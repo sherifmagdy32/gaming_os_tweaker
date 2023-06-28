@@ -70,7 +70,7 @@ $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
 [PsObject[]]$USBControllersAddresses = @()
 
-$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller'} | Select-Object -Property Name, DeviceID
+$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller' -and $_.Name -match 'Extensible'  } | Select-Object -Property Name, DeviceID
 foreach ($usbController in $allUSBControllers) {
 	$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}
 	$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
