@@ -1,7 +1,10 @@
 <#
 	WIP (not done)
 
-	It should be done for Intel, but not AMD, I dont have any information about it, to know if it's the same address space value and if it's the 24 value to sum with it.
+	It's not done for Intel nor AMD, I dont have any information about it, to know if it's the same address space value and if it's the 24 value to sum with it.
+	For Intel, there are cases not addressed by docs in links below, so unless someone who understand the domain provide a fix or complete information, it will stay unfinished.
+	1- If values that are supposed to be summed are non-numbers, what to do?
+	2- How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, it could also be wrong there.
 
 	-------------------------
 
