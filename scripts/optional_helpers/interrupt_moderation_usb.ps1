@@ -105,7 +105,7 @@ foreach ($item in $USBControllersAddresses) {
 	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
 
 	$Address = ''
-	if (!$item.Name.Contains('Intel')) {
+	if ($item.Name.Contains('Intel')) {
 		$selectedValues = (Get-Content -Path ..\tools\RW\$fileName | Select -Index 3).Split(" ")
 		$eighteenDecimalPlus = [int]($selectedValues[4] + $selectedValues[3]) + 24
 		$rightSideValue = $eighteenDecimalPlus.ToString().PadLeft(4, '0')
