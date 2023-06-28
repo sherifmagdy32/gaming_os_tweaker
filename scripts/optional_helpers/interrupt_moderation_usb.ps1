@@ -122,12 +122,12 @@ foreach ($item in $USBControllersAddresses) {
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
 		$selectedValues = (Get-Content -Path $RWPath\$fileName -Wait | Select -Index 3).Split(" ")
-		$eighteenPositionValue = $selectedValues[4] + $selectedValues[3]
-		$LeftSideMemoryRangeDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
-		$EighteenPositionDecimal = Convert-Hex-To-Decimal -value $eighteenPositionValue
-		$TwentyFourHexInDecimal = 36
-		$summedDecimals = $LeftSideMemoryRangeDecimal + $EighteenPositionDecimal + $TwentyFourHexInDecimal
-		$Address = Convert-Decimal-To-Hex -value $summedDecimals
+		$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
+		$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
+		$BaseAddressOffset = Convert-Hex-To-Decimal -value $eighteenPositionValue
+		$TwentyFourHexInDecimal = Convert-Hex-To-Decimal -value '0x24'
+		$AddressInDecimal = $BaseAddress + $BaseAddressOffset + $TwentyFourHexInDecimal
+		$Address = Convert-Decimal-To-Hex -value $AddressInDecimal
 	}
 	if ($item.Name.Contains('AMD')) {
 		# TODO
