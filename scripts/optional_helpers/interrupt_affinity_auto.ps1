@@ -141,7 +141,7 @@ for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
 			continue
 		}
 		$parentDeviceName = $parentDevice | Where KeyName -eq 'DEVPKEY_NAME' | Select -ExpandProperty Data
-		if (!$parentDeviceName) {
+		if ([string]::IsNullOrWhiteSpace($parentDeviceName)) {
 			continue
 		}
 		$parentDeviceLocationInfo = $parentDevice | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
@@ -151,7 +151,7 @@ for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
 		}
 	} while (!$parentDeviceName.Contains('Controller') -and $isUSB)
 
-	if (!$parentDeviceName) {
+	if ([string]::IsNullOrWhiteSpace($parentDeviceName)) {
 		continue
 	}
 
