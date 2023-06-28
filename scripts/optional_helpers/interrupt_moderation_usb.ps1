@@ -65,6 +65,9 @@ if ($BuildNumber -ge 22000) {
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 0 -Force -Type Dword -ErrorAction Ignore
 }
 
+$tempMemDumpFileName = "TEMP_MEM_DUMP"
+$RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
+
 [PsObject[]]$USBControllersAddresses = @()
 
 $allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller'} | Select-Object -Property Name, DeviceID
@@ -115,10 +118,33 @@ function Get-VendorId-From-DeviceId {
 	return "0x" + $deviceIdDEVValue + $deviceIdVENValue
 }
 
+function Build-Filename {
+	param ([string] $memoryRange)
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
+	return "$tempMemDumpFileName-$LeftSideMemoryRange"
+}
+
+function Dump-Memory-File {
+	param ([string] $memoryRange)
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
+	$fileName = Build-Filename -memoryRange $memoryRange
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
+	while (!(Test-Path -Path $RWPath\$fileName)) {
+		Start-Sleep -Seconds 1
+	}
+}
+
+function Disable-IMOD-From-Address {
+	param ([string] $address)
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W16 $address 0x0000"
+	Start-Sleep -Seconds 1
+}
+
 function Build-Intel-Address {
-	param ([string] $path)
+	param ([string] $path, [string] $memoryRange)
 	$selectedValues = (Get-Content -Path $path -Wait | Select -Index 3).Split(" ")
 	$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
 	$BaseAddressOffset = Convert-Hex-To-Decimal -value $eighteenPositionValue
 	$TwentyFourHexInDecimal = Convert-Hex-To-Decimal -value '0x24'
@@ -131,34 +157,22 @@ function Build-AMD-Address {
 	return ''
 }
 
-$tempMemDumpFileName = "TEMP_MEM_DUMP"
-$RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
-
 foreach ($item in $USBControllersAddresses) {
-	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $item.MemoryRange
-	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
-	while (!(Test-Path -Path $RWPath\$fileName)) {
-		Start-Sleep -Seconds 1
-	}
-}
+	Dump-Memory-File -memoryRange $item.MemoryRange
 
-foreach ($item in $USBControllersAddresses) {
-	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $item.MemoryRange
-	$fileName = "$tempMemDumpFileName-$LeftSideMemoryRange"
-	$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
+	$fileName = Build-Filename -memoryRange $item.MemoryRange
 
 	$Address = ''
 	if ($item.Name.Contains('Intel')) {
-		$Address = Build-Intel-Address -path "$RWPath\$fileName"
+		$Address = Build-Intel-Address -path "$RWPath\$fileName" -memoryRange $item.MemoryRange
 	}
 	if ($item.Name.Contains('AMD')) {
 		$Address = Build-AMD-Address
 	}
 	if (![string]::IsNullOrWhiteSpace($Address)) {
-		& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W16 $Address 0x0000"
-		Start-Sleep -Seconds 1
+		Disable-IMOD-From-Address -address $Address
 
+		$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
 		Write-Host "Device: $($item.Name)"
 		Write-Host "Device ID: $($item.DeviceId)"
 		Write-Host "Location Info: $($item.LocationInfo)"
