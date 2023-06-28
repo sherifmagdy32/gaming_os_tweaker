@@ -19,7 +19,7 @@
 
 	-------------------------
 
-	In case you get problems running the script in Win11, you can run the command to allow, and after, another to set back to a safe or undefined policy
+	In case you get problems running the script in Win11, you can run the command to allow, and after, another to set back to a safer or undefined policy
 
 	You can check the current policy settings
 	Get-ExecutionPolicy -List
@@ -97,14 +97,19 @@ function Convert-Decimal-To-Hex {
 	return '0x' + [System.Convert]::ToString($value, 16).ToUpper()
 }
 
-function Get-Left-Side-From-MemoryRange {
-	param ([string] $memoryRange)
-	return $memoryRange.Split("-")[0]
-}
-
 function Convert-Hex-To-Decimal {
 	param ([string] $value)
 	return [convert]::toint64($value, 16)
+}
+
+function Stop-Tool-And-Clean-Temp-Files {
+	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
+	Remove-Item -Path $RWPath\$tempMemDumpFileName*
+}
+
+function Get-Left-Side-From-MemoryRange {
+	param ([string] $memoryRange)
+	return $memoryRange.Split("-")[0]
 }
 
 function Get-VendorId-From-DeviceId {
@@ -128,19 +133,17 @@ function Dump-Memory-File {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$fileName = Build-Filename -memoryRange $memoryRange
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 32 $RWPath\$fileName" | Out-Null
-	while (!(Test-Path -Path $RWPath\$fileName)) {
-		Start-Sleep -Seconds 1
-	}
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 256 $RWPath\$fileName" | Out-Null
+	while (!(Test-Path -Path $RWPath\$fileName)) { Start-Sleep -Seconds 1 }
 }
 
-function Disable-IMOD-From-Address {
+function Disable-IMOD {
 	param ([string] $address)
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W16 $address 0x0000"
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W32 $address 0x00000000"
 	Start-Sleep -Seconds 1
 }
 
-function Build-Intel-Address {
+function Build-Address {
 	param ([string] $memoryRange)
 	$fileName = Build-Filename -memoryRange $memoryRange
 	$selectedValues = (Get-Content -Path "$RWPath\$fileName" -Wait | Select -Index 3).Split(" ")
@@ -153,37 +156,27 @@ function Build-Intel-Address {
 	return Convert-Decimal-To-Hex -value $AddressInDecimal
 }
 
-function Build-AMD-Address {
-	# TODO - Missing information in how
-	return ''
-}
-
 foreach ($item in $USBControllersAddresses) {
 	Dump-Memory-File -memoryRange $item.MemoryRange
 
-	$Address = ''
-	if ($item.Name.Contains('Intel')) {
-		$Address = Build-Intel-Address -memoryRange $item.MemoryRange
+	$Address = Build-Address -memoryRange $item.MemoryRange
+	if ([string]::IsNullOrWhiteSpace($Address)) {
+		Write-Host "Address is empty, didnt found any valid to disable IMOD"
+		continue
 	}
-	if ($item.Name.Contains('AMD')) {
-		$Address = Build-AMD-Address
-	}
-	if (![string]::IsNullOrWhiteSpace($Address)) {
-		Disable-IMOD-From-Address -address $Address
+	Disable-IMOD -address $Address
 
-		$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
-		Write-Host "Device: $($item.Name)"
-		Write-Host "Device ID: $($item.DeviceId)"
-		Write-Host "Location Info: $($item.LocationInfo)"
-		Write-Host "PDO Name: $($item.PDOName)"
-		Write-Host "Vendor ID: $VendorId"
-		Write-Host "Memory Range: $($item.MemoryRange)"
-		Write-Host "Address Used: $Address"
-		[Environment]::NewLine
-	}
+	$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
+	Write-Host "Device: $($item.Name)"
+	Write-Host "Device ID: $($item.DeviceId)"
+	Write-Host "Location Info: $($item.LocationInfo)"
+	Write-Host "PDO Name: $($item.PDOName)"
+	Write-Host "Vendor ID: $VendorId"
+	Write-Host "Memory Range: $($item.MemoryRange)"
+	Write-Host "Address Used: $Address"
+	[Environment]::NewLine
 }
 
-Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
-Remove-Item -Path $RWPath\$tempMemDumpFileName*
+Stop-Tool-And-Clean-Temp-Files
 
 cmd /c pause
