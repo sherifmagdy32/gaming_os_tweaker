@@ -137,8 +137,7 @@ function Dump-Memory-File {
 	$SumCapabilityPlusRuntime = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $RuntimeRegisterSpaceOffsetInDecimal)
 	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $SumCapabilityPlusRuntime" 2>&1 | Out-String
 	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
-	$FormattedValue = $Value.Split("=")[1].Trim()
-	$ValueInDecimal = Convert-Hex-To-Decimal -value $FormattedValue
+	$ValueInDecimal = Convert-Hex-To-Decimal -value $Value.Split("=")[1].Trim()
 	$TwentyFourValueInDecimal = Convert-Hex-To-Decimal -value "0x24"
 	$Interrupter0Address = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal + (32 * 0))
 
