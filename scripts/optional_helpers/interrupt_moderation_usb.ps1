@@ -1,6 +1,8 @@
 <#
 	WIP (not done)
 
+	https://desowin.org/usbpcap/tour.html
+
 	-------------------------
 
 	Automated script to disable interrupt moderation / coalesting in all usb controllers
@@ -47,8 +49,6 @@ if (!$taskExists -And $enableApplyStartupScript) {
 	# Unregister-ScheduledTask -TaskName "InterruptModerationUsb"
 }
 
-Clean-Up
-
 Write-Host "Started disabling interrupt moderation in all usb controllers"
 [Environment]::NewLine
 
@@ -69,7 +69,7 @@ $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
 $allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller' -and $_.Name -match 'Extensible'  } | Select-Object -Property Name, DeviceID
 foreach ($usbController in $allUSBControllers) {
-	$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}
+	$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}, @{N="IRQ";E={$_.Antecedent.IRQNumber}}
 	$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
 
 	$deviceProperties = Get-PnpDeviceProperty -InstanceId $usbController.DeviceID
@@ -86,6 +86,7 @@ foreach ($usbController in $allUSBControllers) {
 		MemoryRange = $deviceMemory.Name
 		LocationInfo = $locationInfo
 		PDOName = $PDOName
+		IRQ = $allocatedResource.IRQ
 	}
 }
 
@@ -103,6 +104,14 @@ function Clean-Up {
 	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 	Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
 	Remove-Item -Path $RWPath\$tempMemDumpFileName*
+}
+
+function Apply-IRQ-Priotity-Optimization {
+	param ([string] $IRQValue)
+	$IRQSplit = $IRQValue.Trim().Split(" ")
+	foreach ($IRQ in $IRQSplit) {
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl" -Name "IRQ$($IRQ)Priority" -Value 1 -Force -Type Dword -ErrorAction Ignore
+	}
 }
 
 function Get-Left-Side-From-MemoryRange {
@@ -194,7 +203,10 @@ function Build-Address {
 	return ''
 }
 
+Clean-Up
+
 foreach ($item in $USBControllersAddresses) {
+	Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
 	Dump-Memory-File -memoryRange $item.MemoryRange
 
 	$Address = Build-Address -memoryRange $item.MemoryRange
