@@ -47,10 +47,10 @@ if (!$taskExists -And $enableApplyStartupScript) {
 	# Unregister-ScheduledTask -TaskName "InterruptModerationUsb"
 }
 
+Clean-Up
+
 Write-Host "Started disabling interrupt moderation in all usb controllers"
 [Environment]::NewLine
-
-Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
 
 # REGs improve tools compatibility with Win11 - You might need to reboot to take effect
 $BuildNumber = Get-WMIObject Win32_OperatingSystem | Select -ExpandProperty BuildNumber
@@ -99,8 +99,9 @@ function Convert-Hex-To-Decimal {
 	return [convert]::toint64($value, 16)
 }
 
-function Stop-Tool-And-Clean-Temp-Files {
+function Clean-Up {
 	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
+	Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
 	Remove-Item -Path $RWPath\$tempMemDumpFileName*
 }
 
@@ -215,6 +216,6 @@ foreach ($item in $USBControllersAddresses) {
 	[Environment]::NewLine
 }
 
-Stop-Tool-And-Clean-Temp-Files
+Clean-Up
 
 cmd /c pause
