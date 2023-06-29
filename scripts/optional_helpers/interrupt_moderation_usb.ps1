@@ -1,10 +1,6 @@
 <#
 	WIP (not done)
 
-	It's not done for Intel nor AMD, for AMD I dont have any information about it, to know if it's the same address space value and if it's the 24h value to sum with it.
-	For Intel, there are cases not addressed by docs in links below, so unless someone who understand the domain provide a fix or complete information, it will stay unfinished.
-	How do I know that the value will always be in the same 18hex place, unless that is complete accurate/correct, this part could also be wrong.
-
 	-------------------------
 
 	Automated script to disable interrupt moderation / coalesting in all usb controllers
@@ -13,6 +9,7 @@
 	https://github.com/djdallmann/GamingPCSetup/tree/master/CONTENT/RESEARCH/PERIPHERALS#universal-serial-bus-usb
 	https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
+	https://github.com/djdallmann/GamingPCSetup/issues/12
 
 	Note1: RW command will not run if you have the GUI version open.
 	Note2: You should be able to run this script from anywhere as long as you have downloaded the gaming_os_tweaks folder.
@@ -133,7 +130,19 @@ function Dump-Memory-File {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$fileName = Build-Filename -memoryRange $memoryRange
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $LeftSideMemoryRange 256 $RWPath\$fileName" | Out-Null
+
+	$CapabilityBaseAddressInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
+	$RuntimeRegisterSpaceOffsetInDecimal = Convert-Hex-To-Decimal -value "0x18"
+	$SumCapabilityPlusRuntime = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $RuntimeRegisterSpaceOffsetInDecimal)
+	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $SumCapabilityPlusRuntime" 2>&1 | Out-String
+	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
+	$FormattedValue = $Value.Split("=")[1].Trim()
+	$ValueInDecimal = Convert-Hex-To-Decimal -value $FormattedValue
+	$TwentyFourValueInDecimal = Convert-Hex-To-Decimal -value "0x24"
+	$Interrupter0Address = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal + (32 * 0))
+
+	# It will dump everything from this address forward, all the way to interrupter 1023
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $Interrupter0Address 33000 $RWPath\$fileName" | Out-Null
 	while (!(Test-Path -Path $RWPath\$fileName)) { Start-Sleep -Seconds 1 }
 }
 
@@ -143,17 +152,46 @@ function Disable-IMOD {
 	Start-Sleep -Seconds 1
 }
 
+function Parse-File-Content {
+	param ([string] $memoryRange)
+	[PsObject[]]$TempArr = @()
+	[PsObject[]]$Data = @()
+
+	$fileName = Build-Filename -memoryRange $memoryRange
+	$dumpedContent = Get-Content -Path "$RWPath\$fileName" | Select-Object -Skip 2
+
+	foreach ($line in $dumpedContent) {
+		$cleanLine = $line.Split("`t")[0].Trim();
+		$lineSplit = $cleanLine.Split(" ")
+		$lineNumber = $lineSplit[0]
+		$first32BitValue = '0x' + $lineSplit[4] + $lineSplit[3] + $lineSplit[2] + $lineSplit[1]
+		$second32BitValue = '0x' + $lineSplit[8] + $lineSplit[7] + $lineSplit[6] + $lineSplit[5]
+		$third32BitValue = '0x' + $lineSplit[12] + $lineSplit[11] + $lineSplit[10] + $lineSplit[9]
+		$forth32BitValue = '0x' + $lineSplit[16] + $lineSplit[15] + $lineSplit[14] + $lineSplit[13]
+
+		$TempArr += [PsObject]@{Value = $first32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
+		$TempArr += [PsObject]@{Value = $second32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
+		$TempArr += [PsObject]@{Value = $third32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
+		$TempArr += [PsObject]@{Value = $forth32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
+	}
+
+	$interrupterCount = 0
+	$topLeftCount = 0
+	for ($i=0; $i -lt $TempArr.Length; $i++) {
+		$item = $TempArr[$i]
+		if (($i + 1) % 8 -eq 0) { $interrupterCount += 1 }
+		if ($interrupterCount -ge 1024) { break }
+		$Data += [PsObject]@{Value = $item.Value; TopLeftPosition = $topLeftCount; Line = $item.Line; Interrupter = $interrupterCount}
+		$topLeftCount += 4
+	}
+	return $Data
+}
+
 function Build-Address {
 	param ([string] $memoryRange)
-	$fileName = Build-Filename -memoryRange $memoryRange
-	$selectedValues = (Get-Content -Path "$RWPath\$fileName" -Wait | Select -Index 3).Split(" ")
-	$eighteenPositionValue = '0x' + $selectedValues[4] + $selectedValues[3]
-	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
-	$BaseAddress = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
-	$BaseAddressOffset = Convert-Hex-To-Decimal -value $eighteenPositionValue
-	$TwentyFourHexInDecimal = Convert-Hex-To-Decimal -value '0x24'
-	$AddressInDecimal = $BaseAddress + $BaseAddressOffset + $TwentyFourHexInDecimal
-	return Convert-Decimal-To-Hex -value $AddressInDecimal
+	$parsedContent = Parse-File-Content -memoryRange $memoryRange
+	# TODO
+	return ''
 }
 
 foreach ($item in $USBControllersAddresses) {
