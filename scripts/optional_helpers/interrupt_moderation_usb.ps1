@@ -1,8 +1,6 @@
 <#
 	WIP (not done)
 
-	https://desowin.org/usbpcap/tour.html
-
 	-------------------------
 
 	Automated script to disable interrupt moderation / coalesting in all usb controllers
@@ -32,62 +30,65 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit
 }
 
-# Startup command is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized.
-# If you want to execute startup script, change from $false to $true
-$enableApplyStartupScript = $false
-$taskName = "InterruptModerationUsb"
-$taskExists = Get-ScheduledTask | Where-Object {$_.TaskName -like $taskName }
-if (!$taskExists -And $enableApplyStartupScript) {
-  $action = New-ScheduledTaskAction -Execute "powershell" -Argument "-WindowStyle hidden -ExecutionPolicy Bypass -File $PSScriptRoot\interrupt_moderation_usb.ps1"
-	$delay = New-TimeSpan -Seconds 10
-	$trigger = New-ScheduledTaskTrigger -AtLogOn -RandomDelay $delay
-	$principal = New-ScheduledTaskPrincipal -UserID "LOCALSERVICE" -RunLevel Highest
-	Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal
-	[Environment]::NewLine
-
-	# In case you have to remove the script from startup, but are not able to do from the UI, run:
-	# Unregister-ScheduledTask -TaskName "InterruptModerationUsb"
-}
-
 Write-Host "Started disabling interrupt moderation in all usb controllers"
 [Environment]::NewLine
 
-# REGs improve tools compatibility with Win11 - You might need to reboot to take effect
-$BuildNumber = Get-WMIObject Win32_OperatingSystem | Select -ExpandProperty BuildNumber
-if ($BuildNumber -ge 22000) {
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios" -Name "HypervisorEnforcedCodeIntegrity" -Value 0 -Force -Type Dword -ErrorAction Ignore
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 0 -Force -Type Dword -ErrorAction Ignore
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 0 -Force -Type Dword -ErrorAction Ignore
-}
-
-$tempMemDumpFileName = "TEMP_MEM_DUMP"
+tempMemDumpFileName = "TEMP_MEM_DUMP"
 $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
-[PsObject[]]$USBControllersAddresses = @()
+function Apply-Startup-Script {
+	$taskName = "InterruptModerationUsb"
+	$taskExists = Get-ScheduledTask | Where-Object {$_.TaskName -like $taskName }
+	if (!$taskExists) {
+		$action = New-ScheduledTaskAction -Execute "powershell" -Argument "-WindowStyle hidden -ExecutionPolicy Bypass -File $PSScriptRoot\interrupt_moderation_usb.ps1"
+		$delay = New-TimeSpan -Seconds 10
+		$trigger = New-ScheduledTaskTrigger -AtLogOn -RandomDelay $delay
+		$principal = New-ScheduledTaskPrincipal -UserID "LOCALSERVICE" -RunLevel Highest
+		Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal
+		[Environment]::NewLine
 
-$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller' -and $_.Name -match 'Extensible'  } | Select-Object -Property Name, DeviceID
-foreach ($usbController in $allUSBControllers) {
-	$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}, @{N="IRQ";E={$_.Antecedent.IRQNumber}}
-	$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
-
-	$deviceProperties = Get-PnpDeviceProperty -InstanceId $usbController.DeviceID
-	$locationInfo = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
-	$PDOName = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
-
-	if ([string]::IsNullOrWhiteSpace($deviceMemory.Name)) {
-		continue
+		# In case you have to remove the script from startup, but are not able to do from the UI, run:
+		# Unregister-ScheduledTask -TaskName "InterruptModerationUsb"
 	}
+}
 
-	$USBControllersAddresses += [PsObject]@{
-		Name = $usbController.Name
-		DeviceId = $usbController.DeviceID
-		MemoryRange = $deviceMemory.Name
-		LocationInfo = $locationInfo
-		PDOName = $PDOName
-		IRQ = $allocatedResource.IRQ
+function Apply-Tool-Compatibility-Registries {
+	$BuildNumber = Get-WMIObject Win32_OperatingSystem | Select -ExpandProperty BuildNumber
+	if ($BuildNumber -ge 22000) {
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios" -Name "HypervisorEnforcedCodeIntegrity" -Value 0 -Force -Type Dword -ErrorAction Ignore
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 0 -Force -Type Dword -ErrorAction Ignore
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\SystemGuard" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Config" -Name "VulnerableDriverBlocklistEnable" -Value 0 -Force -Type Dword -ErrorAction Ignore
 	}
+}
+
+function Get-All-Extensible-USB-Controllers {
+	[PsObject[]]$USBControllers= @()
+
+	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller' -and $_.Name -match 'Extensible'  } | Select-Object -Property Name, DeviceID
+	foreach ($usbController in $allUSBControllers) {
+		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}, @{N="IRQ";E={$_.Antecedent.IRQNumber}}
+		$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
+
+		$deviceProperties = Get-PnpDeviceProperty -InstanceId $usbController.DeviceID
+		$locationInfo = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
+		$PDOName = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
+
+		if ([string]::IsNullOrWhiteSpace($deviceMemory.Name)) {
+			continue
+		}
+
+		$USBControllers += [PsObject]@{
+			Name = $usbController.Name
+			DeviceId = $usbController.DeviceID
+			MemoryRange = $deviceMemory.Name
+			LocationInfo = $locationInfo
+			PDOName = $PDOName
+			IRQ = $allocatedResource.IRQ
+		}
+	}
+	return $USBControllers
 }
 
 function Convert-Decimal-To-Hex {
@@ -203,9 +204,19 @@ function Build-Address {
 	return ''
 }
 
+# --------------------------------------------------------------------------------------------
+
+# Startup script is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized.
+# Uncomment line below if you want to apply startup script
+# Apply-Startup-Script
+
+# REGs to improve tools compatibility with Win11 - You might need to reboot to take effect
+Apply-Tool-Compatibility-Registries
+
 Clean-Up
 
-foreach ($item in $USBControllersAddresses) {
+$USBControllers = Get-All-Extensible-USB-Controllers
+foreach ($item in $USBControllers) {
 	Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
 	Dump-Memory-File -memoryRange $item.MemoryRange
 
