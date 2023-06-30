@@ -134,7 +134,7 @@ function Build-Filename {
 	return "$tempMemDumpFileName-$LeftSideMemoryRange"
 }
 
-function Dump-Memory-File {
+function Find-First-Interrupter {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$fileName = Build-Filename -memoryRange $memoryRange
@@ -146,11 +146,9 @@ function Dump-Memory-File {
 	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
 	$ValueInDecimal = Convert-Hex-To-Decimal -value $Value.Split("=")[1].Trim()
 	$TwentyFourValueInDecimal = Convert-Hex-To-Decimal -value "0x24"
-	$Interrupter0Address = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal + (32 * 0))
+	$Interrupter0PreAddressInDecimal = $CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal
 
-	# It will dump everything from this address forward, all the way to interrupter 1023
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="DMEM $Interrupter0Address 33000 $RWPath\$fileName" | Out-Null
-	while (!(Test-Path -Path $RWPath\$fileName)) { Start-Sleep -Seconds 1 }
+	return $Interrupter0PreAddressInDecimal
 }
 
 function Disable-IMOD {
@@ -159,64 +157,41 @@ function Disable-IMOD {
 	Start-Sleep -Seconds 1
 }
 
-function Parse-File-Content {
-	param ([string] $memoryRange)
-	[PsObject[]]$TempArr = @()
+function Get-All-Interrupters {
+	param ([string] $preAddressInDecimal, [string] $deviceName)
 	[PsObject[]]$Data = @()
+	$interruptersAmount = 1024
 
-	$fileName = Build-Filename -memoryRange $memoryRange
-	$dumpedContent = Get-Content -Path "$RWPath\$fileName" | Select-Object -Skip 2
+	if ($deviceName.Contains('Intel')) { $interruptersAmount = 1024 }
+	if ($deviceName.Contains('AMD')) { $interruptersAmount = 8 }
 
-	foreach ($line in $dumpedContent) {
-		$cleanLine = $line.Split("`t")[0].Trim();
-		$lineSplit = $cleanLine.Split(" ")
-		$lineNumber = $lineSplit[0]
-		$first32BitValue = '0x' + $lineSplit[4] + $lineSplit[3] + $lineSplit[2] + $lineSplit[1]
-		$second32BitValue = '0x' + $lineSplit[8] + $lineSplit[7] + $lineSplit[6] + $lineSplit[5]
-		$third32BitValue = '0x' + $lineSplit[12] + $lineSplit[11] + $lineSplit[10] + $lineSplit[9]
-		$forth32BitValue = '0x' + $lineSplit[16] + $lineSplit[15] + $lineSplit[14] + $lineSplit[13]
-
-		$TempArr += [PsObject]@{Value = $first32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
-		$TempArr += [PsObject]@{Value = $second32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
-		$TempArr += [PsObject]@{Value = $third32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
-		$TempArr += [PsObject]@{Value = $forth32BitValue; TopLeftPosition = ""; Line = $lineNumber; Interrupter = ""}
-	}
-
-	$interrupterCount = 0
-	$topLeftCount = 0
-	for ($i=0; $i -lt $TempArr.Length; $i++) {
-		$item = $TempArr[$i]
-		if (($i + 1) % 8 -eq 0) { $interrupterCount += 1 }
-		if ($interrupterCount -ge 1024) { break }
-		$Data += [PsObject]@{Value = $item.Value; TopLeftPosition = $topLeftCount; Line = $item.Line; Interrupter = $interrupterCount}
-		$topLeftCount += 4
+	for ($i=0; $i -lt $interruptersAmount; $i++) {
+		$AddressInDecimal = $preAddressInDecimal + (32 * $i)
+		$Address = Convert-Decimal-To-Hex -value $AddressInDecimal
+		$Data += [PsObject]@{Address = $Address; Interrupter = $i}
 	}
 	return $Data
-}
-
-function Build-Address {
-	param ([string] $memoryRange)
-	$parsedContent = Parse-File-Content -memoryRange $memoryRange
-	# TODO - Lacking information in how find the correct address in between all 1024 interrupters addresses, as to disable imod.
-	return ''
 }
 
 function ExecuteIMODProcess {
 	Write-Host "Started disabling interrupt moderation in all usb controllers"
 	[Environment]::NewLine
+	Write-Host "------------------------------------------------------------------"
+	[Environment]::NewLine
 
 	$USBControllers = Get-All-USB-Controllers
 	foreach ($item in $USBControllers) {
 		Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
-		Dump-Memory-File -memoryRange $item.MemoryRange
 
-		$Address = Build-Address -memoryRange $item.MemoryRange
-		if ([string]::IsNullOrWhiteSpace($Address)) {
-			Write-Host "Address is empty, didnt found any valid to disable IMOD"
-			continue
+		$Interrupter0PreAddressInDecimal = Find-First-Interrupter -memoryRange $item.MemoryRange
+		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $Interrupter0PreAddressInDecimal -deviceName $item.Name
+
+		foreach ($interrupterItem in $AllInterrupters) {
+			Disable-IMOD -address $interrupterItem.Address
+			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Address $($interrupterItem.Address)"
 		}
-		Disable-IMOD -address $Address
 
+		[Environment]::NewLine
 		$VendorId = Get-VendorId -deviceId $item.DeviceId
 		Write-Host "Device: $($item.Name)"
 		Write-Host "Device ID: $($item.DeviceId)"
@@ -225,6 +200,8 @@ function ExecuteIMODProcess {
 		Write-Host "Vendor ID: $VendorId"
 		Write-Host "Memory Range: $($item.MemoryRange)"
 		Write-Host "Address Used: $Address"
+		[Environment]::NewLine
+		Write-Host "------------------------------------------------------------------"
 		[Environment]::NewLine
 	}
 }
