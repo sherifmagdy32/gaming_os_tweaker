@@ -204,6 +204,31 @@ function Build-Address {
 	return ''
 }
 
+function ExecuteIMODProcess {
+	$USBControllers = Get-All-Extensible-USB-Controllers
+	foreach ($item in $USBControllers) {
+		Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
+		Dump-Memory-File -memoryRange $item.MemoryRange
+
+		$Address = Build-Address -memoryRange $item.MemoryRange
+		if ([string]::IsNullOrWhiteSpace($Address)) {
+			Write-Host "Address is empty, didnt found any valid to disable IMOD"
+			continue
+		}
+		Disable-IMOD -address $Address
+
+		$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
+		Write-Host "Device: $($item.Name)"
+		Write-Host "Device ID: $($item.DeviceId)"
+		Write-Host "Location Info: $($item.LocationInfo)"
+		Write-Host "PDO Name: $($item.PDOName)"
+		Write-Host "Vendor ID: $VendorId"
+		Write-Host "Memory Range: $($item.MemoryRange)"
+		Write-Host "Address Used: $Address"
+		[Environment]::NewLine
+	}
+}
+
 # --------------------------------------------------------------------------------------------
 
 # Startup script is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized.
@@ -215,28 +240,7 @@ Apply-Tool-Compatibility-Registries
 
 Clean-Up
 
-$USBControllers = Get-All-Extensible-USB-Controllers
-foreach ($item in $USBControllers) {
-	Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
-	Dump-Memory-File -memoryRange $item.MemoryRange
-
-	$Address = Build-Address -memoryRange $item.MemoryRange
-	if ([string]::IsNullOrWhiteSpace($Address)) {
-		Write-Host "Address is empty, didnt found any valid to disable IMOD"
-		continue
-	}
-	Disable-IMOD -address $Address
-
-	$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
-	Write-Host "Device: $($item.Name)"
-	Write-Host "Device ID: $($item.DeviceId)"
-	Write-Host "Location Info: $($item.LocationInfo)"
-	Write-Host "PDO Name: $($item.PDOName)"
-	Write-Host "Vendor ID: $VendorId"
-	Write-Host "Memory Range: $($item.MemoryRange)"
-	Write-Host "Address Used: $Address"
-	[Environment]::NewLine
-}
+ExecuteIMODProcess
 
 Clean-Up
 
