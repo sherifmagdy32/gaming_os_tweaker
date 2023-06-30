@@ -30,10 +30,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit
 }
 
-Write-Host "Started disabling interrupt moderation in all usb controllers"
-[Environment]::NewLine
-
-tempMemDumpFileName = "TEMP_MEM_DUMP"
+$tempMemDumpFileName = "TEMP_MEM_DUMP"
 $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
 function Apply-Startup-Script {
@@ -66,7 +63,7 @@ function Apply-Tool-Compatibility-Registries {
 function Get-All-Extensible-USB-Controllers {
 	[PsObject[]]$USBControllers= @()
 
-	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.Name -match 'USB' -and $_.Name -match 'Controller' -and $_.Name -match 'Extensible'  } | Select-Object -Property Name, DeviceID
+	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Name -match 'USB' -and $_.Name -match 'Controller') -and ($_.Name -match 'Extensible' -or $_.Name -match 'xHCI' -or $_.Name -match 'Host') -and ($_.PNPClass -match 'USB')  } | Select-Object -Property Name, DeviceID
 	foreach ($usbController in $allUSBControllers) {
 		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}, @{N="IRQ";E={$_.Antecedent.IRQNumber}}
 		$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
@@ -205,6 +202,9 @@ function Build-Address {
 }
 
 function ExecuteIMODProcess {
+	Write-Host "Started disabling interrupt moderation in all usb controllers"
+	[Environment]::NewLine
+	
 	$USBControllers = Get-All-Extensible-USB-Controllers
 	foreach ($item in $USBControllers) {
 		Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
