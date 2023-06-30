@@ -120,7 +120,7 @@ function Get-Left-Side-From-MemoryRange {
 	return $memoryRange.Split("-")[0]
 }
 
-function Get-VendorId-From-DeviceId {
+function Get-VendorId {
 	param ([string] $deviceId)
 	if ([string]::IsNullOrWhiteSpace($deviceId)) {
 		return "None"
@@ -200,7 +200,7 @@ function Parse-File-Content {
 function Build-Address {
 	param ([string] $memoryRange)
 	$parsedContent = Parse-File-Content -memoryRange $memoryRange
-	# TODO
+	# TODO - Lacking information in how find the correct address in between all 1024 interrupters addresses, as to disable imod.
 	return ''
 }
 
@@ -217,7 +217,7 @@ function ExecuteIMODProcess {
 		}
 		Disable-IMOD -address $Address
 
-		$VendorId = Get-VendorId-From-DeviceId -deviceId $item.DeviceId
+		$VendorId = Get-VendorId -deviceId $item.DeviceId
 		Write-Host "Device: $($item.Name)"
 		Write-Host "Device ID: $($item.DeviceId)"
 		Write-Host "Location Info: $($item.LocationInfo)"
