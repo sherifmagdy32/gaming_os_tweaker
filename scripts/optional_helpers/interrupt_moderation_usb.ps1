@@ -9,10 +9,13 @@
 	https://github.com/djdallmann/GamingPCSetup/tree/master/CONTENT/RESEARCH/PERIPHERALS#universal-serial-bus-usb
 	https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
+	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
 	https://github.com/djdallmann/GamingPCSetup/issues/12
 
 	Note1: RW command will not run if you have the GUI version open.
 	Note2: You should be able to run this script from anywhere as long as you have downloaded the gaming_os_tweaks folder.
+
+	Credits to @BoringBoredom, @amitxv and @djdallmann for helping in different ways.
 
 	-------------------------
 
@@ -147,7 +150,7 @@ function Disable-IMOD {
 }
 
 function Get-All-Interrupters {
-	param ([string] $preAddressInDecimal, [string] $deviceName)
+	param ([int64] $preAddressInDecimal, [string] $deviceName)
 	[PsObject[]]$Data = @()
 	$interruptersAmount = 1024
 
@@ -176,7 +179,7 @@ function ExecuteIMODProcess {
 		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $Interrupter0PreAddressInDecimal -deviceName $item.Name
 
 		foreach ($interrupterItem in $AllInterrupters) {
-			Disable-IMOD -address $interrupterItem.Address
+			# Disable-IMOD -address $interrupterItem.Address
 			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Address $($interrupterItem.Address)"
 		}
 
