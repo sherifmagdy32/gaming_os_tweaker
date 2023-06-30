@@ -30,7 +30,6 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 	Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit
 }
 
-$tempMemDumpFileName = "TEMP_MEM_DUMP"
 $RWPath = "$(Split-Path -Path $PSScriptRoot -Parent)\tools\RW"
 
 function Apply-Startup-Script {
@@ -101,7 +100,6 @@ function Convert-Hex-To-Decimal {
 function Clean-Up {
 	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 	Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
-	Remove-Item -Path $RWPath\$tempMemDumpFileName*
 }
 
 function Apply-IRQ-Priotity-Optimization {
@@ -128,17 +126,9 @@ function Get-VendorId {
 	return "0x" + $deviceIdDEVValue + $deviceIdVENValue
 }
 
-function Build-Filename {
-	param ([string] $memoryRange)
-	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
-	return "$tempMemDumpFileName-$LeftSideMemoryRange"
-}
-
 function Find-First-Interrupter {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
-	$fileName = Build-Filename -memoryRange $memoryRange
-
 	$CapabilityBaseAddressInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
 	$RuntimeRegisterSpaceOffsetInDecimal = Convert-Hex-To-Decimal -value "0x18"
 	$SumCapabilityPlusRuntime = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $RuntimeRegisterSpaceOffsetInDecimal)
@@ -147,7 +137,6 @@ function Find-First-Interrupter {
 	$ValueInDecimal = Convert-Hex-To-Decimal -value $Value.Split("=")[1].Trim()
 	$TwentyFourValueInDecimal = Convert-Hex-To-Decimal -value "0x24"
 	$Interrupter0PreAddressInDecimal = $CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal
-
 	return $Interrupter0PreAddressInDecimal
 }
 
@@ -199,7 +188,6 @@ function ExecuteIMODProcess {
 		Write-Host "PDO Name: $($item.PDOName)"
 		Write-Host "Vendor ID: $VendorId"
 		Write-Host "Memory Range: $($item.MemoryRange)"
-		Write-Host "Address Used: $Address"
 		[Environment]::NewLine
 		Write-Host "------------------------------------------------------------------"
 		[Environment]::NewLine
