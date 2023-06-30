@@ -60,7 +60,7 @@ function Apply-Tool-Compatibility-Registries {
 	}
 }
 
-function Get-All-Extensible-USB-Controllers {
+function Get-All-USB-Controllers {
 	[PsObject[]]$USBControllers= @()
 
 	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Name -match 'USB' -and $_.Name -match 'Controller') -and ($_.Name -match 'Extensible' -or $_.Name -match 'xHCI' -or $_.Name -match 'Host') -and ($_.PNPClass -match 'USB')  } | Select-Object -Property Name, DeviceID
@@ -204,8 +204,8 @@ function Build-Address {
 function ExecuteIMODProcess {
 	Write-Host "Started disabling interrupt moderation in all usb controllers"
 	[Environment]::NewLine
-	
-	$USBControllers = Get-All-Extensible-USB-Controllers
+
+	$USBControllers = Get-All-USB-Controllers
 	foreach ($item in $USBControllers) {
 		Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
 		Dump-Memory-File -memoryRange $item.MemoryRange
