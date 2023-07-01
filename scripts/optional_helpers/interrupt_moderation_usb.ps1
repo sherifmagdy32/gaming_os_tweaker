@@ -1,6 +1,18 @@
 <#
 	WIP (not done)
 
+	Actual IMOD disabling are temporarily disabled, the script are WIP, we are trying to figure out how to solve the last step that is a possible problem.
+
+	Discussion happening at https://github.com/djdallmann/GamingPCSetup/issues/12
+
+	You can provide feedback for what is being discussed. If you want, and even a solution if you know how.
+
+	1- For Win7, Win10 there are different values to differentiate between what is a correct IMOD address, I need to know that the script are currently grabbing the correct address given your OS. I dont know the values for Win11, if they are like Win10 or not. So for now, only matters Win7 and Win10, unless you are deeply knowledge of the subject and know about Win11.
+
+	2- The last problem that I was looking to solve is, devices have different interrupters amount, I cannot set a static value expecting it to be correct, a solution is needed for the problem, and two things could solve the problem. We need a way to get/identify the information we need, from one of the 2 points below.
+		1- Identify all interrupters per device, then imod can be disabled (executed at least) in all of them, but not amiss.
+		2- Identify the correct address, so imod are disabled only in that one, per device.
+
 	-------------------------
 
 	Automated script to disable interrupt moderation / coalesting in all usb controllers
@@ -67,7 +79,7 @@ function Get-All-USB-Controllers {
 
 	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Name -match 'USB' -and $_.Name -match 'Controller') -and ($_.Name -match 'Extensible' -or $_.Name -match 'xHCI' -or $_.Name -match 'Host') -and ($_.PNPClass -match 'USB')  } | Select-Object -Property Name, DeviceID
 	foreach ($usbController in $allUSBControllers) {
-		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}, @{N="IRQ";E={$_.Antecedent.IRQNumber}}
+		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}
 		$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
 
 		$deviceProperties = Get-PnpDeviceProperty -InstanceId $usbController.DeviceID
@@ -84,7 +96,6 @@ function Get-All-USB-Controllers {
 			MemoryRange = $deviceMemory.Name
 			LocationInfo = $locationInfo
 			PDOName = $PDOName
-			IRQ = $allocatedResource.IRQ
 		}
 	}
 	return $USBControllers
@@ -103,14 +114,6 @@ function Convert-Hex-To-Decimal {
 function Clean-Up {
 	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 	Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
-}
-
-function Apply-IRQ-Priotity-Optimization {
-	param ([string] $IRQValue)
-	$IRQSplit = $IRQValue.Trim().Split(" ")
-	foreach ($IRQ in $IRQSplit) {
-		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl" -Name "IRQ$($IRQ)Priority" -Value 1 -Force -Type Dword -ErrorAction Ignore
-	}
 }
 
 function Get-Left-Side-From-MemoryRange {
@@ -172,9 +175,12 @@ function ExecuteIMODProcess {
 	[Environment]::NewLine
 
 	$USBControllers = Get-All-USB-Controllers
-	foreach ($item in $USBControllers) {
-		Apply-IRQ-Priotity-Optimization -IRQValue $item.IRQ
 
+	if ($USBControllers.Length -eq 0) {
+		Write-Host "It didnt found any valid USB controllers to be disabled, try opening an issue at the same place you got this script from, take screenshot(s) from all your usb controllers at device manager or some place else you might know how to get, and use as feedback."
+	}
+
+	foreach ($item in $USBControllers) {
 		$Interrupter0PreAddressInDecimal = Find-First-Interrupter -memoryRange $item.MemoryRange
 		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $Interrupter0PreAddressInDecimal -deviceName $item.Name
 
@@ -195,6 +201,8 @@ function ExecuteIMODProcess {
 		Write-Host "------------------------------------------------------------------"
 		[Environment]::NewLine
 	}
+
+	Write-Host "Script execution is finished!"
 }
 
 # --------------------------------------------------------------------------------------------
