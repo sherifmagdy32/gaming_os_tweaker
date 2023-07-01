@@ -148,7 +148,7 @@ function Find-First-Interrupter {
 
 function Disable-IMOD {
 	param ([string] $address)
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W32 $address 0x00000000"
+	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W32 $address 0x00000000" | Out-Null
 	Start-Sleep -Seconds 1
 }
 
@@ -171,14 +171,15 @@ function Get-All-Interrupters {
 function ExecuteIMODProcess {
 	Write-Host "Started disabling interrupt moderation in all usb controllers"
 	[Environment]::NewLine
-	Write-Host "------------------------------------------------------------------"
-	[Environment]::NewLine
 
 	$USBControllers = Get-All-USB-Controllers
 
 	if ($USBControllers.Length -eq 0) {
-		Write-Host "It didnt found any valid USB controllers to be disabled, try opening an issue at the same place you got this script from, take screenshot(s) from all your usb controllers at device manager or some place else you might know how to get, and use as feedback."
+		Write-Host "Script didnt found any valid USB controllers to be disabled, try opening an issue at the same place you got this script from, take screenshot(s) from all your usb controllers at device manager or some place else you might know how to get, and use as feedback."
+	} else {
+		Write-Host "------------------------------------------------------------------"
 	}
+	[Environment]::NewLine
 
 	foreach ($item in $USBControllers) {
 		$Interrupter0PreAddressInDecimal = Find-First-Interrupter -memoryRange $item.MemoryRange
@@ -202,7 +203,6 @@ function ExecuteIMODProcess {
 		[Environment]::NewLine
 	}
 
-	Write-Host "Script execution is finished!"
 }
 
 # --------------------------------------------------------------------------------------------

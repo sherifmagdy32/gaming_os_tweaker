@@ -87,6 +87,14 @@ function Is-Even {
 	$value % 2 -eq 0
 }
 
+function Apply-IRQ-Priotity-Optimization {
+	param ([string] $IRQValue)
+	$IRQSplit = $IRQValue.Trim().Split(" ")
+	foreach ($IRQ in $IRQSplit) {
+		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl" -Name "IRQ$($IRQ)Priority" -Value 1 -Force -Type Dword -ErrorAction Ignore
+	}
+}
+
 # Priorities - Where lowest number is first.
 $priorities = @(
 	[PsObject]@{Class = 'Display'; Priority = 1; Enabled = $true; Description = 'GPU'; isUSB = $false},
@@ -155,6 +163,8 @@ for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
 		continue
 	}
 
+	$parentDeviceAllocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$parentDeviceInstanceId*" } | Select-Object @{N="IRQ";E={$_.Antecedent.IRQNumber}}
+
 	$relevantData += [PsObject]@{
 		ChildDeviceName = $childDeviceName;
 		ChildDeviceInstanceId = $childDeviceInstanceId;
@@ -165,6 +175,7 @@ for ($i=0; $i -lt $prioritizedDevices.Length; $i++) {
 		ParentDeviceLocationInfo = $parentDeviceLocationInfo;
 		ParentDevicePDOName = $parentDevicePDOName;
 		ClassType = $childDeviceClass;
+		ParentDeviceIRQ = $parentDeviceAllocatedResource.IRQ
 	}
 }
 
@@ -195,27 +206,21 @@ foreach ($item in $relevantData) {
 
 # Apply interrupt affinity tweaks
 foreach ($item in $relevantData) {
-	$ChildDeviceName = $item.ChildDeviceName
-	$ChildDeviceInstanceId = $item.ChildDeviceInstanceId
-	$ChildDeviceLocationInfo = if (Is-Empty-Str -value $item.ChildDeviceLocationInfo) { "None" } else { $item.ChildDeviceLocationInfo }
-	$ChildDevicePDOName = $item.ChildDevicePDOName
-	$ParentDeviceName = $item.ParentDeviceName
-	$ParentDeviceInstanceId = $item.ParentDeviceInstanceId
-	$ParentDeviceLocationInfo = $item.ParentDeviceLocationInfo
-	$ParentDevicePDOName = $item.ParentDevicePDOName
-	$ClassType = $item.ClassType
+	if ($item.ClassType -eq 'Mouse' -or $item.ClassType -eq 'Keyboard') {
+		Apply-IRQ-Priotity-Optimization -IRQValue $item.ParentDeviceIRQ
+	}
 
-	$parentAffinityPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ParentDeviceInstanceId\Device Parameters\Interrupt Management\Affinity Policy"
-	$childAffinityPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ChildDeviceInstanceId\Device Parameters\Interrupt Management\Affinity Policy"
-	$parentMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ParentDeviceInstanceId\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
-	$childMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$ChildDeviceInstanceId\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
+	$parentAffinityPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$($item.ParentDeviceInstanceId)\Device Parameters\Interrupt Management\Affinity Policy"
+	$childAffinityPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$($item.ChildDeviceInstanceId)\Device Parameters\Interrupt Management\Affinity Policy"
+	$parentMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$($item.ParentDeviceInstanceId)\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
+	$childMsiPath = "HKLM:\SYSTEM\CurrentControlSet\Enum\$($item.ChildDeviceInstanceId)\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
 
-	if ($ClassType -eq 'Net') {
+	if ($item.ClassType -eq 'Net') {
 		Set-ItemProperty -Path $childAffinityPath -Name "DevicePriority" -Value 3 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path $childMsiPath -Name "MSISupported" -Value 0 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path $childMsiPath -Name "MessageNumberLimit" -Value 2 -Force -Type Dword -ErrorAction Ignore
 	}
-	if ($ClassType -eq 'Mouse') {
+	if ($item.ClassType -eq 'Mouse') {
 	 	Set-ItemProperty -Path $parentAffinityPath -Name "DevicePriority" -Value 3 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path $parentMsiPath -Name "MSISupported" -Value 0 -Force -Type Dword -ErrorAction Ignore
 	}
@@ -227,14 +232,15 @@ foreach ($item in $relevantData) {
 
 	Set-ItemProperty -Path $parentAffinityPath -Name "AssignmentSetOverride" -Value $coreData.Decimal -Force -Type Qword -ErrorAction Ignore
 	Set-ItemProperty -Path $childAffinityPath -Name "AssignmentSetOverride" -Value $coreData.Decimal -Force -Type Qword -ErrorAction Ignore
-
+	
+	$ChildDeviceLocationInfo = if (Is-Empty-Str -value $item.ChildDeviceLocationInfo) { "None" } else { $item.ChildDeviceLocationInfo }
 	Write-Host "Assigned to Core $($coreData.Core)"
-	Write-Host "Device: $ChildDeviceName - $ChildDeviceInstanceId"
+	Write-Host "Device: $($item.ChildDeviceName) - $($item.ChildDeviceInstanceId)"
 	Write-Host "Location Info: $ChildDeviceLocationInfo"
-	Write-Host "PDO Name: $ChildDevicePDOName"
-	Write-Host "Parent Device: $ParentDeviceName - $ParentDeviceInstanceId"
-	Write-Host "Location Info: $ParentDeviceLocationInfo"
-	Write-Host "PDO Name: $ParentDevicePDOName"
+	Write-Host "PDO Name: $($item.ChildDevicePDOName)"
+	Write-Host "Parent Device: $($item.ParentDeviceName) - $($item.ParentDeviceInstanceId)"
+	Write-Host "Location Info: $($item.ParentDeviceLocationInfo)"
+	Write-Host "PDO Name: $($item.ParentDevicePDOName)"
 	[Environment]::NewLine
 }
 
