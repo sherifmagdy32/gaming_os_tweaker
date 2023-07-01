@@ -1,15 +1,15 @@
 <#
 	WIP (not done)
 
-	Actual IMOD disabling are temporarily disabled, the script are WIP, we are trying to figure out how to solve the last step that is a possible problem.
+	Actual IMOD disabling are temporarily disabled, the script are WIP, we are trying to figure out how to solve the last step.
 
 	Discussion happening at https://github.com/djdallmann/GamingPCSetup/issues/12
 
-	You can provide feedback for what is being discussed. If you want, and even a solution if you know how.
+	You can provide feedback for what is being discussed, if you want, and even a solution if you know how.
 
-	1- For Win7, Win10 there are different values to differentiate between what is a correct IMOD address, I need to know that the script are currently grabbing the correct address given your OS. I dont know the values for Win11, if they are like Win10 or not. So for now, only matters Win7 and Win10, unless you are deeply knowledge of the subject and know about Win11. Reference at https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
+	1- For Win7 and Win10 there are different values to differentiate between what is a correct IMOD address, I need to know that the script are currently grabbing the correct address given your OS. I dont know the values for Win11, if they are like Win10 or not. So for now, only matters Win7 and Win10, unless you have deep knowledge of the subject and know about Win11, let us know. Issue Reference: https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
 
-	2- The last problem that I was looking to solve is, devices have different interrupters amount, I cannot set a static value expecting it to be correct, a solution is needed for the problem, and two things could solve the problem. We need a way to get/identify the information we need, from one of the 2 points below.
+	2- The last problem that I am looking to solve is, devices have different interrupters amount, I cannot set a static value expecting it to be correct, a solution is needed for the problem, and two things could solve the problem. We need a way to get/identify the information we need, from one of the 2 points below.
 		1- Identify all interrupters per device, then imod can be disabled (executed at least) in all of them, but not amiss.
 		2- Identify the correct address, so imod are disabled only in that one, per device.
 
