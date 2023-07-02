@@ -78,6 +78,15 @@ function Get-All-USB-Controllers {
 	[PsObject[]]$USBControllers= @()
 
 	$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Name -match 'USB' -and $_.Name -match 'Controller') -and ($_.Name -match 'Extensible' -or $_.Name -match 'xHCI' -or $_.Name -match 'Host') -and ($_.PNPClass -match 'USB')  } | Select-Object -Property Name, DeviceID
+
+	if ($allUSBControllers.Length -eq 0) {
+		$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Manufacturer -match 'USB' -and $_.Manufacturer -match 'Controller') -and ($_.Manufacturer -match 'Extensible' -or $_.Manufacturer -match 'xHCI' -or $_.Manufacturer -match 'Host') -and ($_.Service -match 'USBXHCI') } | Select-Object -Property Name, DeviceID
+
+		if ($allUSBControllers.Length -eq 0) {
+			$allUSBControllers = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { ($_.Description -match 'USB' -and $_.Description -match 'Controller') -and ($_.Description -match 'Extensible' -or $_.Description -match 'xHCI' -or $_.Description -match 'Host') } | Select-Object -Property Name, DeviceID
+		}
+	}
+
 	foreach ($usbController in $allUSBControllers) {
 		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}
 		$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
