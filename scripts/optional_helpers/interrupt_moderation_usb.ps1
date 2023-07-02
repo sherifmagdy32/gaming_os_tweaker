@@ -9,7 +9,7 @@
 	https://github.com/djdallmann/GamingPCSetup/issues/12
 
 	Note1: RW command will not run if you have the GUI version open.
-	Note2: You should be able to run this script from anywhere as long as you have downloaded the gaming_os_tweaks folder.
+	Note2: You should be able to run this script through cmd, powershell or UI, as long as you have downloaded the gaming_os_tweaks folder and are keeping the file in the folder that it belongs.
 
 	Credits to @BoringBoredom, @amitxv and @djdallmann for helping in different ways.
 
