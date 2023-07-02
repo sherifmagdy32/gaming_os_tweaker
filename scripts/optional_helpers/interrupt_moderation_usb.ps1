@@ -181,7 +181,7 @@ function Disable-IMOD {
 }
 
 function Get-All-Interrupters {
-	param ([int64] $preAddressInDecimal, [string] $deviceName, [int32] $interruptersAmount)
+	param ([int64] $preAddressInDecimal, [int32] $interruptersAmount)
 	[PsObject[]]$Data = @()
 	if ($interruptersAmount -lt 1 -or $interruptersAmount -gt 1024) {
 		Write-Host "Device interrupters amount is different than specified - $interruptersAmount - No address from this device were IMOD disabled"
