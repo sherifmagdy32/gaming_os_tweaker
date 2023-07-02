@@ -120,6 +120,13 @@ function Get-Hex-Value-From-Exe-Result {
 	return $value.Split("=")[1].Trim()
 }
 
+function Get-R32-Hex-From-Address {
+	param ([string] $address)
+	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $address" 2>&1 | Out-String
+	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
+	return Get-Hex-Value-From-Exe-Result -value $Value
+}
+
 function Clean-Up {
 	Stop-Process -Name Rw.exe -Force -ErrorAction Ignore
 	Remove-Item -Path "HKCU:\SOFTWARE\RW-Everything" -Recurse -ErrorAction Ignore
@@ -147,9 +154,8 @@ function Find-First-Interrupter-Data {
 	$CapabilityBaseAddressInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
 	$RuntimeRegisterSpaceOffsetInDecimal = Convert-Hex-To-Decimal -value "0x18"
 	$SumCapabilityPlusRuntime = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $RuntimeRegisterSpaceOffsetInDecimal)
-	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $SumCapabilityPlusRuntime" 2>&1 | Out-String
-	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
-	$ValueInDecimal = Convert-Hex-To-Decimal -value (Get-Hex-Value-From-Exe-Result -value $Value)
+	$Value = Get-R32-Hex-From-Address -address $SumCapabilityPlusRuntime
+	$ValueInDecimal = Convert-Hex-To-Decimal -value $Value
 	$TwentyFourInDecimal = Convert-Hex-To-Decimal -value "0x24"
 	$Interrupter0PreAddressInDecimal = $CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourInDecimal
 
@@ -161,9 +167,8 @@ function Find-First-Interrupter-Data {
 
 function Find-Interrupters-Amount {
 	param ([string] $hcsParams1)
-	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $hcsParams1" 2>&1 | Out-String
-	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
-	$ValueInBinary = Convert-Hex-To-Binary -value (Get-Hex-Value-From-Exe-Result -value $Value)
+	$Value = Get-R32-Hex-From-Address -address
+	$ValueInBinary = Convert-Hex-To-Binary -value $Value
 	$MaxIntrsInBinary = $ValueInBinary.SubString($ValueInBinary.Length - 18, 18 - 8)
 	$InterruptersAmount = Convert-Hex-To-Decimal -value (Convert-Binary-To-Hex -value $MaxIntrsInBinary)
 	return $InterruptersAmount
@@ -184,7 +189,8 @@ function Get-All-Interrupters {
 	}
 	for ($i=0; $i -lt $interruptersAmount; $i++) {
 		$AddressInDecimal = $preAddressInDecimal + (32 * $i)
-		$Address = Convert-Decimal-To-Hex -value $AddressInDecimal
+		$InterrupterAddress = Convert-Decimal-To-Hex -value $AddressInDecimal
+		$Address = Get-R32-Hex-From-Address -address $InterrupterAddress
 		$Data += [PsObject]@{Address = $Address; Interrupter = $i}
 	}
 	return $Data
