@@ -1,20 +1,4 @@
 <#
-	WIP (not done)
-
-	Actual IMOD disabling are temporarily disabled, the script are WIP, we are trying to figure out how to solve the last step.
-
-	Discussion happening at https://github.com/djdallmann/GamingPCSetup/issues/12
-
-	You can provide feedback for what is being discussed, if you want, and even a solution if you know how.
-
-	1- For Win7 and Win10 there are different values to differentiate between what is a correct IMOD address, I need to know that the script are currently grabbing the correct address given your OS. I dont know the values for Win11, if they are like Win10 or not. So for now, only matters Win7 and Win10, unless you have deep knowledge of the subject and know about Win11, let us know. Issue Reference: https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
-
-	2- The last problem that I am looking to solve is, devices have different interrupters amount, I cannot set a static value expecting it to be correct, a solution is needed for the problem, and two things could solve the problem. We need a way to get/identify the information we need, from one of the 2 points below.
-		1- Identify all interrupters per device, then imod can be disabled (executed at least) in all of them, but not amiss.
-		2- Identify the correct address, so imod are disabled only in that one, per device.
-
-	-------------------------
-
 	Automated script to disable interrupt moderation / coalesting in all usb controllers
 
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61
@@ -117,7 +101,23 @@ function Convert-Decimal-To-Hex {
 
 function Convert-Hex-To-Decimal {
 	param ([string] $value)
-	return [convert]::toint64($value, 16)
+	return [convert]::ToInt64($value, 16)
+}
+
+function Convert-Hex-To-Binary {
+	param ([string] $value)
+	return [Convert]::ToString($value, 2)
+}
+
+function Convert-Binary-To-Hex {
+	param ([string] $value)
+	$convertedValue = [Convert]::ToInt64($value, 2)
+	return Convert-Decimal-To-Hex -value $convertedValue
+}
+
+function Get-Hex-Value-From-Exe-Result {
+	param ([string] $value)
+	return $value.Split("=")[1].Trim()
 }
 
 function Clean-Up {
@@ -141,7 +141,7 @@ function Get-VendorId {
 	return "0x" + $deviceIdDEVValue + $deviceIdVENValue
 }
 
-function Find-First-Interrupter {
+function Find-First-Interrupter-Data {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$CapabilityBaseAddressInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
@@ -149,10 +149,24 @@ function Find-First-Interrupter {
 	$SumCapabilityPlusRuntime = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $RuntimeRegisterSpaceOffsetInDecimal)
 	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $SumCapabilityPlusRuntime" 2>&1 | Out-String
 	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
-	$ValueInDecimal = Convert-Hex-To-Decimal -value $Value.Split("=")[1].Trim()
-	$TwentyFourValueInDecimal = Convert-Hex-To-Decimal -value "0x24"
-	$Interrupter0PreAddressInDecimal = $CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourValueInDecimal
-	return $Interrupter0PreAddressInDecimal
+	$ValueInDecimal = Convert-Hex-To-Decimal -value (Get-Hex-Value-From-Exe-Result -value $Value)
+	$TwentyFourInDecimal = Convert-Hex-To-Decimal -value "0x24"
+	$Interrupter0PreAddressInDecimal = $CapabilityBaseAddressInDecimal + $ValueInDecimal + $TwentyFourInDecimal
+
+	$FourInDecimal = Convert-Hex-To-Decimal -value "0x4"
+	$HCSPARAMS1InHex = Convert-Decimal-To-Hex -value ($CapabilityBaseAddressInDecimal + $FourInDecimal)
+
+	return @{ Interrupter0PreAddressInDecimal = $Interrupter0PreAddressInDecimal; HCSPARAMS1 = $HCSPARAMS1InHex }
+}
+
+function Find-Interrupters-Amount {
+	param ([string] $hcsParams1)
+	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $hcsParams1" 2>&1 | Out-String
+	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
+	$ValueInBinary = Convert-Hex-To-Binary -value (Get-Hex-Value-From-Exe-Result -value $Value)
+	$MaxIntrsInBinary = $ValueInBinary.SubString($ValueInBinary.Length - 18, 18 - 8)
+	$InterruptersAmount = Convert-Hex-To-Decimal -value (Convert-Binary-To-Hex -value $MaxIntrsInBinary)
+	return $InterruptersAmount
 }
 
 function Disable-IMOD {
@@ -162,13 +176,12 @@ function Disable-IMOD {
 }
 
 function Get-All-Interrupters {
-	param ([int64] $preAddressInDecimal, [string] $deviceName)
+	param ([int64] $preAddressInDecimal, [string] $deviceName, [int32] $interruptersAmount)
 	[PsObject[]]$Data = @()
-	$interruptersAmount = 1024
-
-	if ($deviceName.Contains('Intel')) { $interruptersAmount = 1024 }
-	if ($deviceName.Contains('AMD')) { $interruptersAmount = 8 }
-
+	if ($interruptersAmount -lt 1 -or $interruptersAmount -gt 1024) {
+		Write-Host "Device interrupters amount is different than specified - $interruptersAmount - No address from this device were IMOD disabled"
+		return $Data
+	}
 	for ($i=0; $i -lt $interruptersAmount; $i++) {
 		$AddressInDecimal = $preAddressInDecimal + (32 * $i)
 		$Address = Convert-Decimal-To-Hex -value $AddressInDecimal
@@ -191,11 +204,12 @@ function ExecuteIMODProcess {
 	[Environment]::NewLine
 
 	foreach ($item in $USBControllers) {
-		$Interrupter0PreAddressInDecimal = Find-First-Interrupter -memoryRange $item.MemoryRange
-		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $Interrupter0PreAddressInDecimal -deviceName $item.Name
+		$FirstInterrupterData = Find-First-Interrupter-Data -memoryRange $item.MemoryRange
+		$InterruptersAmount = Find-Interrupters-Amount -hcsParams1 $FirstInterrupterData.HCSPARAMS1
+		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $FirstInterrupterData.Interrupter0PreAddressInDecimal -interruptersAmount $InterruptersAmount
 
 		foreach ($interrupterItem in $AllInterrupters) {
-			# Disable-IMOD -address $interrupterItem.Address
+			Disable-IMOD -address $interrupterItem.Address
 			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Address $($interrupterItem.Address)"
 		}
 
