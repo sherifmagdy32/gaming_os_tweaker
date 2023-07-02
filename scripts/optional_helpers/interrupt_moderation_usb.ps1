@@ -189,8 +189,8 @@ function Build-Interrupt-Threshold-Control-Data {
 	$MemoryBaseValue = Get-R32-Hex-From-Address -address $MemoryBase
 	$ValueInBinary = Convert-Hex-To-Binary -value $MemoryBaseValue
 	$ReplaceValue = '00000000'
-	$ValueInBinaryLeftSide = $ValueInBinary.Substring($ValueInBinary.Length - 23, $ReplaceValue.Length + 1)
-	$ValueInBinaryRightSide = $ValueInBinary.Substring($ValueInBinary.Length - 23 + $ReplaceValue.Length, $ValueInBinary.Length - 16 - 1)
+	$ValueInBinaryLeftSide = $ValueInBinary.Substring(0, $ValueInBinary.Length - 23)
+	$ValueInBinaryRightSide = $ValueInBinary.Substring($ValueInBinary.Length - 23 + $ReplaceValue.Length, ($ValueInBinary.Length - 1) - 16)
 	$ValueAddress = Convert-Binary-To-Hex -value ($ValueInBinaryLeftSide + $ReplaceValue + $ValueInBinaryRightSide)
 	return [PsObject]@{ValueAddress = $ValueAddress; InterruptAddress = $MemoryBase}
 }
