@@ -180,7 +180,7 @@ function Find-First-Interrupter-Data {
 	return @{ Interrupter0PreAddressInDecimal = $Interrupter0PreAddressInDecimal; HCSPARAMS1 = $HCSPARAMS1InHex }
 }
 
-function Get-Interrupt-Threshold-Control-Data {
+function Build-Interrupt-Threshold-Control-Data {
 	param ([string] $memoryRange)
 	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
 	$LeftSideMemoryRangeInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
@@ -240,7 +240,7 @@ function Execute-IMOD-Process {
 	[Environment]::NewLine
 
 	foreach ($item in $USBControllers) {
-		$InterruptersAmount = 'None' 
+		$InterruptersAmount = 'None'
 		if ($item.Type -eq 'XHCI') {
 			$FirstInterrupterData = Find-First-Interrupter-Data -memoryRange $item.MemoryRange
 			$InterruptersAmount = Find-Interrupters-Amount -hcsParams1 $FirstInterrupterData.HCSPARAMS1
@@ -251,8 +251,8 @@ function Execute-IMOD-Process {
 				Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.ValueAddress)"
 			}
 		}
-		if ($item.Type -eq 'EHCI') { 
-			$InterruptData = Get-Interrupt-Threshold-Control-Data -memoryRange $item.MemoryRange
+		if ($item.Type -eq 'EHCI') {
+			$InterruptData = Build-Interrupt-Threshold-Control-Data -memoryRange $item.MemoryRange
 			Disable-IMOD -address $InterruptData.ValueAddress
 			Write-Host "Disabled Interrupt Threshold Control - Interrupt Address $($InterruptData.InterruptAddress) - Value Address $($InterruptData.ValueAddress)"
 		}
