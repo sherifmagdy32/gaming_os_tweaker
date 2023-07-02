@@ -7,7 +7,7 @@
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
 	https://github.com/djdallmann/GamingPCSetup/issues/12
-	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28582024 - In case I decide to implement EHCI / Interrupt Threshold Control.
+	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28582024
 
 	Note1: RW command will not run if you have the GUI version open.
 	Note2: You should be able to run this script through cmd, powershell or UI, as long as you have downloaded the gaming_os_tweaks folder and are keeping the file in the folder that it belongs.
@@ -113,7 +113,8 @@ function Convert-Hex-To-Decimal {
 
 function Convert-Hex-To-Binary {
 	param ([string] $value)
-	return [Convert]::ToString($value, 2)
+	$ConvertedValue = [Convert]::ToString($value, 2)
+	return $ConvertedValue.PadLeft(32, '0')
 }
 
 function Convert-Binary-To-Hex {
@@ -179,6 +180,21 @@ function Find-First-Interrupter-Data {
 	return @{ Interrupter0PreAddressInDecimal = $Interrupter0PreAddressInDecimal; HCSPARAMS1 = $HCSPARAMS1InHex }
 }
 
+function Get-Interrupt-Threshold-Control-Data {
+	param ([string] $memoryRange)
+	$LeftSideMemoryRange = Get-Left-Side-From-MemoryRange -memoryRange $memoryRange
+	$LeftSideMemoryRangeInDecimal = Convert-Hex-To-Decimal -value $LeftSideMemoryRange
+	$TwentyInDecimal = Convert-Hex-To-Decimal -value "0x20"
+	$MemoryBase = Convert-Decimal-To-Hex -value ($LeftSideMemoryRangeInDecimal + $TwentyInDecimal)
+	$MemoryBaseValue = Get-R32-Hex-From-Address -address $MemoryBase
+	$ValueInBinary = Convert-Hex-To-Binary -value $MemoryBaseValue
+	$ReplaceValue = '00000000'
+	$ValueInBinaryLeftSide = $ValueInBinary.Substring($ValueInBinary.Length - 23, $ReplaceValue.Length + 1)
+	$ValueInBinaryRightSide = $ValueInBinary.Substring($ValueInBinary.Length - 23 + $ReplaceValue.Length, $ValueInBinary.Length - 16 - 1)
+	$ValueAddress = Convert-Binary-To-Hex -value ($ValueInBinaryLeftSide + $ReplaceValue + $ValueInBinaryRightSide)
+	return [PsObject]@{ValueAddress = $ValueAddress; InterruptAddress = $MemoryBase}
+}
+
 function Find-Interrupters-Amount {
 	param ([string] $hcsParams1)
 	$Value = Get-R32-Hex-From-Address -address $hcsParams1
@@ -205,7 +221,7 @@ function Get-All-Interrupters {
 		$AddressInDecimal = $preAddressInDecimal + (32 * $i)
 		$InterrupterAddress = Convert-Decimal-To-Hex -value $AddressInDecimal
 		$Address = Get-R32-Hex-From-Address -address $InterrupterAddress
-		$Data += [PsObject]@{Address = $Address; InterrupterAddress = $InterrupterAddress; Interrupter = $i}
+		$Data += [PsObject]@{ValueAddress = $Address; InterrupterAddress = $InterrupterAddress; Interrupter = $i}
 	}
 	return $Data
 }
@@ -224,18 +240,21 @@ function Execute-IMOD-Process {
 	[Environment]::NewLine
 
 	foreach ($item in $USBControllers) {
+		$InterruptersAmount = 'None' 
 		if ($item.Type -eq 'XHCI') {
 			$FirstInterrupterData = Find-First-Interrupter-Data -memoryRange $item.MemoryRange
 			$InterruptersAmount = Find-Interrupters-Amount -hcsParams1 $FirstInterrupterData.HCSPARAMS1
 			$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $FirstInterrupterData.Interrupter0PreAddressInDecimal -interruptersAmount $InterruptersAmount
 
 			foreach ($interrupterItem in $AllInterrupters) {
-				Disable-IMOD -address $interrupterItem.Address
-				Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.Address)"
+				Disable-IMOD -address $interrupterItem.ValueAddress
+				Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.ValueAddress)"
 			}
 		}
-		if ($item.Type -eq 'EHCI') {
-			# TODO
+		if ($item.Type -eq 'EHCI') { 
+			$InterruptData = Get-Interrupt-Threshold-Control-Data -memoryRange $item.MemoryRange
+			Disable-IMOD -address $InterruptData.ValueAddress
+			Write-Host "Disabled Interrupt Threshold Control - Interrupt Address $($InterruptData.InterruptAddress) - Value Address $($InterruptData.ValueAddress)"
 		}
 
 		[Environment]::NewLine
