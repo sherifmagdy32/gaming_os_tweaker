@@ -107,7 +107,7 @@ function Convert-Binary-To-Hex {
 	return Convert-Decimal-To-Hex -value $convertedValue
 }
 
-function Get-Hex-Value-From-Exe-Result {
+function Get-Hex-Value-From-RW-Result {
 	param ([string] $value)
 	return $value.Split("=")[1].Trim()
 }
@@ -116,7 +116,7 @@ function Get-R32-Hex-From-Address {
 	param ([string] $address)
 	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="R32 $address" 2>&1 | Out-String
 	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
-	return Get-Hex-Value-From-Exe-Result -value $Value
+	return Get-Hex-Value-From-RW-Result -value $Value
 }
 
 function Clean-Up {
@@ -127,6 +127,13 @@ function Clean-Up {
 function Get-Left-Side-From-MemoryRange {
 	param ([string] $memoryRange)
 	return $memoryRange.Split("-")[0]
+}
+
+function Get-BitRange-From-Binary {
+	param ([string] $binaryValue, [int] $from, [int] $to)
+	$backwardsFrom = $to
+	$backwardsTo = $from
+	return $binaryValue.SubString($binaryValue.Length - $backwardsFrom, $backwardsFrom - $backwardsTo)
 }
 
 function Get-VendorId {
@@ -161,7 +168,7 @@ function Find-Interrupters-Amount {
 	param ([string] $hcsParams1)
 	$Value = Get-R32-Hex-From-Address -address $hcsParams1
 	$ValueInBinary = Convert-Hex-To-Binary -value $Value
-	$MaxIntrsInBinary = $ValueInBinary.SubString($ValueInBinary.Length - 18, 18 - 8)
+	$MaxIntrsInBinary = Get-BitRange-From-Binary -binaryValue $ValueInBinary -from 8 -to 18
 	$InterruptersAmount = Convert-Hex-To-Decimal -value (Convert-Binary-To-Hex -value $MaxIntrsInBinary)
 	return $InterruptersAmount
 }
@@ -188,7 +195,7 @@ function Get-All-Interrupters {
 	return $Data
 }
 
-function ExecuteIMODProcess {
+function Execute-IMOD-Process {
 	Write-Host "Started disabling interrupt moderation in all usb controllers"
 	[Environment]::NewLine
 
@@ -219,6 +226,7 @@ function ExecuteIMODProcess {
 		Write-Host "PDO Name: $($item.PDOName)"
 		Write-Host "Vendor ID: $VendorId"
 		Write-Host "Memory Range: $($item.MemoryRange)"
+		Write-Host "Interrupters Count: $InterruptersAmount"
 		[Environment]::NewLine
 		Write-Host "------------------------------------------------------------------"
 		[Environment]::NewLine
@@ -237,7 +245,7 @@ Apply-Tool-Compatibility-Registries
 
 Clean-Up
 
-ExecuteIMODProcess
+Execute-IMOD-Process
 
 Clean-Up
 
