@@ -7,7 +7,7 @@
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
 	https://github.com/djdallmann/GamingPCSetup/issues/12
-	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28582024 - In case I decide to implement EHCI support, handle Interrupt Threshold Control.
+	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28582024 - In case I decide to implement EHCI / Interrupt Threshold Control.
 
 	Note1: RW command will not run if you have the GUI version open.
 	Note2: You should be able to run this script through cmd, powershell or UI, as long as you have downloaded the gaming_os_tweaks folder and are keeping the file in the folder that it belongs.
@@ -71,6 +71,9 @@ function Get-All-USB-Controllers {
 		$locationInfo = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_LocationInfo' | Select -ExpandProperty Data
 		$PDOName = $deviceProperties | Where KeyName -eq 'DEVPKEY_Device_PDOName' | Select -ExpandProperty Data
 
+		$moreControllerData = Get-CimInstance -ClassName Win32_PnPEntity | Where-Object { $_.DeviceID -eq "$($usbController.DeviceID)" } | Select-Object Service
+		$Type = Get-Type-From-Service -value $moreControllerData.Service
+
 		if ([string]::IsNullOrWhiteSpace($deviceMemory.Name)) {
 			continue
 		}
@@ -81,9 +84,21 @@ function Get-All-USB-Controllers {
 			MemoryRange = $deviceMemory.Name
 			LocationInfo = $locationInfo
 			PDOName = $PDOName
+			Type = $Type
 		}
 	}
 	return $USBControllers
+}
+
+function Get-Type-From-Service {
+	param ([string] $value)
+	if ($value -ieq 'USBXHCI') {
+		return 'XHCI'
+	}
+	if ($value -ieq 'USBEHCI') {
+		return 'EHCI'
+	}
+	return 'Unknown'
 }
 
 function Convert-Decimal-To-Hex {
@@ -209,13 +224,18 @@ function Execute-IMOD-Process {
 	[Environment]::NewLine
 
 	foreach ($item in $USBControllers) {
-		$FirstInterrupterData = Find-First-Interrupter-Data -memoryRange $item.MemoryRange
-		$InterruptersAmount = Find-Interrupters-Amount -hcsParams1 $FirstInterrupterData.HCSPARAMS1
-		$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $FirstInterrupterData.Interrupter0PreAddressInDecimal -interruptersAmount $InterruptersAmount
+		if ($item.Type -eq 'XHCI') {
+			$FirstInterrupterData = Find-First-Interrupter-Data -memoryRange $item.MemoryRange
+			$InterruptersAmount = Find-Interrupters-Amount -hcsParams1 $FirstInterrupterData.HCSPARAMS1
+			$AllInterrupters = Get-All-Interrupters -preAddressInDecimal $FirstInterrupterData.Interrupter0PreAddressInDecimal -interruptersAmount $InterruptersAmount
 
-		foreach ($interrupterItem in $AllInterrupters) {
-			Disable-IMOD -address $interrupterItem.Address
-			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.Address)"
+			foreach ($interrupterItem in $AllInterrupters) {
+				Disable-IMOD -address $interrupterItem.Address
+				Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.Address)"
+			}
+		}
+		if ($item.Type -eq 'EHCI') {
+			# TODO
 		}
 
 		[Environment]::NewLine
@@ -225,6 +245,7 @@ function Execute-IMOD-Process {
 		Write-Host "Location Info: $($item.LocationInfo)"
 		Write-Host "PDO Name: $($item.PDOName)"
 		Write-Host "Vendor ID: $VendorId"
+		Write-Host "Device Type: $($item.Type)"
 		Write-Host "Memory Range: $($item.MemoryRange)"
 		Write-Host "Interrupters Count: $InterruptersAmount"
 		[Environment]::NewLine
