@@ -167,7 +167,7 @@ function Find-First-Interrupter-Data {
 
 function Find-Interrupters-Amount {
 	param ([string] $hcsParams1)
-	$Value = Get-R32-Hex-From-Address -address
+	$Value = Get-R32-Hex-From-Address -address $hcsParams1
 	$ValueInBinary = Convert-Hex-To-Binary -value $Value
 	$MaxIntrsInBinary = $ValueInBinary.SubString($ValueInBinary.Length - 18, 18 - 8)
 	$InterruptersAmount = Convert-Hex-To-Decimal -value (Convert-Binary-To-Hex -value $MaxIntrsInBinary)
@@ -176,8 +176,8 @@ function Find-Interrupters-Amount {
 
 function Disable-IMOD {
 	param ([string] $address)
-	& "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Stderr /Command="W32 $address 0x00000000" | Out-Null
-	Start-Sleep -Seconds 1
+	$Value = & "$RWPath\Rw.exe" /Min /NoLogo /Stdout /Command="W32 $address 0x00000000" 2>&1 | Out-String
+	while ([string]::IsNullOrWhiteSpace($Value)) { Start-Sleep -Seconds 1 }
 }
 
 function Get-All-Interrupters {
@@ -191,7 +191,7 @@ function Get-All-Interrupters {
 		$AddressInDecimal = $preAddressInDecimal + (32 * $i)
 		$InterrupterAddress = Convert-Decimal-To-Hex -value $AddressInDecimal
 		$Address = Get-R32-Hex-From-Address -address $InterrupterAddress
-		$Data += [PsObject]@{Address = $Address; Interrupter = $i}
+		$Data += [PsObject]@{Address = $Address; InterrupterAddress = $InterrupterAddress; Interrupter = $i}
 	}
 	return $Data
 }
@@ -216,7 +216,7 @@ function ExecuteIMODProcess {
 
 		foreach ($interrupterItem in $AllInterrupters) {
 			Disable-IMOD -address $interrupterItem.Address
-			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Address $($interrupterItem.Address)"
+			Write-Host "Disabled IMOD - Interrupter $($interrupterItem.Interrupter) - Interrupter Address $($interrupterItem.InterrupterAddress) - Value Address $($interrupterItem.Address)"
 		}
 
 		[Environment]::NewLine
