@@ -7,6 +7,7 @@
 	https://linustechtips.com/topic/1477802-what-does-changing-driver-interrupt-affinity-cause-the-driver-to-do/
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28580928
 	https://github.com/djdallmann/GamingPCSetup/issues/12
+	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61#post-28582024 - In case I decide to implement EHCI support, handle Interrupt Threshold Control.
 
 	Note1: RW command will not run if you have the GUI version open.
 	Note2: You should be able to run this script through cmd, powershell or UI, as long as you have downloaded the gaming_os_tweaks folder and are keeping the file in the folder that it belongs.
@@ -62,7 +63,6 @@ function Get-All-USB-Controllers {
 	[PsObject[]]$USBControllers= @()
 
 	$allUSBControllers = Get-CimInstance -ClassName Win32_USBController | Select-Object -Property Name, DeviceID
-
 	foreach ($usbController in $allUSBControllers) {
 		$allocatedResource = Get-CimInstance -ClassName Win32_PNPAllocatedResource | Where-Object { $_.Dependent.DeviceID -like "*$($usbController.DeviceID)*" } | Select @{N="StartingAddress";E={$_.Antecedent.StartingAddress}}
 		$deviceMemory = Get-CimInstance -ClassName Win32_DeviceMemoryAddress | Where-Object { $_.StartingAddress -eq "$($allocatedResource.StartingAddress)" }
@@ -236,7 +236,7 @@ function Execute-IMOD-Process {
 
 # --------------------------------------------------------------------------------------------
 
-# Startup script is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized.
+# Startup script is optional, because before that you must test the script if will work and not cause BSOD, by not having the startup set, a simple restart should be enough to have it normalized. Know that once you have enabled the startup function, you must keep the file and folder including everything in the location that you executed this script file from.
 # Uncomment line below if you want to apply startup script
 # Apply-Startup-Script
 
