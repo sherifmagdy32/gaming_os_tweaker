@@ -46,6 +46,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mouclass\Parameter
 
 :: Optimize mouse and keyboard settings
 :: Flags 122 disable filterkeys, but 27 is what is necessary to bypass certain limits from windows, while keeping everything else disabled.
+:: having this value as 27 disable keys repeating at all which is not disired instead 0 would disable all windows limitation while keeping normal functionality.
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v Flags /t REG_SZ /d 27 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v DelayBeforeAcceptance /t REG_SZ /d 0 /f
 REG ADD "HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response" /v BounceTime /t REG_SZ /d 0 /f
