@@ -1,5 +1,5 @@
 <#
-	Automated script to disable interrupt moderation / coalesting in all usb controllers
+	Automated script to disable Interrupt Moderation (XHCI) or Interrupt Threshold Control (EHCI) in all USB controllers.
 
 	https://www.overclock.net/threads/usb-polling-precision.1550666/page-61
 	https://github.com/djdallmann/GamingPCSetup/tree/master/CONTENT/RESEARCH/PERIPHERALS#universal-serial-bus-usb
