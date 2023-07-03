@@ -4,8 +4,9 @@
 
 - If you dont have a external PCIe USB card, you want to use the best controller in the motherboard. One from CPU is faster, and from Chipset is slower. It would be better to have Mouse, Keyboard and Controller on the fast one. You can check the controllers available with USB Tree View. It seems that the first controller in the list is usually the best one. <https://www.uwe-sieber.de/usbtreeview_e.html> - <https://www.youtube.com/watch?v=82K3Pb0178g>
 
-- (At your own risk), you can disable xCHI Interrupt Moderation for USB, mainly to benefit mouses. <https://github.com/BoringBoredom/PC-Optimization-Hub/blob/main/content/xhci%20imod/xhci%20imod.md>
-  - Recently I built a script that does it automatically at `optional_helpers/interrupt_moderation_usb.ps1`
+- I have built a script to automatically disable Interrupt Moderation aka IMOD (XHCI) and Interrupt Threshold Control (EHCI) in all USB controllers.
+  - Script can be found at [interrupt_moderation_usb.ps1](../scripts/optional_helpers/interrupt_moderation_usb.ps1)
+  - Use at your own risk
 
 - Convert games or DPI sensitivity by using <https://www.mouse-sensitivity.com/>
 

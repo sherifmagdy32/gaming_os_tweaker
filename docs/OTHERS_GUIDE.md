@@ -46,6 +46,14 @@ Script can be found at [interrupt_affinity_auto.ps1](../scripts/optional_helpers
 
 ---
 
+## Interrupt Moderation USB
+
+I have built a script to automatically disable Interrupt Moderation aka IMOD (XHCI) and Interrupt Threshold Control (EHCI) in all USB controllers.
+
+Script can be found at [interrupt_moderation_usb.ps1](../scripts/optional_helpers/interrupt_moderation_usb.ps1)
+
+---
+
 ## Interrupt Affinity Policy
 
 - Download at <https://www.techpowerup.com/download/microsoft-interrupt-affinity-tool/>

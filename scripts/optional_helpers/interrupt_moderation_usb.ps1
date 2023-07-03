@@ -40,7 +40,8 @@ function Apply-Startup-Script {
 		$delay = New-TimeSpan -Seconds 10
 		$trigger = New-ScheduledTaskTrigger -AtLogOn -RandomDelay $delay
 		$principal = New-ScheduledTaskPrincipal -UserID "LOCALSERVICE" -RunLevel Highest
-		Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal
+		$STSet = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Minutes 3)
+		Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal -Settings $STSet
 		[Environment]::NewLine
 
 		# In case you have to remove the script from startup, but are not able to do from the UI, run:
@@ -50,7 +51,8 @@ function Apply-Startup-Script {
 
 function Apply-Tool-Compatibility-Registries {
 	$BuildNumber = Get-WMIObject Win32_OperatingSystem | Select -ExpandProperty BuildNumber
-	if ($BuildNumber -ge 22000) {
+	$isWin11 = $BuildNumber -ge 22000
+	if ($isWin11) {
 		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 0 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios" -Name "HypervisorEnforcedCodeIntegrity" -Value 0 -Force -Type Dword -ErrorAction Ignore
 		Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 0 -Force -Type Dword -ErrorAction Ignore
